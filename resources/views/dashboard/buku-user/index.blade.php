@@ -135,15 +135,19 @@
                                                 <p class="card-text">Kategori: {{ $buku->kategoriBuku->nama_kategori }}</p>
                                             @endif
 
-                                            <form action="{{ route('buku.ajukan-peminjaman', $buku->buku_id) }}" method="POST">
-                                                @csrf
-                                                <button type="submit" class="btn btn-success mb-2">Ajukan Peminjaman</button>
-                                            </form>
+                                            <div class="d-flex justify-content-center mt-2">
+                                                <form action="{{ route('buku.ajukan-peminjaman', $buku->buku_id) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-success mx-1">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                </form>
 
-                                            <!-- Tombol "Tambah ke Koleksi Saya" dan Modal -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addToCollectionModal{{ $buku->id }}">
-                                                Tambahkan ke Koleksi Saya
-                                            </button>
+                                                <!-- Tombol "Tambah ke Koleksi Saya" dan Modal -->
+                                                <button type="button" class="btn btn-primary mx-2" data-toggle="modal" data-target="#addToCollectionModal{{ $buku->id }}">
+                                                    <i class="fas fa-plus"></i> 
+                                                </button>
+                                            </div>
 
                                             <!-- Modal -->
                                             <div class="modal fade" id="addToCollectionModal{{ $buku->id }}" tabindex="-1" role="dialog" aria-labelledby="addToCollectionModalLabel{{ $buku->id }}" aria-hidden="true">

@@ -35,14 +35,14 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $kategori->nama_kategori }}</td>
                                         <td>
-                                        <a href="{{ route('kategori.edit', ['kategori_id' => $kategori->kategori_id]) }}" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="{{ route('kategori.edit', ['kategori_id' => $kategori->kategori_id]) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
 
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'petugas')
                                                 <form id="delete-form-{{ $kategori->kategori_id }}" action="{{ route('kategori.destroy', $kategori->kategori_id) }}" class="d-inline" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                                <button onclick="deleteForm('{{ $kategori->kategori_id }}')" class="btn btn-danger btn-sm">Hapus</button>
+                                                <button onclick="deleteForm('{{ $kategori->kategori_id }}')" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                                             @endif
 
                                         </td>

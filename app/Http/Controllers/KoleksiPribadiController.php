@@ -14,7 +14,7 @@ class KoleksiPribadiController extends Controller
      */
     public function index()
     {
-        $koleksiPribadi = KoleksiPribadi::where('user_id', auth()->user()->id)
+        $koleksiPribadi = KoleksiPribadi::where('user_id', auth()->user()->user_id)
             ->with('buku')
             ->get();
 
@@ -82,10 +82,10 @@ class KoleksiPribadiController extends Controller
      * @param  \App\Models\KoleksiPribadi  $koleksiPribadi
      * @return \Illuminate\Http\Response
      */
-    public function hapus($id)
+    public function hapus($koleksi_id)
     {
         // Hapus item dari koleksi pribadi
-        $koleksiPribadi = KoleksiPribadi::where('id', $id)->delete();
+        $koleksiPribadi = KoleksiPribadi::where('koleksi_id', $koleksi_id)->delete();
     
         // Redirect atau tampilkan pesan sukses
         return redirect()->route('koleksipribadi.index')->with('success', 'Item dihapus dari koleksi pribadi.');

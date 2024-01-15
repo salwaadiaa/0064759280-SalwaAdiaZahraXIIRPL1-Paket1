@@ -52,14 +52,15 @@
                                         @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('buku.edit', $buku->buku_id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                            <a href="{{ route('buku.edit', $buku->buku_id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                            
                                             {{-- Tampilkan tombol hapus hanya untuk admin --}}
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'petugas')
                                                 <form id="delete-form-{{ $buku->buku_id }}" action="{{ route('buku.destroy', $buku->buku_id) }}" class="d-inline" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                                <button onclick="deleteForm('{{ $buku->buku_id }}')" class="btn btn-danger btn-sm">Hapus</button>
+                                                <button onclick="deleteForm('{{ $buku->buku_id }}')" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                                             @endif
                                             
                                         </td>

@@ -68,7 +68,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/admin/ulasan', [UlasanBukuController::class, 'ulasanAdmin'])->name('ulasan.admin');
 
     Route::get('/dashboard/koleksipribadi', [KoleksiPribadiController::class, 'index'])->name('koleksipribadi.index');
-    Route::delete('/koleksi/{id}/hapus', [KoleksiPribadiController::class, 'hapus'])->name('koleksi.hapus');
+    Route::delete('/koleksi/{koleksi_id}/hapus', [KoleksiPribadiController::class, 'hapus'])->name('koleksi.hapus');
 
     Route::get('/kategori', [KategoriBukuController::class, 'indexUser'])->name('kategori.user');
     Route::get('/admin/kategori', [KategoriBukuController::class, 'indexAdmin'])->name('kategori.admin');

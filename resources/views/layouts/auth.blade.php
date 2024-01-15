@@ -46,7 +46,7 @@
     <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="{{ route('login') }}">
-                <img src="{{ asset('/assets/img/brand/white.png') }}">
+                <img src="{{ asset('/assets/img/brand/blue.png') }}">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse"
                 aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,8 +125,8 @@
             <div class="row align-items-center justify-content-xl-between">
                 <div class="col-xl-6">
                     <div class="copyright text-center text-xl-left text-muted">
-                        &copy; {{ date('Y') }} <a href="https://www.creative-tim.com" class="font-weight-bold ml-1"
-                            target="_blank">Creative Tim</a>
+                        &copy; {{ date('Y') }} <a href="https://www.linkedin.com/in/salwa-adia-zahra-06153028a/?originalSubdomain=id" class="font-weight-bold ml-1"
+                            target="_blank">Salwa Adia Zahra</a>
                     </div>
                 </div>
             </div>

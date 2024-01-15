@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
                 'user_id' => 'P001',
                 'username' => 'petugas',
                 'name' => 'petugas',
-                'email' => 'user@mail.com',
+                'email' => 'petugas@mail.com',
                 'password' => Hash::make('password'),
                 'role' => 'petugas',
                 'alamat' => 'rumah',

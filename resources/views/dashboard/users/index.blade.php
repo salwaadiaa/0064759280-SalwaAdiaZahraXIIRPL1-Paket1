@@ -22,9 +22,11 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Username</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
+                                    <th>Alamat</th>
                                     <th>Avatar</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -33,11 +35,11 @@
                                 @forelse ($users as $user)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $user->username }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
-                                        <td>
-                                            {{ str()->title($user->role) }}
-                                        </td>
+                                        <td>{{ str()->title($user->role) }}</td>
+                                        <td>{{ $user->alamat }}</td>
                                         <td>
                                             <img src="{{ asset('/uploads/images/'.$user->avatar) }}" alt="{{ $user->name }}" width="100">
                                         </td>
@@ -58,7 +60,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="4">
+                                    <th colspan="5">
                                         {{ $users->links() }}
                                     </th>
                                 </tr>

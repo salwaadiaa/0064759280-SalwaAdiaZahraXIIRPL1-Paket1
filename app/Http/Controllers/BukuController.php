@@ -127,7 +127,7 @@ class BukuController extends Controller
         'user_id' => auth()->id(),
         'buku_id' => $bukuId,
         'tanggal_peminjaman' => now(),
-        'tanggal_pengembalian' => now()->addDays(14), // Contoh: batas peminjaman 14 hari
+        'tanggal_pengembalian' => now()->addDays(5), // Contoh: batas peminjaman 14 hari
         'status_peminjaman' => 'Diajukan',
     ]);
 
@@ -154,13 +154,13 @@ class BukuController extends Controller
     public function tambahKeKoleksi($buku_id)
     {
         $buku = Buku::find($buku_id);
-    
+
         if (!$buku) {
             return redirect()->back()->with('error', 'Buku tidak ditemukan');
         }
     
         // Cek apakah buku sudah ada di koleksi pribadi pengguna
-        $existingCollection = KoleksiPribadi::where('user_id', Auth::user_id())
+        $existingCollection = KoleksiPribadi::where('user_id', Auth::user()->user_id)
             ->where('buku_id', $buku->buku_id)
             ->first();
     
@@ -170,7 +170,7 @@ class BukuController extends Controller
     
         // Tambahkan buku ke koleksi pribadi
         KoleksiPribadi::create([
-            'user_id' => Auth::user_id(),
+            'user_id' => Auth::user()->user_id,
             'buku_id' => $buku->buku_id,
             // Anda bisa menambahkan data tambahan jika diperlukan
         ]);

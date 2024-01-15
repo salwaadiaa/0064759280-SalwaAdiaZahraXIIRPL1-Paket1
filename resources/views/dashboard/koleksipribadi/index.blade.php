@@ -32,12 +32,11 @@
                                         <td>{{ $item->buku->penerbit }}</td>
                                         <td>
                                             <!-- Tombol Hapus -->
-                                            <form action="{{ route('koleksi.hapus', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Hapus</button>
-                                            </form>
-
+                                            <form action="{{ route('koleksi.hapus', $item->koleksi_id) }}" method="POST" id="delete-form-{{ $item->koleksi_id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-danger" onclick="deleteForm('{{ $item->koleksi_id }}')">Hapus</button>
+                                                </form>
                                         </td>
                                     </tr>
                                 @empty
@@ -53,3 +52,21 @@
         </div>
     </div>
 @endsection
+
+<script>
+    function deleteForm(id) {
+        Swal.fire({
+            title: 'Hapus data',
+            text: "Anda akan menghapus data!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Batal!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $(`#delete-form-${id}`).submit();
+            }
+        });
+    }
+</script>

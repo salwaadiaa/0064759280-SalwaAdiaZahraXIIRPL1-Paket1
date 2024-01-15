@@ -15,6 +15,20 @@
             <div class="card shadow">
                 <div class="card-header bg-transparent border-0 text-dark">
                     <h2 class="card-title h3">Riwayat Ulasan Buku</h2>
+                    <form action="{{ route('ulasan.admin') }}" method="GET">
+                <div class="input-group">
+                    <select class="form-control" name="judul">
+                        <option value="">-- Pilih Judul Buku --</option>
+                        @foreach ($listJudulBuku as $judulBuku)
+                            <option value="{{ $judulBuku->judul }}" {{ request('judul') == $judulBuku->judul ? 'selected' : '' }}>
+                                {{ $judulBuku->judul }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </form>
+            <br>
                     <div class="table-responsive">
                         <table class="table table-flush table-hover">
                             <thead>

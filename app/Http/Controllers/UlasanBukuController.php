@@ -79,11 +79,16 @@ class UlasanBukuController extends Controller
         return view('dashboard.ulasan.buku_di_ulas', compact('bukusDiUlas'));
     }
 
-    public function ulasanAdmin()
+    public function ulasanAdmin(Request $request)
 {
-    // Ambil semua ulasan buku
     $ulasans = UlasanBuku::with(['user', 'buku'])->get();
+    $listJudulBuku = Buku::select('judul')->distinct()->get();
 
-    return view('dashboard.ulasan.ulasan_admin', compact('ulasans'));
+    if ($request->has('judul')) {
+        $judul = $request->input('judul');
+        $ulasans = $ulasans->where('buku.judul', $judul);
+    }
+
+    return view('dashboard.ulasan.ulasan_admin', compact('ulasans', 'listJudulBuku'));
 }
 }

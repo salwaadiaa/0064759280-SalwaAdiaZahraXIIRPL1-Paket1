@@ -65,7 +65,8 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>User</th>
+                                    <th>Nama Peminjam</th>
+                                    <th>Email Peminjam</th>
                                     <th>Buku</th>
                                     <th>Tanggal Peminjaman</th>
                                     <th>Tanggal Pengembalian</th>
@@ -78,6 +79,7 @@
                                 @forelse ($peminjamans as $peminjaman)
                                     <tr class="status-row" data-status="{{ $peminjaman->status_peminjaman }}">
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $peminjaman->user->email }}</td>
                                         <td>{{ $peminjaman->user->name }}</td>
                                         <td>{{ $peminjaman->buku->judul }}</td>
                                         <td>{{ $peminjaman->tanggal_peminjaman }}</td>

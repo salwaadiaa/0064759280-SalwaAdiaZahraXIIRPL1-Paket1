@@ -46,7 +46,7 @@ class PeminjamanController extends Controller
         $selisihHari = $tanggalKembali->diffInDays($tanggalPengembalian, false);
     
         // Menghitung denda jika telat mengembalikan
-        $denda = $selisihHari > 0 ? $selisihHari * 20000 : 0;
+        $denda = $selisihHari > 0 ? $selisihHari * 5000 : 0;
     
         $peminjaman->status_peminjaman = 'Sudah Kembali';
         $peminjaman->denda = $denda;
@@ -57,17 +57,20 @@ class PeminjamanController extends Controller
     }
 
     public function exportPdf(Request $request)
-{
-    $statusFilter = $request->input('status');
+    {
+        $statusFilter = $request->input('status');
 
-    $peminjamans = Peminjaman::when($statusFilter, function ($query) use ($statusFilter) {
-            return $query->where('status_peminjaman', $statusFilter);
-        })
-        ->get();
+        $peminjamans = Peminjaman::when($statusFilter, function ($query) use ($statusFilter) {
+                return $query->where('status_peminjaman', $statusFilter);
+            })
+            ->get();
 
-    $pdf = PDF::loadView('dashboard.peminjaman.export_pdf', compact('peminjamans'));
-    return $pdf->download('daftar_peminjaman.pdf');
-}
+        $statusSuffix = $statusFilter ? '_' . str_replace(' ', '_', strtolower($statusFilter)) : '';
+        $fileName = 'daftar_peminjaman' . $statusSuffix . '.pdf';
+
+        $pdf = PDF::loadView('dashboard.peminjaman.export-pdf', compact('peminjamans'));
+        return $pdf->download($fileName);
+    }
 
     public function submitReview(Request $request, $peminjaman_id)
     {

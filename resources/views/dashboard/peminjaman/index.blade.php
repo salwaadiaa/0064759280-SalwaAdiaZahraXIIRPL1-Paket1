@@ -65,8 +65,8 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Peminjam</th>
                                     <th>Email Peminjam</th>
+                                    <th>Nama Peminjam</th>
                                     <th>Buku</th>
                                     <th>Tanggal Peminjaman</th>
                                     <th>Tanggal Pengembalian</th>
@@ -127,10 +127,11 @@
     <script>
 
 $(document).ready(function() {
-        $('#download-pdf').click(function() {
-            window.location.href = '/peminjaman/exportPdf'; // Sesuaikan dengan URL yang sesuai
-        });
+    $('#download-pdf').click(function() {
+        var selectedStatus = $('#statusFilter').val();
+        window.location.href = '/peminjaman/exportPdf?status=' + selectedStatus;
     });
+});
 
         function confirmApproval(peminjaman_id) {
             Swal.fire({

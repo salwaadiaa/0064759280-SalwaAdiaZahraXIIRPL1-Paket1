@@ -37,31 +37,35 @@
 </head>
 <body>
     <h1>Daftar Peminjaman</h1>
-
-    <table>
+    
+    <table border="1">
         <thead>
             <tr>
-            <th>No</th>
-                                    <th>Nama Peminjam</th>
-                                    <th>Email Peminjam</th>
-                                    <th>Buku</th>
-                                    <th>Tanggal Peminjaman</th>
-                                    <th>Tanggal Pengembalian</th>
-                                    <th>Status</th>
+                <th>No</th>
+                <th>Nama Peminjam</th>
+                <th>Email Peminjam</th>
+                <th>Buku</th>
+                <th>Tanggal Peminjaman</th>
+                <th>Tanggal Pengembalian</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($peminjamans as $peminjaman)
+            @forelse ($peminjamans as $peminjaman)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $peminjaman->user->email }}</td>
-                                        <td>{{ $peminjaman->user->name }}</td>
-                                        <td>{{ $peminjaman->buku->judul }}</td>
-                                        <td>{{ $peminjaman->tanggal_peminjaman }}</td>
-                                        <td>{{ $peminjaman->tanggal_pengembalian }}</td>
-                                        <td>{{ $peminjaman->status_peminjaman }}</td>
+                    <td>{{ $peminjaman->user->name }}</td>
+                    <td>{{ $peminjaman->buku->judul }}</td>
+                    <td>{{ $peminjaman->tanggal_peminjaman }}</td>
+                    <td>{{ $peminjaman->tanggal_pengembalian }}</td>
+                    <td>{{ $peminjaman->status_peminjaman }}</td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="7">Tidak ada data peminjaman.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </body>

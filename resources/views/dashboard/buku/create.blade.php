@@ -70,6 +70,16 @@
                         </div>
 
                         <div class="form-group mb-3">
+                            <label for="stok">Stok</label>
+                            <input type="number" class="form-control @error('stok') is-invalid @enderror" id="stok"
+                                placeholder="Stok" value="{{ old('stok') }}" name="stok" required>
+
+                            @error('stok')
+                                <div class="d-block invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group mb-3">
                             <label for="kategori_id">Kategori</label>
                             <select class="form-control" id="kategori_id" name="kategori_id">
                                 <option value="">Pilih Kategori</option>

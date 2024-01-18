@@ -48,7 +48,7 @@
                     <label for="statusFilter" class="form-label">Filter Status:</label>
                         <select id="statusFilter" class="form-select">
                             <option value="">Semua</option>
-                            <option value="Diajukan">Diajukan</option>
+<option value="Diajukan">Diajukan</option>
                             <option value="Dipinjam">Dipinjam</option>
                             <option value="Sudah Kembali">Sudah Kembali</option>
                         </select>
@@ -86,18 +86,8 @@
                                         <td>{{ $peminjaman->tanggal_pengembalian }}</td>
                                         <td>{{ $peminjaman->status_peminjaman }}</td>
                                         <td>
-                                            @if($peminjaman->status_peminjaman == 'Diajukan')
-                                                <form id="approve-form-{{ $peminjaman->peminjaman_id }}" action="{{ route('peminjaman.approve', $peminjaman->peminjaman_id) }}" method="POST" style="display: inline;">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button type="button" class="btn btn-success" onclick="confirmApproval('{{ $peminjaman->peminjaman_id }}')">Setujui</button>
-                                                </form>
-                                                <form id="reject-form-{{ $peminjaman->peminjaman_id }}" action="{{ route('peminjaman.reject', $peminjaman->peminjaman_id) }}" method="POST" style="display: inline;">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button type="button" class="btn btn-danger" onclick="confirmRejection('{{ $peminjaman->peminjaman_id }}')">Tolak</button>
-                                                </form>
-                                            @elseif($peminjaman->status_peminjaman == 'Dipinjam')
+                                            @if($peminjaman->status_peminjaman == 'Dipinjam')
+                                                <!-- Status Dipinjam -->
                                                 <form id="return-form-{{ $peminjaman->peminjaman_id }}" action="{{ route('peminjaman.return', $peminjaman->peminjaman_id) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('PUT')
@@ -132,42 +122,6 @@ $(document).ready(function() {
         window.location.href = '/peminjaman/exportPdf?status=' + selectedStatus;
     });
 });
-
-        function confirmApproval(peminjaman_id) {
-            Swal.fire({
-                title: 'Konfirmasi Setujui Peminjaman',
-                text: 'Apakah Anda yakin ingin menyetujui peminjaman?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, setujui!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Jika dikonfirmasi, kirimkan formulir persetujuan
-                    $(`#approve-form-${peminjaman_id}`).submit();
-                }
-            });
-        }
-
-        function confirmRejection(peminjaman_id) {
-            Swal.fire({
-                title: 'Konfirmasi Menolak Peminjaman',
-                text: 'Apakah Anda yakin ingin menolak peminjaman?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, tolak!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Jika dikonfirmasi, kirimkan formulir penolakan
-                    $(`#reject-form-${peminjaman_id}`).submit();
-                }
-            });
-        }
 
         function confirmReturn(peminjaman_id) {
             Swal.fire({

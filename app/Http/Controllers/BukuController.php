@@ -33,13 +33,11 @@ class BukuController extends Controller
             return $query;
         })
         ->where('judul', 'like', "%$search%")
+        ->where('stok', '>', 0) // Hanya tampilkan buku yang stoknya lebih dari 0
         ->paginate(10);
 
     return view('dashboard.buku-user.index', compact('bukus', 'kategoris', 'kategori_id'));
 }
-
-    
-
 
     public function create()
     {
@@ -59,6 +57,7 @@ class BukuController extends Controller
         $buku->penerbit = $request->input('penerbit');
         $buku->tahun_terbit = $request->input('tahun_terbit');
         $buku->kategori_id = $request->input('kategori_id');
+        $buku->stok = $request->input('stok');
 
         // Simpan gambar dan atur nama gambar sesuai kebutuhan
         if ($request->hasFile('gambar')) {
@@ -98,6 +97,7 @@ class BukuController extends Controller
             'penulis' => 'required|string',
             'penerbit' => 'required|string',
             'tahun_terbit' => 'required|numeric',
+            'stok' => 'required|numeric|min:0',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ubah sesuai kebutuhan
         ]);
 
@@ -107,6 +107,7 @@ class BukuController extends Controller
         $buku->penulis = $request->input('penulis');
         $buku->penerbit = $request->input('penerbit');
         $buku->tahun_terbit = $request->input('tahun_terbit');
+        $buku->stok = $request->input('stok');
 
         if ($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');
@@ -122,35 +123,43 @@ class BukuController extends Controller
 
     public function ajukanPeminjaman($bukuId)
 {
-    // Logika untuk mengajukan peminjaman, misalnya set tanggal_peminjaman dan tanggal_pengembalian
+    // Temukan buku berdasarkan ID
+    $buku = Buku::find($bukuId);
+
+    // Pastikan buku ditemukan
+    if (!$buku) {
+        return redirect()->back()->with('error', 'Buku tidak ditemukan');
+    }
+
+    // Cek apakah stok cukup untuk dipinjam
+    if ($buku->stok <= 0) {
+        return redirect()->back()->with('error', 'Stok buku habis. Tidak dapat melakukan peminjaman.');
+    }
+
+    // Kurangkan stok buku
+    $buku->stok--;
+
+    // Simpan perubahan pada stok
+    $buku->save();
+
+    // Buat entri peminjaman baru
+    $tanggalPeminjaman = now();
+    $tanggalPengembalian = clone $tanggalPeminjaman;
+    $tanggalPengembalian->addDays(5);
+
+
     Peminjaman::create([
         'user_id' => auth()->id(),
         'buku_id' => $bukuId,
-        'tanggal_peminjaman' => now(),
-        'tanggal_pengembalian' => now()->addDays(5), // Contoh: batas peminjaman 14 hari
-        'status_peminjaman' => 'Diajukan',
+        'tanggal_peminjaman' => $tanggalPeminjaman,
+        'tanggal_pengembalian' => $tanggalPengembalian,
+        'status_peminjaman' => 'Dipinjam',
     ]);
 
-    return redirect()->back()->with('success', 'Peminjaman berhasil diajukan.');
+    return redirect()->back()->with('success', 'Peminjaman berhasil dilakukan.');
 }
 
-    public function setujuiPeminjaman($peminjamanId)
-    {
-        $peminjaman = Peminjaman::findOrFail($peminjamanId);
-        $peminjaman->status_persetujuan = 'Disetujui';
-        $peminjaman->save();
 
-        return redirect()->back()->with('success', 'Peminjaman disetujui.');
-    }
-
-    public function tolakPeminjaman($peminjamanId)
-    {
-        $peminjaman = Peminjaman::findOrFail($peminjamanId);
-        $peminjaman->status_persetujuan = 'Ditolak';
-        $peminjaman->save();
-
-        return redirect()->back()->with('success', 'Peminjaman ditolak.');
-    }
     public function tambahKeKoleksi($buku_id)
     {
         $buku = Buku::find($buku_id);

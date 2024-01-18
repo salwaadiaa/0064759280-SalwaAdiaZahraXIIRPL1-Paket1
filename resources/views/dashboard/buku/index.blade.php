@@ -29,6 +29,7 @@
                                     <th>Penulis</th>
                                     <th>Penerbit</th>
                                     <th>Tahun Terbit</th>
+                                    <th>Stok Buku</th>
                                     <th>Kategori</th>
                                     <th>Gambar</th>
                                     <th>Aksi</th>
@@ -43,6 +44,7 @@
                                         <td>{{ $buku->penulis }}</td>
                                         <td>{{ $buku->penerbit }}</td>
                                         <td>{{ $buku->tahun_terbit }}</td>
+                                        <td>{{ $buku->stok }}</td>
                                         <td>{{ $buku->kategoriBuku->nama_kategori ?? '-' }}</td>
                                         <td>
                                         @if($buku->gambar)

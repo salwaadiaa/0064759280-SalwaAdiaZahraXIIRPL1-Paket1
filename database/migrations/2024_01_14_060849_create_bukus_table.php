@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('penulis');
             $table->string('penerbit');
             $table->year('tahun_terbit');
+            $table->integer('stok')->default(0);
             $table->string('gambar')->nullable();
             $table->timestamps();
         });

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\KoleksiPribadi;
+use App\Models\UlasanBuku;
+use App\Models\Buku;
 use Illuminate\Http\Request;
 
 class KoleksiPribadiController extends Controller
@@ -13,13 +15,16 @@ class KoleksiPribadiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $koleksiPribadi = KoleksiPribadi::where('user_id', auth()->user()->user_id)
-            ->with('buku')
-            ->get();
+{
+    // Ambil buku yang sudah diulas
+    $bukusDiUlas = Buku::has('ulasans')->get();
 
-        return view('dashboard.koleksipribadi.index', compact('koleksiPribadi'));
-    }
+    // Ambil data lain yang diperlukan untuk tampilan (sesuaikan jika diperlukan)
+    $koleksiPribadi = KoleksiPribadi::all();
+
+    // Kirim data ke tampilan
+    return view('dashboard.koleksipribadi.index', compact('koleksiPribadi', 'bukusDiUlas'));
+}
 
     /**
      * Show the form for creating a new resource.

@@ -42,4 +42,8 @@ class Buku extends Model
     {
         return $this->ulasan_bukus()->exists();
     }
+     public function ulasans()
+    {
+        return $this->hasMany(UlasanBuku::class, 'buku_id');
+    }
 }

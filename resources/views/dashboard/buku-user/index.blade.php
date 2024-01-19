@@ -143,37 +143,7 @@
                                                     </button>
                                                 </form>
 
-                                                <!-- Tombol "Tambah ke Koleksi Saya" dan Modal -->
-                                                <button type="button" class="btn btn-primary mx-2" data-toggle="modal" data-target="#addToCollectionModal{{ $buku->id }}">
-                                                    <i class="fas fa-plus"></i> 
-                                                </button>
-                                            </div>
-
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="addToCollectionModal{{ $buku->id }}" tabindex="-1" role="dialog" aria-labelledby="addToCollectionModalLabel{{ $buku->id }}" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="addToCollectionModalLabel{{ $buku->id }}">Tambahkan ke Koleksi Saya</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <!-- Isi modal sesuai kebutuhan, misalnya form tambahan -->
-                                                            <!-- Contoh: -->
-                                                            <form action="{{ route('buku.tambah-ke-koleksi', $buku->buku_id) }}" method="POST">
-                                                                @csrf
-                                                                <!-- Tambahkan input atau elemen form lainnya di sini -->
-                                                                <button type="submit" class="btn btn-primary">Tambahkan</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                           
                             @empty
                                 <div class="col-12">
                                     <p>Tidak ada data buku.</p>

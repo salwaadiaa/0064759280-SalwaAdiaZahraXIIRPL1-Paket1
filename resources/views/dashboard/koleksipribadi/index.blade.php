@@ -21,30 +21,21 @@
                                     <th>No</th>
                                     <th>Judul Buku</th>
                                     <th>Penerbit</th>
-                                    <th>Aksi</th> <!-- Kolom Aksi ditambahkan di sini -->
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($koleksiPribadi as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->buku->judul }}</td>
-                                        <td>{{ $item->buku->penerbit }}</td>
-                                        <td>
-                                            <!-- Tombol Hapus -->
-                                            <form action="{{ route('koleksi.hapus', $item->koleksi_id) }}" method="POST" id="delete-form-{{ $item->koleksi_id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-danger" onclick="deleteForm('{{ $item->koleksi_id }}')">Hapus</button>
-                                                </form>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4">Tidak ada buku dalam koleksi pribadi.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
+    @forelse ($bukusDiUlas as $buku)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $buku->judul }}</td>
+            <td>{{ $buku->penerbit }}</td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="4">Tidak ada buku dalam koleksi pribadi yang telah diulas.</td>
+        </tr>
+    @endforelse
+</tbody>
                         </table>
                     </div>
                 </div>

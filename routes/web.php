@@ -33,7 +33,9 @@ require __DIR__.'/auth.php';
 
 # ------ Authenticated routes ------ #
 Route::middleware('auth')->group(function() {
-    Route::get('/dashboard', [RouteController::class, 'dashboard'])->name('home'); # dashboard
+    Route::get('/dashboard', [RouteController::class, 'dashboard'])
+    ->name('home')
+    ->middleware('auth');
 
     Route::prefix('profile')->group(function(){
         Route::get('/', [ProfileController::class, 'myProfile'])->name('profile');

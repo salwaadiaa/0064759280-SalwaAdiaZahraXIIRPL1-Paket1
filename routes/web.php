@@ -50,8 +50,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
     Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
     Route::post('/buku/store', [BukuController::class, 'store'])->name('buku.store');
-    Route::get('/buku/edit/{id}', [BukuController::class, 'edit'])->name('buku.edit');
-    Route::put('/buku/update/{id}', [BukuController::class, 'update'])->name('buku.update');
+    Route::get('/buku/edit/{buku_id}', [BukuController::class, 'edit'])->name('buku.edit');
+    Route::put('/buku/update/{buku_id}', [BukuController::class, 'update'])->name('buku.update');
     Route::delete('/buku/destroy/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
     Route::post('/buku/tambah-ke-koleksi/{buku_id}', [BukuController::class, 'tambahKeKoleksi'])->name('buku.tambah-ke-koleksi');
     Route::get('/user/buku/index', [BukuController::class, 'bukuIndex'])->name('user.buku.index');

@@ -46,9 +46,27 @@
                         </div>
 
                         <div class="form-group mb-3">
+                            <label for="stok">Stok</label>
+                            <input type="number" class="form-control" id="stok" name="stok" value="{{ $buku->stok }}">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="kategori_id">Kategori</label>
+                            <select class="form-control" id="kategori_id" name="kategori_id">
+                                <option value="">Pilih Kategori</option>
+                                @foreach($kategoriBukus as $kategoriBuku)
+                                    <option value="{{ $kategoriBuku->kategori_id }}" {{ $buku->kategori_id == $kategoriBuku->kategori_id ? 'selected' : '' }}>
+                                        {{ $kategoriBuku->nama_kategori }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3">
                             <label for="gambar">Gambar</label>
                             @if($buku->gambar)
-                                <img src="{{ asset('storage/upload/buku/' . $buku->gambar) }}" alt="{{ $buku->judul }}" style="max-width: 100px; max-height: 100px; margin-bottom: 10px;">
+                                <img src="{{ asset('uploads/images/' . $buku->gambar) }}" alt="{{ $buku->judul }}"
+                                    style="max-width: 100px; max-height: 100px; margin-bottom: 10px;">
                             @endif
                             <input type="file" class="form-control-file" id="gambar" name="gambar">
                         </div>

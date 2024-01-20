@@ -19,7 +19,7 @@ class KoleksiPribadiController extends Controller
     // Ambil buku yang sudah diulas
     $bukusDiUlas = Buku::has('ulasans')->get();
 
-    // Ambil data lain yang diperlukan untuk tampilan (sesuaikan jika diperlukan)
+    // Ambil data lain yang diperlukan untuk tampilan
     $koleksiPribadi = KoleksiPribadi::all();
 
     // Kirim data ke tampilan

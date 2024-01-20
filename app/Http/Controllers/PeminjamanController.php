@@ -19,24 +19,6 @@ class PeminjamanController extends Controller
         return view('dashboard.peminjaman.index', compact('peminjamans'));
     }
 
-    public function approve($peminjaman_id)
-    {
-        $peminjaman = Peminjaman::findOrFail($peminjaman_id);
-        $peminjaman->status_peminjaman = 'Dipinjam';
-        $peminjaman->save();
-
-        return redirect()->route('peminjaman.index')->with('success', 'Peminjaman disetujui.');
-    }
-
-    public function reject($peminjaman_id)
-    {
-        $peminjaman = Peminjaman::findOrFail($peminjaman_id);
-        $peminjaman->status_peminjaman = 'Ditolak';
-        $peminjaman->save();
-
-        return redirect()->route('peminjaman.index')->with('success', 'Peminjaman ditolak.');
-    }
-
     public function return($peminjaman_id)
 {
     $peminjaman = Peminjaman::findOrFail($peminjaman_id);
@@ -78,31 +60,4 @@ class PeminjamanController extends Controller
         $pdf = PDF::loadView('dashboard.peminjaman.export-pdf', compact('peminjamans'));
         return $pdf->download($fileName);
     }
-
-    public function submitReview(Request $request, $peminjaman_id)
-    {
-        $request->validate([
-            'rating' => 'required|integer|between:1,5',
-            'ulasan' => 'required|string|max:255',
-        ]);
-    
-        $peminjaman = Peminjaman::findOrFail($peminjaman_id);
-    
-        // Create a new book review
-        UlasanBuku::create([
-            'user_id' => Auth::user_id(), // Anggap saja Anda memiliki sistem pengguna
-            'buku_id' => $peminjaman->buku_id,
-            'peminjam_id' => $peminjaman->peminjaman_id,
-            'ulasan' => $request->ulasan,
-            'rating' => $request->rating,
-        ]);
-    
-        // Delete the record from the original table
-        $peminjaman->delete();
-    
-        return redirect()->route('peminjaman.index')->with('success', 'Pengembalian berhasil, dan ulasan Anda telah direkam.');
-    }
-    
-
-
 }

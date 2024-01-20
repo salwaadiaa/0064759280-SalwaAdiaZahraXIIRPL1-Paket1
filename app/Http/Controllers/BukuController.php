@@ -84,13 +84,16 @@ class BukuController extends Controller
     }
 
     public function edit($buku_id)
-    {
-        $buku = Buku::findOrFail($buku_id);
-        return view('dashboard.buku.edit', compact('buku'));
-    }
+{
+    $buku = Buku::findOrFail($buku_id);
+    $kategoriBukus = KategoriBuku::all(); 
+    return view('dashboard.buku.edit', compact('buku', 'kategoriBukus'));
+}
+
 
     public function update(Request $request, $buku_id)
     {
+        // dd($request->all());
         $request->validate([
             'buku_id' => 'required',
             'judul' => 'required|string|max:255',
@@ -98,6 +101,7 @@ class BukuController extends Controller
             'penerbit' => 'required|string',
             'tahun_terbit' => 'required|numeric',
             'stok' => 'required|numeric|min:0',
+            'kategori_id' => 'required|numeric',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ubah sesuai kebutuhan
         ]);
 
@@ -107,6 +111,7 @@ class BukuController extends Controller
         $buku->penulis = $request->input('penulis');
         $buku->penerbit = $request->input('penerbit');
         $buku->tahun_terbit = $request->input('tahun_terbit');
+        $buku->kategori_id = $request->input('kategori_id');
         $buku->stok = $request->input('stok');
 
         if ($request->hasFile('gambar')) {
@@ -159,31 +164,4 @@ class BukuController extends Controller
     return redirect()->back()->with('success', 'Peminjaman berhasil dilakukan.');
 }
 
-
-    public function tambahKeKoleksi($buku_id)
-    {
-        $buku = Buku::find($buku_id);
-
-        if (!$buku) {
-            return redirect()->back()->with('error', 'Buku tidak ditemukan');
-        }
-    
-        // Cek apakah buku sudah ada di koleksi pribadi pengguna
-        $existingCollection = KoleksiPribadi::where('user_id', Auth::user()->user_id)
-            ->where('buku_id', $buku->buku_id)
-            ->first();
-    
-        if ($existingCollection) {
-            return redirect()->back()->with('warning', 'Buku sudah ada di koleksi Anda');
-        }
-    
-        // Tambahkan buku ke koleksi pribadi
-        KoleksiPribadi::create([
-            'user_id' => Auth::user()->user_id,
-            'buku_id' => $buku->buku_id,
-            // Anda bisa menambahkan data tambahan jika diperlukan
-        ]);
-    
-        return redirect()->back()->with('success', 'Buku berhasil ditambahkan ke koleksi Anda');
-    }
     }

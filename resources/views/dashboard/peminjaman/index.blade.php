@@ -48,7 +48,6 @@
                     <label for="statusFilter" class="form-label">Filter Status:</label>
                         <select id="statusFilter" class="form-select">
                             <option value="">Semua</option>
-<option value="Diajukan">Diajukan</option>
                             <option value="Dipinjam">Dipinjam</option>
                             <option value="Sudah Kembali">Sudah Kembali</option>
                         </select>

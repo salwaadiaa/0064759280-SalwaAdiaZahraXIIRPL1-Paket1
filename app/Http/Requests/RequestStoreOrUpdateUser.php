@@ -23,39 +23,27 @@ class RequestStoreOrUpdateUser extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'name' => 'required|max:255',
-            'email' => 'required|email|',
-            'role' => 'required|in:admin,user',
+        return [
+            'user_id' => 'required|unique:users,user_id',
+            'username' => 'required|unique:users,username',
+            'name' => 'required',
+            'alamat' => 'nullable',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed',
+            'role' => 'required|in:admin,petugas',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
-
-        if($this->isMethod('POST')){
-            $rules['password'] = 'required|min:6';
-            $rules['confirmation_password'] = 'required|same:password';
-            $rules['email'] .= 'unique:users,id,'.$this->user()->id;
-            $rules['avatar'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
-        }
-
-        return $rules;
     }
 
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
     public function messages()
     {
         return [
-            'name.required' => 'Kolom nama harus diisi.',
-            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
-            'email.required' => 'Kolom email harus diisi.',
-            'email.email' => 'Format email tidak valid.',
-            'email.unique' => 'Email sudah digunakan.',
-            'password.required' => 'Kolom password harus diisi.',
-            'password.min' => 'Password minimal 6 karakter.',
-            'role.required' => 'Kolom role harus diisi.',
-            'role.in' => 'Role tidak valid.',
-            'avatar.image' => 'File harus berupa gambar.',
-            'avatar.mimes' => 'Format gambar tidak valid.',
-            'avatar.max' => 'Gambar tidak boleh lebih dari 2MB.',
-            'confirmation_password.required' => 'Kolom konfirmasi password harus diisi.',
-            'confirmation_password.same' => 'Konfirmasi password tidak sama.',
+            // Define custom error messages if needed
         ];
     }
 }

@@ -11,12 +11,14 @@ use App\Models\KoleksiPribadi;
 
 class BukuController extends Controller
 {
+    //menampilkan daftar buku di halaman admin dan petugas
     public function index()
     {
-        $bukus = Buku::paginate(10); // Ganti jumlah paginasi sesuai kebutuhan
+        $bukus = Buku::paginate(10); 
         return view('dashboard.buku.index', compact('bukus'));
     }
 
+    //menampilkan daftar buku di halaman user, dan menambahkan fungsi search berdasarkan judul buku dan dapat memilih kategori buku 
     public function bukuIndex(Request $request)
 {
     $search = $request->input('search');
@@ -29,16 +31,16 @@ class BukuController extends Controller
             });
         })
         ->when(!$kategori_id, function ($query) {
-            // Jika tidak ada kategori yang dipilih, tampilkan semua buku
             return $query;
         })
         ->where('judul', 'like', "%$search%")
-        ->where('stok', '>', 0) // Hanya tampilkan buku yang stoknya lebih dari 0
+        ->where('stok', '>', 0) 
         ->paginate(10);
 
     return view('dashboard.buku-user.index', compact('bukus', 'kategoris', 'kategori_id'));
 }
 
+    //menampilkan form tambah buku untuk admin
     public function create()
     {
         $buku_id = 'BUKU-' . sprintf('%04d', Buku::count() + 1);
@@ -48,8 +50,6 @@ class BukuController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi inputan form disini
-
         $buku = new Buku();
         $buku->buku_id = $request->input('buku_id');
         $buku->judul = $request->input('judul');
@@ -59,7 +59,6 @@ class BukuController extends Controller
         $buku->kategori_id = $request->input('kategori_id');
         $buku->stok = $request->input('stok');
 
-        // Simpan gambar dan atur nama gambar sesuai kebutuhan
         if ($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');
             $namaGambar = time() . '.' . $gambar->getClientOriginalExtension();
@@ -74,10 +73,8 @@ class BukuController extends Controller
 
     public function destroy($buku_id)
     {
-        // Temukan buku berdasarkan ID
         $buku = Buku::findOrFail($buku_id);
 
-        // Hapus buku
         $buku->delete();
 
         return redirect()->route('buku.index')->with('success', 'Buku berhasil dihapus.');
@@ -127,41 +124,31 @@ class BukuController extends Controller
     }
 
     public function ajukanPeminjaman($bukuId)
-{
-    // Temukan buku berdasarkan ID
-    $buku = Buku::find($bukuId);
+    {
+        $buku = Buku::find($bukuId);
+        if (!$buku) {
+            return redirect()->back()->with('error', 'Buku tidak ditemukan');
+        }
+        if ($buku->stok <= 0) {
+            return redirect()->back()->with('error', 'Stok buku habis. Tidak dapat melakukan peminjaman.');
+        }
+        $buku->stok--;
+        $buku->save();
 
-    // Pastikan buku ditemukan
-    if (!$buku) {
-        return redirect()->back()->with('error', 'Buku tidak ditemukan');
+        $tanggalPeminjaman = now();
+        $tanggalPengembalian = clone $tanggalPeminjaman;
+        $tanggalPengembalian->addDays(5);
+
+
+        Peminjaman::create([
+            'user_id' => auth()->id(),
+            'buku_id' => $bukuId,
+            'tanggal_peminjaman' => $tanggalPeminjaman,
+            'tanggal_pengembalian' => $tanggalPengembalian,
+            'status_peminjaman' => 'Dipinjam',
+        ]);
+
+        return redirect()->back()->with('success', 'Peminjaman berhasil dilakukan.');
     }
 
-    // Cek apakah stok cukup untuk dipinjam
-    if ($buku->stok <= 0) {
-        return redirect()->back()->with('error', 'Stok buku habis. Tidak dapat melakukan peminjaman.');
-    }
-
-    // Kurangkan stok buku
-    $buku->stok--;
-
-    // Simpan perubahan pada stok
-    $buku->save();
-
-    // Buat entri peminjaman baru
-    $tanggalPeminjaman = now();
-    $tanggalPengembalian = clone $tanggalPeminjaman;
-    $tanggalPengembalian->addDays(5);
-
-
-    Peminjaman::create([
-        'user_id' => auth()->id(),
-        'buku_id' => $bukuId,
-        'tanggal_peminjaman' => $tanggalPeminjaman,
-        'tanggal_pengembalian' => $tanggalPengembalian,
-        'status_peminjaman' => 'Dipinjam',
-    ]);
-
-    return redirect()->back()->with('success', 'Peminjaman berhasil dilakukan.');
 }
-
-    }

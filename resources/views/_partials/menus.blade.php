@@ -9,13 +9,16 @@
     </a>
 </li>
 
-@if (Auth::user()->role == 'admin' || Auth::user()->role == 'petugas')
+@if (Auth::user()->role == 'admin')
 <li class="nav-item">
     <a class="nav-link {{ $routeActive == 'users.index' ? 'active' : '' }}" href="{{ route('users.index') }}">
         <i class="fas fa-users text-warning"></i>
         <span class="nav-link-text">Users</span>
     </a>
 </li>
+@endif
+
+@if (Auth::user()->role == 'admin' || Auth::user()->role == 'petugas')
 <li class="nav-item">
     <a class="nav-link {{ $routeActive == 'buku.index' ? 'active' : '' }}" href="{{ route('buku.index') }}">
         <i class="fas fa-book text-info"></i>
@@ -56,16 +59,10 @@
             <span class="nav-link-text">Tambah Ulasan</span>
         </a>
     </li>
-    <!-- <li class="nav-item">
-        <a class="nav-link {{ $routeActive == 'dashboard.ulasan.buku-di-ulas' ? 'active' : '' }}" href="{{ route('dashboard.ulasan.buku-di-ulas') }}">
-            <i class="fas fa-comment text-success"></i>
-            <span class="nav-link-text">Buku yang Sudah Diulas</span>
-        </a>
-    </li> -->
     <li class="nav-item">
         <a class="nav-link {{ $routeActive == 'koleksipribadi.index' ? 'active' : '' }}" href="{{ route('koleksipribadi.index') }}">
             <i class="ni ni-collection text-primary"></i>
-            <span class="nav-link-text">Koleksi Pribadi</span>
+            <span class="nav-link-text">Daftar Bacaan</span>
         </a>
     </li>
     <li class="nav-item">

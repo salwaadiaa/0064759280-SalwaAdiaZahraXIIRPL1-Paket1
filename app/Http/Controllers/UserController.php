@@ -15,8 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderByDesc('user_id');
-        $users = $users->paginate(50);
+        $users = User::orderBy('created_at', 'desc')->paginate(10);
 
         return view('dashboard.users.index', compact('users'));
     }
@@ -39,23 +38,37 @@ class UserController extends Controller
      */
     public function store(RequestStoreOrUpdateUser $request)
     {
-        $validated = $request->validated() + [
-            'created_at' => now(),
-        ];
+        // Form request will handle validation, and if it fails, it will automatically redirect back with errors.
 
-        if($request->hasFile('avatar')){
+        // Handle file upload if an avatar is provided
+        $avatarPath = null;
+
+        if ($request->hasFile('avatar')) {
             $fileName = time() . '.' . $request->avatar->extension();
-            $validated['avatar'] = $fileName;
-
+            $avatarPath = $fileName;
+        
             // move file
             $request->avatar->move(public_path('uploads/images'), $fileName);
+        } else {
+            // Set default avatar filename if no file is uploaded
+            $avatarPath = 'avatar.png';
         }
+        
+        // Create a new user
+        $user = User::create([
+            'user_id' => $request->user_id,
+            'username' => $request->username,
+            'name' => $request->name,
+            'alamat' => $request->alamat,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'avatar' => $avatarPath,
+        ]);
+        
 
-        $validated['password'] = Hash::make($validated['password']);
-
-        $user = User::create($validated);
-
-        return redirect(route('users.index'))->with('success', 'User berhasil ditambahkan.');
+        // Redirect back with a success message
+        return redirect()->route('users.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
     /**
@@ -91,31 +104,40 @@ class UserController extends Controller
      */
     public function update(RequestStoreOrUpdateUser $request, $user_id)
     {
-        $validated = $request->validated() + [
-            'updated_at' => now(),
-        ];
-
         $user = User::findOrFail($user_id);
 
-        $validated['avatar'] = $user->avatar;
-
-        if($request->hasFile('avatar')){
+        // Handle file upload if a new avatar is provided
+        $avatarPath = $user->avatar;
+    
+        if ($request->hasFile('avatar')) {
             $fileName = time() . '.' . $request->avatar->extension();
-            $validated['avatar'] = $fileName;
-
-            // move file
+            $avatarPath = $fileName;
+    
+            // Move file
             $request->avatar->move(public_path('uploads/images'), $fileName);
-
-            // delete old file
-            $oldPath = public_path('/uploads/images/'.$user->avatar);
-            if(file_exists($oldPath) && $user->avatar != 'avatar.png'){
-                unlink($oldPath);
+    
+            // Delete the old avatar file if it's not the default one
+            if ($user->avatar !== 'avatar.png') {
+                $oldAvatarPath = public_path('uploads/images/') . $user->avatar;
+                if (file_exists($oldAvatarPath)) {
+                    unlink($oldAvatarPath);
+                }
             }
         }
-
-        $user->update($validated);
-
-        return redirect(route('users.index'))->with('success', 'User berhasil diperbarui.');
+    
+        // Update the user data
+        $user->update([
+            'user_id' => $request->user_id,
+            'username' => $request->username,
+            'name' => $request->name,
+            'alamat' => $request->alamat,
+            'email' => $request->email,
+            'role' => $request->role,
+            'avatar' => $avatarPath,
+        ]);
+    
+        // Redirect back with a success message
+        return redirect()->route('users.index')->with('success', 'Pengguna berhasil diperbarui.');
     }
 
     /**

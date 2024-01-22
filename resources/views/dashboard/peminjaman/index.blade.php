@@ -1,6 +1,4 @@
-<!-- resources/views/dashboard/peminjaman/index.blade.php -->
 <style>
-    /* Tambahkan CSS berikut untuk memperbagus tampilan filter status */
 .form-label {
     margin-right: 10px;
 }
@@ -52,13 +50,13 @@
                             <option value="Sudah Kembali">Sudah Kembali</option>
                         </select>
 
-                        <button id="download-pdf" class="btn btn-danger pdf-button">
-                            <i class="fas fa-file-pdf"></i> PDF
-                        </button>
+                        @if(auth()->user()->role == 'admin')
+                            <button id="download-pdf" class="btn btn-danger pdf-button" onclick="downloadPdf()">
+                                <i class="fas fa-file-pdf"></i> PDF
+                            </button>
+                        @endif
                     </div>
 
-                    <!-- Tombol Export PDF -->
-                    <!-- <a href="{{ route('peminjaman.exportPdf') }}" id="exportPdf" class="btn btn-primary btn-sm" target="_blank">Export PDF</a> -->
                     <div class="table-responsive">
                         <table class="table table-flush table-hover">
                             <thead>
@@ -86,13 +84,11 @@
                                         <td>{{ $peminjaman->status_peminjaman }}</td>
                                         <td>
                                             @if($peminjaman->status_peminjaman == 'Dipinjam')
-                                                <!-- Status Dipinjam -->
                                                 <form id="return-form-{{ $peminjaman->peminjaman_id }}" action="{{ route('peminjaman.return', $peminjaman->peminjaman_id) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('PUT')
                                                     <button type="button" class="btn btn-primary" onclick="confirmReturn('{{ $peminjaman->peminjaman_id }}')">Selesai</button>
                                                 </form>
-                                                <!-- Tombol untuk proses pengembalian -->
                                                 <p>Denda: Rp {{ number_format($peminjaman->denda) }}</p>
                                             @endif
                                         </td>
@@ -115,12 +111,12 @@
     @parent
     <script>
 
-$(document).ready(function() {
-    $('#download-pdf').click(function() {
-        var selectedStatus = $('#statusFilter').val();
-        window.location.href = '/peminjaman/exportPdf?status=' + selectedStatus;
-    });
-});
+        $(document).ready(function() {
+            $('#download-pdf').click(function() {
+                var selectedStatus = $('#statusFilter').val();
+                window.location.href = '/peminjaman/exportPdf?status=' + selectedStatus;
+            });
+        });
 
         function confirmReturn(peminjaman_id) {
             Swal.fire({

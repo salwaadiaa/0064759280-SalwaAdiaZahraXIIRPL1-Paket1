@@ -1,7 +1,9 @@
 @extends('layouts.app')
+
 @section('title', 'Tambah Pengguna')
 
 @section('title-header', 'Tambah Pengguna')
+
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
     <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Daftar Pengguna</a></li>
@@ -18,6 +20,16 @@
                 <div class="card-body">
                     <form action="{{ route('users.store') }}" method="POST" role="form" enctype="multipart/form-data">
                         @csrf
+
+                        <div class="form-group mb-3">
+                            <label for="user_id">User ID</label>
+                            <input type="text" class="form-control @error('user_id') is-invalid @enderror" id="user_id"
+                                placeholder="User ID Pengguna" value="{{ old('user_id') }}" name="user_id" required>
+
+                            @error('user_id')
+                                <div class="d-block invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
                         <div class="form-group mb-3">
                             <label for="username">Username</label>
@@ -40,29 +52,21 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="email">Email</label>
-                            <input type="text" class="form-control @error('email') is-invalid @enderror" id="email"
-                                placeholder="Email Pengguna" value="{{ old('email') }}" name="email" required>
+                            <label for="alamat">Alamat</label>
+                            <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat"
+                                placeholder="Alamat Pengguna">{{ old('alamat') }}</textarea>
 
-                            @error('email')
+                            @error('alamat')
                                 <div class="d-block invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="role">Role</label>
-                            <select class="form-control @error('role') is-invalid @enderror" id="role" name="role" required>
-                                <option value="" selected>---Role---</option>
-                                @php
-                                    $roles = ['admin', 'user'];
-                                @endphp
-                                @foreach ($roles as $role)
-                                    <option value="{{ $role }}" @if (old('role') == $role) selected @endif>
-                                        {{ $role }}</option>
-                                @endforeach
-                            </select>
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control @error('email') is-invalid @enderror" id="email"
+                                placeholder="Email Pengguna" value="{{ old('email') }}" name="email" required>
 
-                            @error('role')
+                            @error('email')
                                 <div class="d-block invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -88,11 +92,19 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="alamat">Alamat</label>
-                            <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat"
-                                placeholder="Alamat Pengguna">{{ old('alamat') }}</textarea>
+                            <label for="role">Role</label>
+                            <select class="form-control @error('role') is-invalid @enderror" id="role" name="role" required>
+                                <option value="" selected>---Role---</option>
+                                @php
+                                    $roles = ['admin', 'petugas'];
+                                @endphp
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role }}" @if (old('role') == $role) selected @endif>
+                                        {{ $role }}</option>
+                                @endforeach
+                            </select>
 
-                            @error('alamat')
+                            @error('role')
                                 <div class="d-block invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

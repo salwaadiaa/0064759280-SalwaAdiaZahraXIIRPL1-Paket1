@@ -15,33 +15,11 @@ use App\Http\Controllers\RouteController;
 use App\Http\Controllers\TreeviewController;
 use App\Http\Controllers\UlasanBukuController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-# ------ Unauthenticated routes ------ #
-Route::get('/', [AuthenticatedSessionController::class, 'create']);
-require __DIR__.'/auth.php';
-
-
-# ------ Authenticated routes ------ #
-Route::middleware('auth')->group(function() {
-    Route::get('/dashboard', [RouteController::class, 'dashboard'])
-    ->name('home')
-    ->middleware('auth');
-
-    Route::prefix('profile')->group(function(){
-        Route::get('/', [ProfileController::class, 'myProfile'])->name('profile');
-        Route::put('/change-ava', [ProfileController::class, 'changeFotoProfile'])->name('change-ava');
-        Route::put('/change-profile', [ProfileController::class, 'changeProfile'])->name('change-profile');
-    }); # profile group
+Route::middleware(['web', 'auth', 'preventBackAfterLogout'])->group(function () {
+    Route::get('/dashboard', [RouteController::class, 'dashboard'])->name('home');
+    Route::get('/profile', [ProfileController::class, 'myProfile'])->name('profile');
+    Route::put('/profile/change-ava', [ProfileController::class, 'changeFotoProfile'])->name('change-ava');
+    Route::put('/profile/change-profile', [ProfileController::class, 'changeProfile'])->name('change-profile');
 
     Route::resource('users', UserController::class);
     Route::resource('treeview', TreeviewController::class)->only('index');
@@ -79,5 +57,7 @@ Route::middleware('auth')->group(function() {
     Route::get('admin/kategori/{kategori_id}/edit', [KategoriBukuController::class, 'edit'])->name('kategori.edit');
     Route::put('admin/kategori/{kategori_id}', [KategoriBukuController::class, 'update'])->name('kategori.update');
     Route::delete('/admin/kategori/{kategori_id}', [KategoriBukuController::class, 'destroy'])->name('kategori.destroy');
-
 });
+
+Route::get('/', [AuthenticatedSessionController::class, 'create']);
+require __DIR__.'/auth.php';

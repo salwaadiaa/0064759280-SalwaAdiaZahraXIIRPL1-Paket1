@@ -19,7 +19,6 @@ class Peminjaman extends Model
         'tanggal_pengembalian',
         'status_peminjaman',
         'denda',
-        'late_return_penalty',
     ];
 
     public function calculateDenda()

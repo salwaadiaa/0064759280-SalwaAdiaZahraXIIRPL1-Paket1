@@ -16,6 +16,11 @@ class PeminjamanController extends Controller
     public function index()
     {
         $peminjamans = Peminjaman::with(['user', 'buku'])->get();
+    
+        foreach ($peminjamans as $peminjaman) {
+            $peminjaman->calculateDenda();
+        }
+    
         return view('dashboard.peminjaman.index', compact('peminjamans'));
     }
 

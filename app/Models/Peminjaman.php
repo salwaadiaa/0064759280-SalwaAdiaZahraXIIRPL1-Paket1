@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Peminjaman extends Model
 {
@@ -18,7 +19,25 @@ class Peminjaman extends Model
         'tanggal_pengembalian',
         'status_peminjaman',
         'denda',
+        'late_return_penalty',
     ];
+
+    public function calculateDenda()
+    {
+        $expectedReturnDate = Carbon::parse($this->tanggal_pengembalian);
+        $actualReturnDate = Carbon::now();
+
+        // Calculate the difference in days
+        $daysLate = $actualReturnDate->diffInDays($expectedReturnDate, false);
+
+        // Calculate late fee (for example, $10 per day)
+        $lateFee = max(0, $daysLate) * 10000;
+
+        $this->denda = $lateFee;
+        $this->save();
+
+        return $this->denda;
+    }
 
     // Relasi ke tabel users
     public function user()

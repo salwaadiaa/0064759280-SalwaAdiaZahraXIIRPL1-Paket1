@@ -13,7 +13,7 @@
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">Total Buku</h5>
-                    <i class="fas fa-book fa-4x mb-3"></i> <!-- Sesuaikan ukuran ikon dengan class fa-4x atau yang sesuai -->
+                    <i class="fas fa-book fa-4x mb-3"></i>
                     <p class="card-text">{{ $totalBuku }}</p>
                 </div>
             </div>

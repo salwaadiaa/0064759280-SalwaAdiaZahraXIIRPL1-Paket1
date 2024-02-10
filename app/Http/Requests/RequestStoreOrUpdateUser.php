@@ -30,7 +30,7 @@ class RequestStoreOrUpdateUser extends FormRequest
             'alamat' => 'nullable',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed',
-            'role' => 'required|in:admin,petugas',
+            'role' => 'required|in:admin,petugas,user',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }

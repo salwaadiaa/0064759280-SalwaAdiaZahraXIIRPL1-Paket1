@@ -9,45 +9,56 @@
     </a>
 </li>
 
-@if (Auth::user()->role == 'admin')
-<li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'users.index' ? 'active' : '' }}" href="{{ route('users.index') }}">
-        <i class="fas fa-users text-warning"></i>
-        <span class="nav-link-text">Users</span>
-    </a>
-</li>
-@endif
-
 @if (Auth::user()->role == 'admin' || Auth::user()->role == 'petugas')
-<li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'buku.index' ? 'active' : '' }}" href="{{ route('buku.index') }}">
-        <i class="fas fa-book text-info"></i>
-        <span class="nav-link-text">Buku</span>
-    </a>
-</li>
-<li class="nav-item">
-        <a class="nav-link {{ $routeActive == 'peminjaman.index' ? 'active' : '' }}" href="{{ route('peminjaman.index') }}">
-            <i class="fas fa-book text-success"></i>
-            <span class="nav-link-text">Peminjaman</span>
+    <li class="nav-item">
+        <a class="nav-link {{ $routeActive == 'kategori.admin' ? 'active' : '' }}" href="{{ route('kategori.admin') }}">
+            <i class="ni ni-tag text-primary"></i>
+            <span class="nav-link-text">Manajemen Kategori</span>
         </a>
     </li>
     <li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'ulasan.admin' ? 'active' : '' }}" href="{{ route('ulasan.admin') }}">
-        <i class="fas fa-comment text-primary"></i>
-        <span class="nav-link-text">Riwayat Ulasan Buku</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'kategori.admin' ? 'active' : '' }}" href="{{ route('kategori.admin') }}">
-        <i class="ni ni-tag text-primary"></i>
-        <span class="nav-link-text">Manajemen Kategori</span>
-    </a>
-</li>
+        <a class="nav-link {{ $routeActive == 'buku.index' ? 'active' : '' }}" href="{{ route('buku.index') }}">
+            <i class="fas fa-book text-info"></i>
+            <span class="nav-link-text">Daftar Buku</span>
+        </a>
+    </li>
+    <!-- <li class="nav-item">
+        <a class="nav-link {{ $routeActive == 'users.index' ? 'active' : '' }}" href="{{ route('users.index') }}">
+            <i class="fas fa-users text-warning"></i>
+            <span class="nav-link-text">Anggota</span>
+        </a>
+    </li> -->
+    <li class="nav-item">
+        <a class="nav-link {{ $routeActive == 'peminjaman.index' ? 'active' : '' }}" href="{{ route('peminjaman.index') }}">
+            <i class="fas fa-clock text-success"></i>
+            <span class="nav-link-text">Daftar Peminjaman</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ $routeActive == 'peminjaman.selesai' ? 'active' : '' }}" href="{{ route('peminjaman.selesai') }}">
+            <i class="fas fa-history text-primary"></i>
+            <span class="nav-link-text">Riwayat Peminjaman</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ $routeActive == 'ulasan.admin' ? 'active' : '' }}" href="{{ route('ulasan.admin') }}">
+            <i class="fas fa-comment text-primary"></i>
+            <span class="nav-link-text">Riwayat Ulasan Buku</span>
+        </a>
+    </li>
+@endif
 
+@if (Auth::user()->role == 'admin')
+    <li class="nav-item">
+        <a class="nav-link {{ $routeActive == 'users.index' ? 'active' : '' }}" href="{{ route('users.index') }}">
+            <i class="fas fa-users text-warning"></i>
+            <span class="nav-link-text">Users</span>
+        </a>
+    </li>
 @endif
 
 @if (Auth::user()->role == 'user')
-<li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link {{ $routeActive == 'user.buku.index' ? 'active' : '' }}" href="{{ route('user.buku.index') }}">
             <i class="fas fa-book text-info"></i>
             <span class="nav-link-text">Buku</span>
@@ -66,10 +77,9 @@
         </a>
     </li>
     <li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'kategori.user' ? 'active' : '' }}" href="{{ route('kategori.user') }}">
-        <i class="ni ni-tag text-primary"></i>
-        <span class="nav-link-text">Kategori Buku</span>
-    </a>
-</li>
-
+        <a class="nav-link {{ $routeActive == 'kategori.user' ? 'active' : '' }}" href="{{ route('kategori.user') }}">
+            <i class="ni ni-tag text-primary"></i>
+            <span class="nav-link-text">Kategori Buku</span>
+        </a>
+    </li>
 @endif

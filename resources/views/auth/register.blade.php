@@ -35,12 +35,12 @@
                             <form role="form" action="{{ route('register.store') }}" method="POST">
                                 @csrf
 
-                                <div class="form-group mb-3">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
+                                <div class="hidden">
+                                    <div hidden="input-group input-group-merge input-group-alternative">
+                                        <div hidden="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-key-25"></i></span>
                                         </div>
-                                        <input class="form-control" name="user_id" placeholder="User ID" type="text"
+                                        <input type="hidden" name="user_id" placeholder="User ID" type="text"
                                             value="{{ $user_id }}" readonly>
                                     </div>
                                 </div>

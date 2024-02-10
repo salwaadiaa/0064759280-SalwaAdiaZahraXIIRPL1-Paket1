@@ -10,59 +10,74 @@ use App\Models\Buku;
 use App\Models\KoleksiPribadi;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 class PeminjamanController extends Controller
 {
     public function index()
     {
-        $peminjamans = Peminjaman::with(['user', 'buku'])->get();
-    
+        $peminjamans = Peminjaman::with(['user', 'buku'])->where('status_peminjaman', 'Dipinjam')->get();
+        
         foreach ($peminjamans as $peminjaman) {
             $peminjaman->calculateDenda();
         }
-    
-        return view('dashboard.peminjaman.index', compact('peminjamans'));
+
+        $peminjamanSelesai = Peminjaman::with(['user', 'buku'])->where('status_peminjaman', 'Sudah Kembali')->get();
+
+        return view('dashboard.peminjaman.index', compact('peminjamans', 'peminjamanSelesai'));
     }
+
+    public function selesai()
+    {
+        $peminjamanSelesai = Peminjaman::with(['user', 'buku'])->where('status_peminjaman', 'Sudah Kembali')->get();
+
+        return view('dashboard.peminjaman.riwayat', compact('peminjamanSelesai'));
+    }
+
 
     public function return($peminjaman_id)
     {
         $peminjaman = Peminjaman::findOrFail($peminjaman_id);
-        
-        // Menghitung selisih hari
-        $tanggalPengembalian = Carbon::parse($peminjaman->tanggal_pengembalian);
-        $tanggalKembali = Carbon::now();
-        $selisihHari = $tanggalKembali->diffInDays($tanggalPengembalian, false);
-        
-        // Menghitung denda jika telat mengembalikan
-        $denda = $selisihHari > 0 ? $selisihHari * 5000 : 0;
-        
+
+        if ($peminjaman->status_peminjaman === 'Sudah Kembali') {
+            return redirect()->route('peminjaman.index')->with('warning', 'Buku sudah dikembalikan sebelumnya.');
+        }
+
         $peminjaman->status_peminjaman = 'Sudah Kembali';
-        $peminjaman->denda = $denda;
+
+        $lateFee = $peminjaman->calculateDenda();
+        
         $peminjaman->save();
 
-        // Mengembalikan stok buku
         $buku = Buku::find($peminjaman->buku_id);
         $buku->stok++;
         $buku->save();
 
-        // Menambahkan sweetalert pengembalian berhasil
-        return redirect()->route('peminjaman.index')->with('success', 'Pengembalian berhasil.');
+        return redirect()->route('peminjaman.index')->with('success', 'Buku sudah berhasil dikembalikan.');
     }
-
 
     public function exportPdf(Request $request)
     {
-        $statusFilter = $request->input('status');
-
-        $peminjamans = Peminjaman::when($statusFilter, function ($query) use ($statusFilter) {
-                return $query->where('status_peminjaman', $statusFilter);
-            })
-            ->get();
-
-        $statusSuffix = $statusFilter ? '_' . str_replace(' ', '_', strtolower($statusFilter)) : '';
-        $fileName = 'daftar_peminjaman' . $statusSuffix . '.pdf';
-
-        $pdf = PDF::loadView('dashboard.peminjaman.export-pdf', compact('peminjamans'));
-        return $pdf->download($fileName);
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+    
+        // Ambil data berdasarkan rentang tanggal jika ada, jika tidak, ambil semua data
+        $query = Peminjaman::with(['user', 'buku'])
+            ->where('status_peminjaman', 'Sudah Kembali');
+    
+        if ($startDate && $endDate) {
+            $query->whereBetween('tanggal_peminjaman', [$startDate, $endDate]);
+        }
+    
+        $peminjamans = $query->get();
+    
+        $pdf = PDF::loadView('dashboard.peminjaman.export-pdf', compact('peminjamans', 'startDate', 'endDate'));
+        $pdf->setPaper('a4', 'landscape');
+    
+        $filename = 'peminjaman_' . ($startDate ?? 'all') . '_to_' . ($endDate ?? 'all') . '.pdf';
+    
+        return $pdf->download($filename);
     }
+    
 }

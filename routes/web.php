@@ -1,19 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\BukuController;
-use App\Http\Controllers\DataTableController;
-use App\Http\Controllers\KategoriBukuController;
-use App\Http\Controllers\KoleksiPribadiController;
-use App\Http\Controllers\PeminjamanController;
-use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProfitController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\RouteController;
-use App\Http\Controllers\TreeviewController;
-use App\Http\Controllers\UlasanBukuController;
+    use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\Auth\AuthenticatedSessionController;
+    use App\Http\Controllers\BukuController;
+    use App\Http\Controllers\DataTableController;
+    use App\Http\Controllers\KategoriBukuController;
+    use App\Http\Controllers\KoleksiPribadiController;
+    use App\Http\Controllers\PeminjamanController;
+    use App\Http\Controllers\ProdukController;
+    use App\Http\Controllers\ProfileController;
+    use App\Http\Controllers\ProfitController;
+    use App\Http\Controllers\UserController;
+    use App\Http\Controllers\RouteController;
+    use App\Http\Controllers\TreeviewController;
+    use App\Http\Controllers\UlasanBukuController;
 
 Route::middleware(['web', 'auth', 'preventBackAfterLogout'])->group(function () {
     Route::get('/dashboard', [RouteController::class, 'dashboard'])->name('home');
@@ -22,8 +22,6 @@ Route::middleware(['web', 'auth', 'preventBackAfterLogout'])->group(function () 
     Route::put('/profile/change-profile', [ProfileController::class, 'changeProfile'])->name('change-profile');
 
     Route::resource('users', UserController::class);
-    Route::resource('treeview', TreeviewController::class)->only('index');
-    Route::resource('profit', ProfitController::class)->only('index');
 
     Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
     Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
@@ -37,6 +35,7 @@ Route::middleware(['web', 'auth', 'preventBackAfterLogout'])->group(function () 
 
     Route::get('/peminjaman/exportPdf', [PeminjamanController::class, 'exportPdf'])->name('peminjaman.exportPdf');
     Route::get('/peminjam', [PeminjamanController::class, 'index'])->name('peminjaman.index');
+    Route::get('/peminjam/selesai', [PeminjamanController::class, 'selesai'])->name('peminjaman.selesai');
     Route::put('/peminjaman/approve/{peminjaman_id}', [PeminjamanController::class, 'approve'])->name('peminjaman.approve');
     Route::put('/peminjaman/reject/{peminjaman_id}', [PeminjamanController::class, 'reject'])->name('peminjaman.reject');
     Route::put('/peminjaman/return/{peminjaman_id}', [PeminjamanController::class, 'return'])->name('peminjaman.return');

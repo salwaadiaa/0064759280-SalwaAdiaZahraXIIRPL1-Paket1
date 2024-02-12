@@ -8769,7 +8769,7 @@ a.close.disabled
 
 .bg-primary
 {
-    background-color: #3F779D !important;
+    background-color: #C0A183 !important;
 }
 
 a.bg-primary:hover,
@@ -8873,7 +8873,7 @@ button.bg-dark:focus
 
 .bg-default
 {
-    background-color: #B4CCE0 !important;
+    background-color: #E0D6C6 !important;
 }
 
 a.bg-default:hover,
@@ -24153,7 +24153,7 @@ button.bg-lighter:focus
 
 .bg-gradient-primary
 {
-    background: linear-gradient(87deg, #499FA4 0, #3F779D 100%) !important;
+    background: linear-gradient(87deg, #E0D6C6 0, #C0A183 100%) !important;
 }
 
 .bg-gradient-secondary
@@ -24213,7 +24213,7 @@ button.bg-lighter:focus
 
 .bg-gradient-blue
 {
-    background: linear-gradient(87deg, #499FA4 0, #3F779D 100%) !important;
+    background: linear-gradient(87deg, #C0A183 0, #C0A183 100%) !important;
 }
 
 .bg-gradient-indigo
@@ -24509,7 +24509,7 @@ button.section-darker:focus
 
 .bg-gradient-primary
 {
-    background: linear-gradient(87deg, #499FA4 0, #3F779D 100%) !important;
+    background: linear-gradient(87deg, #C0A183 0, #C0A183 100%) !important;
 }
 
 .bg-gradient-secondary
@@ -24649,7 +24649,7 @@ button.section-darker:focus
 
 .fill-default
 {
-    fill: #B4CCE0;
+    fill: #E0D6C6;
 }
 
 .stroke-default

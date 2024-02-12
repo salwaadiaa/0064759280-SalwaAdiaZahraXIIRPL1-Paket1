@@ -63,7 +63,15 @@
                     <td>{{ $peminjaman->buku->judul }}</td>
                     <td>{{ $peminjaman->tanggal_peminjaman }}</td>
                     <td>{{ $peminjaman->tanggal_pengembalian }}</td>
-                    <td class="denda-column">Rp. {{ number_format($peminjaman->denda, 0, ',', '.') }}</td>
+                    <td class="denda-column">
+                        <?php
+                        $returnDate = new DateTime($peminjaman->tanggal_pengembalian);
+                        $today = new DateTime();
+                        $lateDays = max(0, $today->diff($returnDate)->days);
+                        $denda = $lateDays * 10000;
+                        echo 'Rp. ' . number_format($denda, 0, ',', '.');
+                        ?>
+                    </td>
                     <td>{{ $peminjaman->status_peminjaman }}</td>
                 </tr>
             @empty
@@ -74,30 +82,6 @@
         </tbody>
     </table>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var today = new Date();
 
-            document.querySelectorAll('.status-row').forEach(function (row) {
-                var returnDate = new Date(row.querySelector('td:nth-child(6)').innerText);
-                var lateDays = Math.max(0, Math.floor((today - returnDate) / (24 * 60 * 60 * 1000)));
-                var denda = lateDays * 10000;
-
-                var formattedDenda = 'Rp. ' + numberFormat(denda);
-
-                var dendaColumn = row.querySelector('.denda-column');
-                dendaColumn.innerText = formattedDenda;
-
-                if (lateDays > 0) {
-                    // Tampilkan denda jika ada keterlambatan
-                    dendaColumn.style.display = 'table-cell';
-                }
-            });
-
-            function numberFormat(value) {
-                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            }
-        });
-    </script>
 </body>
 </html>

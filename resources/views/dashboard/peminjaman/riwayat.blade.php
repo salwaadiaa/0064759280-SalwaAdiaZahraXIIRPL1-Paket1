@@ -32,8 +32,14 @@
 
 @section('title-header', 'Riwayat Peminjaman')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+@if (Auth::user()->role == 'admin')
+    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard Admin</a></li>
     <li class="breadcrumb-item active">Riwayat Peminjaman</li>
+@endif
+@if (Auth::user()->role == 'petugas')
+    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard Petugas</a></li>
+    <li class="breadcrumb-item active">Riwayat Peminjaman</li>
+@endif
 @endsection
 
 @section('content')
@@ -48,10 +54,11 @@
                         <label for="end_date" class="form-label">End Date:</label>
                         <input type="date" id="end_date" class="form-select">
                         <button class="btn" id="filterBtn">Filter</button>
-
+                        @if (Auth::user()->role == 'admin')
                         <button class="pdf-button" id="exportPdfBtn">
                         <i class="fas fa-file-pdf"></i> Ekspor PDF
                         </button>
+                        @endif
                     </div>
 
 

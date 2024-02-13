@@ -24151,6 +24151,10 @@ button.bg-lighter:focus
     background-color: #cbd3da !important;
 }
 
+.btn-custom {
+    background-color: #C0A183;
+}
+
 .bg-gradient-primary
 {
     background: linear-gradient(87deg, #E0D6C6 0, #C0A183 100%) !important;

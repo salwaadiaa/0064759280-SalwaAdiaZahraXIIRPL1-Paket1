@@ -32,8 +32,14 @@
 
 @section('title-header', 'Daftar Peminjaman')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+@if (Auth::user()->role == 'admin')
+    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard Admin</a></li>
     <li class="breadcrumb-item active">Daftar Peminjaman</li>
+@endif
+@if (Auth::user()->role == 'petugas')
+    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard Petugas</a></li>
+    <li class="breadcrumb-item active">Daftar Peminjaman</li>
+@endif
 @endsection
 
 @section('content')
@@ -43,18 +49,6 @@
                 <div class="card-header bg-transparent border-0 text-dark">
                     <h2 class="card-title h3">Daftar Peminjaman</h2>
                     <div class="mb-3">
-                    <!-- <label for="statusFilter" class="form-label">Filter Status:</label>
-                        <select id="statusFilter" class="form-select">
-                            <option value="">Semua</option>
-                            <option value="Dipinjam">Dipinjam</option>
-                            <option value="Sudah Kembali">Sudah Kembali</option>
-                        </select> -->
-
-                        <!-- @if(auth()->user()->role == 'admin')
-                            <button id="download-pdf" class="btn btn-danger pdf-button" onclick="downloadPdf()">
-                                <i class="fas fa-file-pdf"></i> PDF
-                            </button>
-                        @endif -->
                     </div>
 
                     <div class="table-responsive">
@@ -67,9 +61,10 @@
                                     <th>Buku</th>
                                     <th>Tanggal Peminjaman</th>
                                     <th>Tanggal Pengembalian</th>
-                                    <!-- <th>Denda</th> -->
                                     <th>Status</th>
+                                    @if (Auth::user()->role == 'petugas')
                                     <th>Aksi</th>
+                                    @endif
                                     
                                 </tr>
                             </thead>
@@ -82,8 +77,8 @@
                                     <td>{{ $peminjaman->buku->judul }}</td>
                                     <td>{{ $peminjaman->tanggal_peminjaman }}</td>
                                     <td>{{ $peminjaman->tanggal_pengembalian }}</td>
-                                    <!-- <td class="denda-column">Rp. {{ number_format($peminjaman->denda, 0, ',', '.') }}</td> -->
                                     <td>{{ $peminjaman->status_peminjaman }}</td>
+                                    @if (Auth::user()->role == 'petugas')
                                     <td>
                                         @if($peminjaman->status_peminjaman == 'Dipinjam')
                                             <form id="return-form-{{ $peminjaman->peminjaman_id }}" action="{{ route('peminjaman.return', $peminjaman->peminjaman_id) }}" method="POST" style="display: inline;">
@@ -94,6 +89,7 @@
                                             <div class="denda-column" style="display: none;">Rp. {{ number_format($peminjaman->denda, 0, ',', '.') }}</div>
                             @endif
                                     </td>
+                                    @endif
                                 </tr>
                             @empty
                                 <tr>
@@ -154,17 +150,7 @@
                 });
             });
 
-            // Event Listener untuk Export PDF
-            document.getElementById('exportPdf').addEventListener('click', function () {
-                var statusFilter = document.getElementById('statusFilter').value;
-                var url = '{{ route("peminjaman.exportPdf") }}';
-
-                if (statusFilter !== '') {
-                    url += '?status=' + statusFilter;
-                }
-
-                window.open(url, '_blank');
-            });
+            
         });
     </script>
      <script>
@@ -184,13 +170,34 @@
         if (lateDays > 0) {
             // Tampilkan denda jika ada keterlambatan
             dendaColumn.style.display = 'table-cell';
+
+            
+        var peminjamanId = row.dataset.peminjamanId;
+        calculateDendaOnServer(peminjamanId);
         }
     });
-
+    function calculateDendaOnServer(peminjamanId) {
+    // Lakukan pemanggilan AJAX ke server untuk menghitung dan menyimpan denda
+    $.ajax({
+        type: 'POST',
+        url: 'peminjaman/calculate-denda', // Sesuaikan dengan URL endpoint yang kamu miliki
+        data: {
+            peminjaman_id: peminjamanId,
+            _token: '{{ csrf_token() }}'
+        },
+        success: function (response) {
+            console.log('Denda berhasil dihitung dan disimpan di server');
+        },
+        error: function (error) {
+            console.error('Gagal menghitung dan menyimpan denda di server:', error);
+        }
+    });
+}
     function numberFormat(value) {
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
 });
+
 
     </script>
 @endsection

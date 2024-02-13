@@ -18,10 +18,6 @@ class PeminjamanController extends Controller
     public function index()
     {
         $peminjamans = Peminjaman::with(['user', 'buku'])->where('status_peminjaman', 'Dipinjam')->get();
-        
-        foreach ($peminjamans as $peminjaman) {
-            $peminjaman->calculateDenda();
-        }
 
         $peminjamanSelesai = Peminjaman::with(['user', 'buku'])->where('status_peminjaman', 'Sudah Kembali')->get();
 
@@ -45,8 +41,6 @@ class PeminjamanController extends Controller
         }
 
         $peminjaman->status_peminjaman = 'Sudah Kembali';
-
-        $lateFee = $peminjaman->calculateDenda();
         
         $peminjaman->save();
 
@@ -57,27 +51,46 @@ class PeminjamanController extends Controller
         return redirect()->route('peminjaman.index')->with('success', 'Buku sudah berhasil dikembalikan.');
     }
 
-    public function exportPdf(Request $request)
-    {
-        $startDate = $request->input('startDate');
-        $endDate = $request->input('endDate');
+    public function calculateDenda(Request $request)
+{
+    $peminjamanId = $request->input('peminjaman_id');
+
+    // Temukan peminjaman berdasarkan ID
+    $peminjaman = Peminjaman::find($peminjamanId);
+
+    // Panggil metode calculateDenda pada model
+    $peminjaman->calculateDenda();
+
+    return response()->json(['message' => 'Denda berhasil dihitung dan disimpan.']);
+}
+
+public function exportPdf(Request $request)
+{
+    $startDate = $request->input('startDate');
+    $endDate = $request->input('endDate');
     
-        // Ambil data berdasarkan rentang tanggal jika ada, jika tidak, ambil semua data
-        $query = Peminjaman::with(['user', 'buku'])
-            ->where('status_peminjaman', 'Sudah Kembali');
+    // Ambil data berdasarkan rentang tanggal jika ada, jika tidak, ambil semua data
+    $query = Peminjaman::with(['user', 'buku'])
+        ->where('status_peminjaman', 'Sudah Kembali');
     
-        if ($startDate && $endDate) {
-            $query->whereBetween('tanggal_peminjaman', [$startDate, $endDate]);
-        }
-    
-        $peminjamans = $query->get();
-    
-        $pdf = PDF::loadView('dashboard.peminjaman.export-pdf', compact('peminjamans', 'startDate', 'endDate'));
-        $pdf->setPaper('a4', 'landscape');
-    
-        $filename = 'peminjaman_' . ($startDate ?? 'all') . '_to_' . ($endDate ?? 'all') . '.pdf';
-    
-        return $pdf->download($filename);
+    if ($startDate && $endDate) {
+        $query->whereBetween('tanggal_peminjaman', [$startDate, $endDate]);
     }
+    
+    $peminjamans = $query->get();
+
+    // Hitung denda untuk setiap peminjaman
+    foreach ($peminjamans as $peminjaman) {
+        $peminjaman->calculateDenda();
+    }
+
+    $pdf = PDF::loadView('dashboard.peminjaman.export-pdf', compact('peminjamans', 'startDate', 'endDate'));
+    $pdf->setPaper('a4', 'landscape');
+    
+    $filename = 'peminjaman_' . ($startDate ?? 'all') . '_to_' . ($endDate ?? 'all') . '.pdf';
+    
+    return $pdf->download($filename);
+}
+
     
 }

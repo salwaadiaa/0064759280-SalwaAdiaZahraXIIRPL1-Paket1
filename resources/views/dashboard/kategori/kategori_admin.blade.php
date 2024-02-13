@@ -4,8 +4,14 @@
 
 @section('title-header', 'Manajemen Kategori Buku')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+@if (Auth::user()->role == 'admin')
+    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard Admin</a></li>
     <li class="breadcrumb-item active">Manajemen Kategori Buku</li>
+@endif
+@if (Auth::user()->role == 'petugas')
+    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard Petugas</a></li>
+    <li class="breadcrumb-item active">Manajemen Kategori Buku</li>
+@endif
 @endsection
 
 @if (Auth::user()->role == 'admin' || Auth::user()->role == 'petugas')

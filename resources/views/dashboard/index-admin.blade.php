@@ -1,10 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard Admin')
+@section('title', 'Dashboard Admin & Petugas')
 
-@section('title-header', 'Dashboard Admin')
+@section('title-header', 'Dashboard Admin & Petugas')
 @section('breadcrumb')
+@if (Auth::user()->role == 'admin')
     <li class="breadcrumb-item active">Dashboard Admin</li>
+@endif
+@if (Auth::user()->role == 'petugas')
+    <li class="breadcrumb-item active">Dashboard Petugas</li>
+@endif
 @endsection
 
 @section('content')

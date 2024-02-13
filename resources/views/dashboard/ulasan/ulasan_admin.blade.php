@@ -5,8 +5,14 @@
 
 @section('title-header', 'Riwayat Ulasan Buku - Admin')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('ulasan.admin') }}">Admin Dashboard</a></li>
+@if (Auth::user()->role == 'admin')
+    <li class="breadcrumb-item"><a href="{{ route('ulasan.admin') }}">Dashboard Admin</a></li>
     <li class="breadcrumb-item active">Riwayat Ulasan Buku</li>
+@endif
+@if (Auth::user()->role == 'petugas')
+    <li class="breadcrumb-item"><a href="{{ route('ulasan.admin') }}">Dashboard Petugas</a></li>
+    <li class="breadcrumb-item active">Riwayat Ulasan Buku</li>
+@endif
 @endsection
 
 @section('content')
@@ -25,7 +31,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <button type="submit" class="btn btn-primary">Filter</button>
+                            <button type="submit" class="btn btn-custom">Filter</button>
                         </div>
                     </form>
                     <br>

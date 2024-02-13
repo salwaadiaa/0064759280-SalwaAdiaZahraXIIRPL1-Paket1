@@ -92,6 +92,10 @@
         flex: 1;
         margin-right: 15px; /* Sesuaikan dengan kebutuhan Anda */
     }
+    .btn-custom {
+        background-color: #C0A183;
+        /* Tambahkan properti CSS lain sesuai kebutuhan Anda */
+    }
 </style>
 
 <div class="row d-flex align-items-stretch">
@@ -115,7 +119,7 @@
             <div class="col-md-6 mx-auto">
                 <form class="d-flex" action="{{ route('user.buku.index') }}" method="GET">
                     <input class="form-control me-2" type="text" name="search" placeholder="Cari buku...">
-                    <button class="btn btn-outline-primary" type="submit">Cari</button>
+                    <button class="btn btn-outline-white" type="submit">Cari</button>
                 </form>
             </div>
         </div>
@@ -149,11 +153,11 @@
                             <div class="d-flex justify-content-center mt-2">
                                 <form action="{{ route('buku.ajukan-peminjaman', $buku->buku_id) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-success mx-1">
+                                    <button type="submit" class="btn btn-custom mx-1">
                                         <i class="fas fa-check"></i>
                                     </button>
                                 </form>
-                                <button type="button" class="btn btn-primary mx-2" data-toggle="modal" data-target="#detailBukuModal{{ $buku->buku_id }}">
+                                <button type="button" class="btn btn-custom mx-2" data-toggle="modal" data-target="#detailBukuModal{{ $buku->buku_id }}">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             </div>

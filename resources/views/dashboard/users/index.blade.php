@@ -3,7 +3,7 @@
 
 @section('title-header', 'Users')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard Admin</a></li>
     <li class="breadcrumb-item active">Users</li>
 @endsection
 

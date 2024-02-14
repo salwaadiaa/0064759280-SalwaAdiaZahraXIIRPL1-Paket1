@@ -21,7 +21,6 @@
                                     <th>No</th>
                                     <th>Judul Buku</th>
                                     <th>Penerbit</th>
-                                    <!-- Tambahkan kolom lain sesuai kebutuhan -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -30,7 +29,6 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $buku->judul }}</td>
                                         <td>{{ $buku->penerbit }}</td>
-                                        <!-- Tambahkan kolom lain sesuai kebutuhan -->
                                     </tr>
                                 @empty
                                     <tr>

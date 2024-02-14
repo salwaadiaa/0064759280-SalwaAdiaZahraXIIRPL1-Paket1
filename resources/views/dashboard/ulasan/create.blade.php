@@ -9,11 +9,9 @@
     <li class="breadcrumb-item active">Ulas Buku</li>
 @endsection
 
-@section('content')
 <style>
     .rating {
-        unicode-bidi: bidi-override;
-        direction: rtl;
+        display: inline-block;
     }
 
     .rating input {
@@ -21,28 +19,22 @@
     }
 
     .rating label {
-        font-size: 25px;
-        color: #ddd;
-        display: inline-block;
+        font-size: 30px;
+        color: #ccc;
         cursor: pointer;
     }
 
-    .rating label::before {
-        content: "\2605"; /* Unicode karakter bintang */
-        padding: 5px;
-        font-size: 25px;
-        color: #ddd;
-        display: block;
-        position: relative;
+    .rating label:before {
+        content: '\2605';
     }
 
-    .rating input:checked ~ label,
-    .rating label:hover,
-    .rating label:hover ~ label {
-        color: #f8ce0b;
+    .rating input:checked ~ label {
+        color: #ffcc00; /* Change this to the desired color when a star is selected */
     }
 </style>
 
+
+@section('content')
 <div class="row">
     <div class="col-12">
         <div class="card shadow">
@@ -59,13 +51,13 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="rating">Rating</label>
+                        <label for="rating">Rating</label> <br>
                         <div class="rating">
-                            <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5 star"></label>
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5 stars"></label>
                             <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 stars"></label>
                             <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 stars"></label>
                             <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 stars"></label>
-                            <input type="radio" id="star1" name="rating" value="1"><label for="star5" title="1 stars"></label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 stars"></label>
                         </div>
                         @error('rating')
                             <div class="d-block invalid-feedback">{{ $message }}</div>
@@ -77,35 +69,5 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const stars = document.querySelectorAll('.rating input');
-
-        stars.forEach(function (star) {
-            star.addEventListener('change', function () {
-                const rating = this.value;
-                resetStarColors();
-                highlightStars(rating);
-            });
-        });
-
-        function resetStarColors() {
-            stars.forEach(function (star) {
-                const label = star.nextElementSibling;
-                label.style.color = '#ddd';
-            });
-        }
-
-        function highlightStars(count) {
-            for (let i = 1; i <= count; i++) {
-                const star = document.getElementById(`star${i}`);
-                if (star) {
-                    const label = star.nextElementSibling;
-                    label.style.color = '#f8ce0b';
-                }
-            }
-        }
-    });
-</script>
 @endsection
+

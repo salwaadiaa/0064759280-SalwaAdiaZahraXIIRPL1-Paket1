@@ -1,6 +1,6 @@
 Tutorial installasi:
 
-1. git clone https://github.com/salwaadiaa/template-basic.git
+1. git clone https://github.com/salwaadiaa/0064759280-SalwaAdiaZahraXIIRPL1-Paket1.git
 2. composer install / composer update
 3. npm install 
 4. npm run dev

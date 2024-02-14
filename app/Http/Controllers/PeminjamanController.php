@@ -51,19 +51,6 @@ class PeminjamanController extends Controller
         return redirect()->route('peminjaman.index')->with('success', 'Buku sudah berhasil dikembalikan.');
     }
 
-    public function calculateDenda(Request $request)
-{
-    $peminjamanId = $request->input('peminjaman_id');
-
-    // Temukan peminjaman berdasarkan ID
-    $peminjaman = Peminjaman::find($peminjamanId);
-
-    // Panggil metode calculateDenda pada model
-    $peminjaman->calculateDenda();
-
-    return response()->json(['message' => 'Denda berhasil dihitung dan disimpan.']);
-}
-
 public function exportPdf(Request $request)
 {
     $startDate = $request->input('startDate');
@@ -78,11 +65,6 @@ public function exportPdf(Request $request)
     }
     
     $peminjamans = $query->get();
-
-    // Hitung denda untuk setiap peminjaman
-    foreach ($peminjamans as $peminjaman) {
-        $peminjaman->calculateDenda();
-    }
 
     $pdf = PDF::loadView('dashboard.peminjaman.export-pdf', compact('peminjamans', 'startDate', 'endDate'));
     $pdf->setPaper('a4', 'landscape');

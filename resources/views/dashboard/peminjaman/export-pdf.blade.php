@@ -67,9 +67,10 @@
                         <?php
                         $returnDate = new DateTime($peminjaman->tanggal_pengembalian);
                         $today = new DateTime();
-                        $lateDays = max(0, $today->diff($returnDate)->days);
+                        $lateDays = max(0, $returnDate->diff($today)->format('%r%a'));
                         $denda = $lateDays * 10000;
                         echo 'Rp. ' . number_format($denda, 0, ',', '.');
+                        
                         ?>
                     </td>
                     <td>{{ $peminjaman->status_peminjaman }}</td>

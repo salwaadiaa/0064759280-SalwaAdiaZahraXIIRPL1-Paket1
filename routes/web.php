@@ -40,7 +40,6 @@ Route::middleware(['web', 'auth', 'preventBackAfterLogout'])->group(function () 
     Route::put('/peminjaman/approve/{peminjaman_id}', [PeminjamanController::class, 'approve'])->name('peminjaman.approve');
     Route::put('/peminjaman/reject/{peminjaman_id}', [PeminjamanController::class, 'reject'])->name('peminjaman.reject');
     Route::put('/peminjaman/return/{peminjaman_id}', [PeminjamanController::class, 'return'])->name('peminjaman.return');
-    Route::post('peminjaman/calculate-denda', 'PeminjamanController@calculateDenda');
 
     Route::get('/ulasan', [UlasanBukuController::class, 'index'])->name('ulasan.index')->middleware(['auth', 'roles:user']);
     Route::get('/ulasan/create/{peminjamanId}', [UlasanBukuController::class, 'create'])->name('ulasan.create')->middleware(['auth', 'roles:user']);

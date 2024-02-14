@@ -18,4 +18,4 @@ Login untuk user:
 user@mail.com
 password
 
-SELAMAT NGODING!
+SEMANGAT, JANGAN MUAK

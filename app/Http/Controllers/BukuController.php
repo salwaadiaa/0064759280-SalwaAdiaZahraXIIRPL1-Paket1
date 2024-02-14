@@ -126,29 +126,33 @@ class BukuController extends Controller
     public function ajukanPeminjaman($bukuId)
     {
         $buku = Buku::find($bukuId);
+    
         if (!$buku) {
             return redirect()->back()->with('error', 'Buku tidak ditemukan');
         }
+    
         if ($buku->stok <= 0) {
             return redirect()->back()->with('error', 'Stok buku habis. Tidak dapat melakukan peminjaman.');
         }
+    
         $buku->stok--;
         $buku->save();
-
+    
         $tanggalPeminjaman = now();
         $tanggalPengembalian = clone $tanggalPeminjaman;
         $tanggalPengembalian->addDays(5);
-
-
-        Peminjaman::create([
+    
+        $peminjaman = Peminjaman::create([
             'user_id' => auth()->id(),
             'buku_id' => $bukuId,
             'tanggal_peminjaman' => $tanggalPeminjaman,
-            'tanggal_pengembalian' => $tanggalPengembalian,
+            'tanggal_pengembalian' => clone $tanggalPengembalian,
             'status_peminjaman' => 'Dipinjam',
         ]);
-
+    
+    
         return redirect()->back()->with('success', 'Peminjaman berhasil dilakukan.');
     }
+    
 
 }

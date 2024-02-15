@@ -59,5 +59,5 @@ Route::middleware(['web', 'auth', 'preventBackAfterLogout'])->group(function () 
     Route::delete('/admin/kategori/{kategori_id}', [KategoriBukuController::class, 'destroy'])->name('kategori.destroy')->middleware(['auth', 'roles:admin,petugas']);
 });
 
-Route::get('/', [AuthenticatedSessionController::class, 'create']);
+Route::get('/', [BukuController::class, 'landing']);
 require __DIR__.'/auth.php';

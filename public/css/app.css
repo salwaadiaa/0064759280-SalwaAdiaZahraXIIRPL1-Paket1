@@ -763,6 +763,9 @@ select {
 .table {
   display: table;
 }
+.table-cell {
+  display: table-cell;
+}
 .table-row {
   display: table-row;
 }
@@ -832,6 +835,9 @@ select {
 .shrink-0 {
   flex-shrink: 0;
 }
+.border-collapse {
+  border-collapse: collapse;
+}
 .origin-top-left {
   transform-origin: top left;
 }
@@ -899,6 +905,9 @@ select {
 }
 .rounded-md {
   border-radius: 0.375rem;
+}
+.rounded {
+  border-radius: 0.25rem;
 }
 .rounded-l-md {
   border-top-left-radius: 0.375rem;

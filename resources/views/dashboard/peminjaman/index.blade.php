@@ -61,11 +61,12 @@
                                     <th>Buku</th>
                                     <th>Tanggal Peminjaman</th>
                                     <th>Tanggal Pengembalian</th>
+                                    <th>Denda</th>
                                     <th>Status</th>
                                     @if (Auth::user()->role == 'petugas')
                                     <th>Aksi</th>
                                     @endif
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,6 +78,7 @@
                                     <td>{{ $peminjaman->buku->judul }}</td>
                                     <td>{{ $peminjaman->tanggal_peminjaman }}</td>
                                     <td>{{ $peminjaman->tanggal_pengembalian }}</td>
+                                    <td class="denda-column" style="display: none;">>Rp. {{ number_format($peminjaman->denda, 0, ',', '.') }}</td>
                                     <td>{{ $peminjaman->status_peminjaman }}</td>
                                     @if (Auth::user()->role == 'petugas')
                                     <td>
@@ -86,7 +88,7 @@
                                                 @method('PUT')
                                                 <button type="button" class="btn btn-primary" onclick="confirmReturn('{{ $peminjaman->peminjaman_id }}')">Selesai</button>
                                             </form>
-                                            <div class="denda-column" style="display: none;">Rp. {{ number_format($peminjaman->denda, 0, ',', '.') }}</div>
+                                            {{-- <div class="denda-column" style="display: none;">Rp. {{ number_format($peminjaman->denda, 0, ',', '.') }}</div> --}}
                             @endif
                                     </td>
                                     @endif
@@ -150,7 +152,7 @@
                 });
             });
 
-            
+
         });
     </script>
      <script>
@@ -171,7 +173,7 @@
             // Tampilkan denda jika ada keterlambatan
             dendaColumn.style.display = 'table-cell';
 
-            
+
         var peminjamanId = row.dataset.peminjamanId;
         calculateDendaOnServer(peminjamanId);
         }

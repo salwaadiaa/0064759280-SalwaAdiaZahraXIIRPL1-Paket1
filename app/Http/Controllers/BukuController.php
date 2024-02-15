@@ -11,14 +11,19 @@ use App\Models\KoleksiPribadi;
 
 class BukuController extends Controller
 {
+    public function landing()
+    {
+        $bukus = Buku::with('ulasans')->limit(12)->get(); // Mengambil 12 buku pertama beserta ulasannya
+        return view('layouts.landingpage', compact('bukus'));
+    }
     //menampilkan daftar buku di halaman admin dan petugas
     public function index()
     {
-        $bukus = Buku::paginate(10); 
+        $bukus = Buku::paginate(10);
         return view('dashboard.buku.index', compact('bukus'));
     }
 
-    //menampilkan daftar buku di halaman user, dan menambahkan fungsi search berdasarkan judul buku dan dapat memilih kategori buku 
+    //menampilkan daftar buku di halaman user, dan menambahkan fungsi search berdasarkan judul buku dan dapat memilih kategori buku
     public function bukuIndex(Request $request)
 {
     $search = $request->input('search');
@@ -34,7 +39,7 @@ class BukuController extends Controller
             return $query;
         })
         ->where('judul', 'like', "%$search%")
-        ->where('stok', '>', 0) 
+        ->where('stok', '>', 0)
         ->paginate(10);
 
     return view('dashboard.buku-user.index', compact('bukus', 'kategoris', 'kategori_id'));
@@ -83,7 +88,7 @@ class BukuController extends Controller
     public function edit($buku_id)
 {
     $buku = Buku::findOrFail($buku_id);
-    $kategoriBukus = KategoriBuku::all(); 
+    $kategoriBukus = KategoriBuku::all();
     return view('dashboard.buku.edit', compact('buku', 'kategoriBukus'));
 }
 
@@ -126,22 +131,22 @@ class BukuController extends Controller
     public function ajukanPeminjaman($bukuId)
     {
         $buku = Buku::find($bukuId);
-    
+
         if (!$buku) {
             return redirect()->back()->with('error', 'Buku tidak ditemukan');
         }
-    
+
         if ($buku->stok <= 0) {
             return redirect()->back()->with('error', 'Stok buku habis. Tidak dapat melakukan peminjaman.');
         }
-    
+
         $buku->stok--;
         $buku->save();
-    
+
         $tanggalPeminjaman = now();
         $tanggalPengembalian = clone $tanggalPeminjaman;
         $tanggalPengembalian->addDays(5);
-    
+
         $peminjaman = Peminjaman::create([
             'user_id' => auth()->id(),
             'buku_id' => $bukuId,
@@ -149,10 +154,10 @@ class BukuController extends Controller
             'tanggal_pengembalian' => clone $tanggalPengembalian,
             'status_peminjaman' => 'Dipinjam',
         ]);
-    
-    
+
+
         return redirect()->back()->with('success', 'Peminjaman berhasil dilakukan.');
     }
-    
+
 
 }

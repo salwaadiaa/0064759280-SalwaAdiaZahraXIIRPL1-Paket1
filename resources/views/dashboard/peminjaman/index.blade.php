@@ -61,7 +61,7 @@
                                     <th>Buku</th>
                                     <th>Tanggal Peminjaman</th>
                                     <th>Tanggal Pengembalian</th>
-                                    <th>Denda</th>
+                                    <th id="dendaColumn">Denda</th>
                                     <th>Status</th>
                                     @if (Auth::user()->role == 'petugas')
                                     <th>Aksi</th>
@@ -156,7 +156,7 @@
         });
     </script>
      <script>
-       document.addEventListener('DOMContentLoaded', function () {
+      document.addEventListener('DOMContentLoaded', function () {
     var today = new Date();
 
     document.querySelectorAll('.status-row').forEach(function (row) {
@@ -167,39 +167,42 @@
         var formattedDenda = 'Rp. ' + numberFormat(denda);
 
         var dendaColumn = row.querySelector('.denda-column');
+
+        // Tampilkan nilai denda, bahkan jika tidak ada keterlambatan (nilai denda = 0)
         dendaColumn.innerText = formattedDenda;
+        dendaColumn.style.display = 'table-cell';
 
-        if (lateDays > 0) {
-            // Tampilkan denda jika ada keterlambatan
-            dendaColumn.style.display = 'table-cell';
-
+        // Ubah nilai denda menjadi 0 jika tidak ada keterlambatan
+        if (lateDays === 0) {
+            dendaColumn.innerText = 'Rp. 0';
+        }
 
         var peminjamanId = row.dataset.peminjamanId;
         calculateDendaOnServer(peminjamanId);
-        }
     });
+
     function calculateDendaOnServer(peminjamanId) {
-    // Lakukan pemanggilan AJAX ke server untuk menghitung dan menyimpan denda
-    $.ajax({
-        type: 'POST',
-        url: 'peminjaman/calculate-denda', // Sesuaikan dengan URL endpoint yang kamu miliki
-        data: {
-            peminjaman_id: peminjamanId,
-            _token: '{{ csrf_token() }}'
-        },
-        success: function (response) {
-            console.log('Denda berhasil dihitung dan disimpan di server');
-        },
-        error: function (error) {
-            console.error('Gagal menghitung dan menyimpan denda di server:', error);
-        }
-    });
-}
+        // Lakukan pemanggilan AJAX ke server untuk menghitung dan menyimpan denda
+        $.ajax({
+            type: 'POST',
+            url: 'peminjaman/calculate-denda', // Sesuaikan dengan URL endpoint yang kamu miliki
+            data: {
+                peminjaman_id: peminjamanId,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function (response) {
+                console.log('Denda berhasil dihitung dan disimpan di server');
+            },
+            error: function (error) {
+                console.error('Gagal menghitung dan menyimpan denda di server:', error);
+            }
+        });
+    }
+
     function numberFormat(value) {
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
 });
-
 
     </script>
 @endsection

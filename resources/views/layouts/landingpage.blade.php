@@ -4,13 +4,13 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Appland Bootstrap Template - Index</title>
+    
+  <title>SAZLibrary</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="{{ asset('/assets/img/brand/favicon.png') }}" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -147,11 +147,10 @@
                             </div>
                         </div>
                     @empty
-                        <!-- Tidak ada ulasan untuk buku ini -->
+                    
                     @endforelse
                 @empty
-                    <!-- Tidak ada buku yang memiliki ulasan -->
-                    <p>Tidak ada ulasan buku.</p>
+                    <!--  -->
                 @endforelse
             </div>
             <div class="swiper-pagination"></div>

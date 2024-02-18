@@ -78,7 +78,7 @@
                                     <td>{{ $peminjaman->buku->judul }}</td>
                                     <td>{{ $peminjaman->tanggal_peminjaman }}</td>
                                     <td>{{ $peminjaman->tanggal_pengembalian }}</td>
-                                    <td class="denda-column" style="display: none;">>Rp. {{ number_format($peminjaman->denda, 0, ',', '.') }}</td>
+                                    <td class="denda-column">Rp. {{ number_format($peminjaman->denda, 0, ',', '.') }}</td>
                                     <td>{{ $peminjaman->status_peminjaman }}</td>
                                     @if (Auth::user()->role == 'petugas')
                                     <td>
@@ -111,14 +111,6 @@
 @section('script')
     @parent
     <script>
-
-        $(document).ready(function() {
-            $('#download-pdf').click(function() {
-                var selectedStatus = $('#statusFilter').val();
-                window.location.href = '/peminjaman/exportPdf?status=' + selectedStatus;
-            });
-        });
-
         function confirmReturn(peminjaman_id) {
             Swal.fire({
                 title: 'Konfirmasi Pengembalian',
@@ -131,29 +123,10 @@
                 cancelButtonText: 'Belum'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Jika dikonfirmasi, kirimkan formulir pengembalian
                     $(`#return-form-${peminjaman_id}`).submit();
                 }
             });
         }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // Event Listener untuk Filter Status
-            document.getElementById('statusFilter').addEventListener('change', function () {
-                var selectedStatus = this.value;
-                var tableRows = document.querySelectorAll('.status-row');
-
-                tableRows.forEach(function (row) {
-                    if (selectedStatus === '' || row.getAttribute('data-status') === selectedStatus) {
-                        row.style.display = 'table-row';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-            });
-
-
-        });
     </script>
      <script>
       document.addEventListener('DOMContentLoaded', function () {
@@ -176,28 +149,7 @@
         if (lateDays === 0) {
             dendaColumn.innerText = 'Rp. 0';
         }
-
-        var peminjamanId = row.dataset.peminjamanId;
-        calculateDendaOnServer(peminjamanId);
     });
-
-    function calculateDendaOnServer(peminjamanId) {
-        // Lakukan pemanggilan AJAX ke server untuk menghitung dan menyimpan denda
-        $.ajax({
-            type: 'POST',
-            url: 'peminjaman/calculate-denda', // Sesuaikan dengan URL endpoint yang kamu miliki
-            data: {
-                peminjaman_id: peminjamanId,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function (response) {
-                console.log('Denda berhasil dihitung dan disimpan di server');
-            },
-            error: function (error) {
-                console.error('Gagal menghitung dan menyimpan denda di server:', error);
-            }
-        });
-    }
 
     function numberFormat(value) {
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');

@@ -63,16 +63,7 @@
                     <td>{{ $peminjaman->buku->judul }}</td>
                     <td>{{ $peminjaman->tanggal_peminjaman }}</td>
                     <td>{{ $peminjaman->tanggal_pengembalian }}</td>
-                    <td class="denda-column">
-                        <?php
-                        $returnDate = new DateTime($peminjaman->tanggal_pengembalian);
-                        $today = new DateTime();
-                        $lateDays = max(0, $returnDate->diff($today)->format('%r%a'));
-                        $denda = $lateDays * 10000;
-                        echo 'Rp. ' . number_format($denda, 0, ',', '.');
-                        
-                        ?>
-                    </td>
+                    <td>Rp. {{ number_format($peminjaman->denda, 0, ',', '.') }}</td>
                     <td>{{ $peminjaman->status_peminjaman }}</td>
                 </tr>
             @empty

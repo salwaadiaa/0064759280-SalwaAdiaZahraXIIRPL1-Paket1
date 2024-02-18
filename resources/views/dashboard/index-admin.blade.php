@@ -4,12 +4,12 @@
 
 @section('title-header', 'Dashboard Admin & Petugas')
 @section('breadcrumb')
-@if (Auth::user()->role == 'admin')
-    <li class="breadcrumb-item active">Dashboard Admin</li>
-@endif
-@if (Auth::user()->role == 'petugas')
-    <li class="breadcrumb-item active">Dashboard Petugas</li>
-@endif
+    @if (Auth::user()->role == 'admin')
+        <li class="breadcrumb-item active">Dashboard Admin</li>
+    @endif
+    @if (Auth::user()->role == 'petugas')
+        <li class="breadcrumb-item active">Dashboard Petugas</li>
+    @endif
 @endsection
 
 @section('content')
@@ -46,27 +46,22 @@
         </div>
     </div>
 
-    <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         // Data total peminjaman per tanggal
         var dataPerTanggal = {!! $peminjamanPerTanggal !!};
 
-        // Inisialisasi canvas chart
         var ctx = document.getElementById('peminjamanChart').getContext('2d');
 
-        // Buat array untuk label tanggal dan data peminjaman
         var labels = [];
         var data = [];
 
-        // Loop melalui data per tanggal untuk mengisi label tanggal dan data peminjaman
         for (var i = 0; i < dataPerTanggal.length; i++) {
             labels.push(dataPerTanggal[i].tanggal);
             data.push(dataPerTanggal[i].total);
         }
 
-        // Buat grafik garis
         var peminjamanChart = new Chart(ctx, {
             type: 'line',
             data: {

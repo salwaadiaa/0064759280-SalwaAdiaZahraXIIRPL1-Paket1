@@ -38,6 +38,12 @@ class Buku extends Model
         return $this->hasMany(Peminjaman::class);
     }
 
+    public function peminjamans()
+{
+    return $this->hasMany(Peminjaman::class, 'buku_id');
+}
+
+
     public function hasUlasan()
     {
         return $this->ulasan_bukus()->exists();

@@ -15,18 +15,27 @@ class RouteController extends Controller
     $user = auth()->user();
 
     if ($user->role == 'user') {
-        // Jika pengguna adalah "user," arahkan ke tampilan dashboard pengguna
-        return view('dashboard.index-user', compact('user'));
+        $peminjamans = Peminjaman::with(['user', 'buku'])
+            ->where('user_id', $user->user_id)
+            ->where('status_peminjaman', 'Dipinjam')
+            ->get();
+
+        return view('dashboard.index-user', compact('user', 'peminjamans'));
     } else {
+        $totalDenda = Peminjaman::where('status_peminjaman', 'Sudah Kembali')
+            ->sum('denda');
+
         $peminjamanPerTanggal = Peminjaman::select(DB::raw('DATE(tanggal_peminjaman) as tanggal'), DB::raw('COUNT(*) as total'))
-                                ->groupBy('tanggal')
-                                ->get();
+            ->groupBy('tanggal')
+            ->get();
+
         $totalBuku = Buku::count();
         $totalKategoriBuku = KategoriBuku::count();
         $totalPeminjaman = Peminjaman::count();
 
-        return view('dashboard.index-admin', compact('totalBuku', 'totalKategoriBuku', 'totalPeminjaman', 'peminjamanPerTanggal'));
+        return view('dashboard.index-admin', compact('totalBuku', 'totalKategoriBuku', 'totalPeminjaman', 'peminjamanPerTanggal', 'totalDenda'));
     }
 }
 
+    
 }

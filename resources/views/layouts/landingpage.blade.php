@@ -103,24 +103,24 @@
         </div>
 
         <div class="container-fluid" data-aos="fade-up">
-            <div class="gallery-slider swiper">
-                <div class="swiper-wrapper">
-                    @forelse ($bukus as $buku)
-                        <div class="swiper-slide">
-                            <a href="{{ asset('uploads/images/' . $buku->gambar) }}" class="gallery-lightbox" data-gall="gallery-carousel">
-                                @if($buku->gambar)
-                                    <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="img-fluid" alt="{{ $buku->judul }}">
-                                @endif
-                                <h6 style="text-align: center;">{{ $buku->judul }}</h6>
-                            </a>
-                        </div>
-                    @empty
-                        <p>Tidak ada data buku.</p>
-                    @endforelse
-                </div>
-                <div class="swiper-pagination"></div>
+        <div class="gallery-slider swiper">
+            <div class="swiper-wrapper">
+                @forelse ($bukus as $buku)
+                    <div class="swiper-slide">
+                        <a href="{{ asset('uploads/images/' . $buku->gambar) }}" class="gallery-lightbox" data-gall="gallery-carousel">
+                            @if($buku->gambar)
+                                <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="img-fluid gallery-image" alt="{{ $buku->judul }}">
+                            @endif
+                            <h6 style="text-align: center;">{{ $buku->judul }}</h6>
+                        </a>
+                    </div>
+                @empty
+                    <p>Tidak ada data buku.</p>
+                @endforelse
             </div>
+            <div class="swiper-pagination"></div>
         </div>
+    </div>
     </section><!-- End Gallery Section -->
 
    <!-- ======= Testimonials Section ======= -->

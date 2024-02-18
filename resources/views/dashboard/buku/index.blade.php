@@ -30,14 +30,14 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Id Buku</th>
+                                    <th>ID Buku</th>
+                                    <th>Gambar</th>
                                     <th>Judul</th>
+                                    <th>Kategori</th>
                                     <th>Penulis</th>
                                     <th>Penerbit</th>
                                     <th>Tahun Terbit</th>
                                     <th>Stok Buku</th>
-                                    <th>Kategori</th>
-                                    <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -46,12 +46,6 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $buku->buku_id }}</td>
-                                        <td>{{ $buku->judul }}</td>
-                                        <td>{{ $buku->penulis }}</td>
-                                        <td>{{ $buku->penerbit }}</td>
-                                        <td>{{ $buku->tahun_terbit }}</td>
-                                        <td>{{ $buku->stok }}</td>
-                                        <td>{{ $buku->kategoriBuku->nama_kategori ?? '-' }}</td>
                                         <td>
                                         @if($buku->gambar)
                                             <img src="{{ asset('uploads/images/' . $buku->gambar) }}" alt="{{ $buku->judul }}" style="max-width: 50px; max-height: 50px;">
@@ -59,6 +53,12 @@
                                             No Image
                                         @endif
                                         </td>
+                                        <td>{{ $buku->judul }}</td>
+                                        <td>{{ $buku->kategoriBuku->nama_kategori ?? '-' }}</td>
+                                        <td>{{ $buku->penulis }}</td>
+                                        <td>{{ $buku->penerbit }}</td>
+                                        <td>{{ $buku->tahun_terbit }}</td>
+                                        <td>{{ $buku->stok }}</td>   
                                         <td>
                                             <a href="{{ route('buku.edit', $buku->buku_id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                                             

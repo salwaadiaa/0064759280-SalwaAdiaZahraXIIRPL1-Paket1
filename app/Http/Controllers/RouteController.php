@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Buku;
 use App\Models\KategoriBuku;
 use App\Models\Peminjaman;
+use App\Models\UlasanBuku;
 use Illuminate\Support\Facades\DB;
 
 class RouteController extends Controller
@@ -32,10 +33,12 @@ class RouteController extends Controller
         $totalBuku = Buku::count();
         $totalKategoriBuku = KategoriBuku::count();
         $totalPeminjaman = Peminjaman::count();
+        $jumlahUlasan = UlasanBuku::count();
 
-        return view('dashboard.index-admin', compact('totalBuku', 'totalKategoriBuku', 'totalPeminjaman', 'peminjamanPerTanggal', 'totalDenda'));
+        return view('dashboard.index-admin', compact('totalBuku', 'totalKategoriBuku', 'totalPeminjaman', 'peminjamanPerTanggal', 'totalDenda', 'jumlahUlasan'));
     }
 }
+
 
     
 }

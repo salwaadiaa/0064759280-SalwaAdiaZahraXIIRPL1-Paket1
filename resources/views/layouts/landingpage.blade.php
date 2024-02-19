@@ -28,14 +28,37 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <style>
+    .card {
+        width: 200px; /* Lebar tetap card */
+        height: 300px; /* Tinggi tetap card */
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 0 auto;
+        display: flex; /* Gunakan flexbox untuk tata letak */
+        flex-direction: column; /* Atur orientasi ke kolom */
+        justify-content: center; /* Pusatkan vertikal */
+        align-items: center; /* Pusatkan horizontal */
+        transition: transform 0.3s ease-in-out;
+    }
 
-  <!-- =======================================================
-  * Template Name: Appland
-  * Updated: Jan 29 2024 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/free-bootstrap-app-landing-page-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 70%; /* Sesuaikan tinggi gambar sesuai kebutuhan */
+        object-fit: cover;
+    }
+
+    .card-title {
+        margin-top: 10px;
+        text-align: center; /* Pusatkan teks judul di dalam card */
+    }
+</style>
+
 </head>
 
 <body>
@@ -106,14 +129,17 @@
         <div class="gallery-slider swiper">
             <div class="swiper-wrapper">
                 @forelse ($bukus as $buku)
-                    <div class="swiper-slide">
-                        <a href="{{ asset('uploads/images/' . $buku->gambar) }}" class="gallery-lightbox" data-gall="gallery-carousel">
-                            @if($buku->gambar)
-                                <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="img-fluid gallery-image" alt="{{ $buku->judul }}">
-                            @endif
-                            <h6 style="text-align: center;">{{ $buku->judul }}</h6>
-                        </a>
-                    </div>
+                <div class="swiper-slide">
+    <div class="card">
+        <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="card-img-top" alt="{{ $buku->judul }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ $buku->judul }}</h5>
+            <!-- tambahkan informasi lainnya seperti pengarang, genre, dll sesuai kebutuhan -->
+        </div>
+    </div>
+</div>
+
+
                 @empty
                     <p>Tidak ada data buku.</p>
                 @endforelse

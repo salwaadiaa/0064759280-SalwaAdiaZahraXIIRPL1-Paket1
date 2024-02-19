@@ -17,7 +17,8 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
-        $peminjamans = Peminjaman::with(['user', 'buku'])->where('status_peminjaman', 'Dipinjam')->get();
+        
+        $peminjamans = Peminjaman::with(['user', 'buku'])->where('status_peminjaman', 'Dipinjam')->paginate(10);
 
         $peminjamanSelesai = Peminjaman::with(['user', 'buku'])->where('status_peminjaman', 'Sudah Kembali')->get();
 
@@ -26,10 +27,10 @@ class PeminjamanController extends Controller
 
     public function selesai()
     {
-        $peminjamanSelesai = Peminjaman::with(['user', 'buku'])->where('status_peminjaman', 'Sudah Kembali')->get();
-
+        $peminjamanSelesai = Peminjaman::with(['user', 'buku'])->where('status_peminjaman', 'Sudah Kembali')->paginate(10);
+    
         return view('dashboard.peminjaman.riwayat', compact('peminjamanSelesai'));
-    }
+    }    
 
     public function return(Request $request, $peminjaman_id)
     {
@@ -106,7 +107,5 @@ class PeminjamanController extends Controller
         $filename = 'peminjaman_' . ($startDate ?? 'all') . '_to_' . ($endDate ?? 'all') . '.pdf';
         
         return $pdf->download($filename);
-    }
-
-    
+    }   
 }

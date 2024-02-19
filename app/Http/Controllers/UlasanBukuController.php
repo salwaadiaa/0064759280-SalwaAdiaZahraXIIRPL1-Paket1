@@ -14,9 +14,9 @@ class UlasanBukuController extends Controller
     {
         $peminjamans = Peminjaman::where('user_id', auth()->user()->user_id)
         ->where('status_peminjaman', 'Sudah Kembali')
-        ->doesntHave('ulasan') // Filter hanya yang belum diulas
+        ->doesntHave('ulasan')
         ->with(['user', 'buku', 'ulasan'])
-        ->get();
+        ->paginate(10);
 
     return view('dashboard.ulasan.index', compact('peminjamans'));
     }
@@ -79,15 +79,19 @@ class UlasanBukuController extends Controller
         return view('dashboard.ulasan.buku_di_ulas', compact('bukusDiUlas'));
     }
 
-    public function ulasanAdmin(Request $request)
+   public function ulasanAdmin(Request $request)
 {
-    $ulasans = UlasanBuku::with(['user', 'buku'])->get();
-    $listJudulBuku = Buku::select('judul')->distinct()->get();
+    $ulasans = UlasanBuku::with(['user', 'buku']);
 
     if ($request->has('judul')) {
         $judul = $request->input('judul');
-        $ulasans = $ulasans->where('buku.judul', $judul);
+        $ulasans->whereHas('buku', function ($query) use ($judul) {
+            $query->where('judul', $judul);
+        });
     }
+
+    $ulasans = $ulasans->paginate(10);
+    $listJudulBuku = Buku::select('judul')->distinct()->get();
 
     return view('dashboard.ulasan.ulasan_admin', compact('ulasans', 'listJudulBuku'));
 }

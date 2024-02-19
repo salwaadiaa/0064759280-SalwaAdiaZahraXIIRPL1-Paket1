@@ -62,6 +62,26 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                                @if($ulasans->currentPage() > 1)
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $ulasans->previousPageUrl() }}" tabindex="-1">Previous</a>
+                                    </li>
+                                @endif
+
+                                @for ($i = max(1, $ulasans->currentPage() - 2); $i <= min($ulasans->currentPage() + 2, $ulasans->lastPage()); $i++)
+                                    <li class="page-item {{ ($i == $ulasans->currentPage()) ? 'active' : '' }}">
+                                        <a class="page-link" href="{{ $ulasans->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+
+                                @if($ulasans->currentPage() < $ulasans->lastPage())
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $ulasans->nextPageUrl() }}">Next</a>
+                                    </li>
+                                @endif
+                            </ul>
                     </div>
                 </div>
             </div>

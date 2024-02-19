@@ -45,7 +45,7 @@ Route::middleware(['web', 'auth', 'preventBackAfterLogout'])->group(function () 
     Route::get('/ulasan/create/{peminjamanId}', [UlasanBukuController::class, 'create'])->name('ulasan.create')->middleware(['auth', 'roles:user']);
     Route::post('/ulasan-buku/store', [UlasanBukuController::class, 'store'])->name('ulasan.store')->middleware(['auth', 'roles:user']);
     Route::get('dashboard/ulasan/buku-di-ulas', [UlasanBukuController::class, 'bukuDiUlas'])->name('dashboard.ulasan.buku-di-ulas');
-    Route::get('/admin/ulasan', [UlasanBukuController::class, 'ulasanAdmin'])->name('ulasan.admin')->middleware(['auth', 'roles:admin,petugas']);
+    Route::get('/admin-petugas/ulasan', [UlasanBukuController::class, 'ulasanAdmin'])->name('ulasan.admin')->middleware(['auth', 'roles:admin,petugas']);
 
     Route::get('/dashboard/koleksipribadi', [KoleksiPribadiController::class, 'index'])->name('koleksipribadi.index')->middleware(['auth', 'roles:user']);
     Route::delete('/koleksi/{koleksi_id}/hapus', [KoleksiPribadiController::class, 'hapus'])->name('koleksi.hapus')->middleware(['auth', 'roles:user']);

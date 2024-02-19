@@ -76,7 +76,7 @@
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                         </div>
                                         <input class="form-control" name="name" placeholder="Full Name" type="text"
                                             value="{{ old('name') }}">
@@ -90,7 +90,7 @@
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-bold"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                                         </div>
                                         <textarea class="form-control" name="alamat" placeholder="Alamat">{{ old('alamat') }}</textarea>
                                     </div>

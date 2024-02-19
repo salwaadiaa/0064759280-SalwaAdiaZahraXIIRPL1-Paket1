@@ -9,7 +9,7 @@ class KategoriBukuController extends Controller
 {
     public function indexAdmin()
     {
-        $kategoris = KategoriBuku::all();
+        $kategoris = KategoriBuku::orderBy('created_at', 'asc')->paginate(5);
         return view('dashboard.kategori.kategori_admin', compact('kategoris'));
     }
 

@@ -94,14 +94,36 @@
                                     <td colspan="7">Tidak ada data peminjaman.</td>
                                 </tr>
                             @endforelse
-                        </tbody>
-
+                            </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                                @if($peminjamanSelesai->currentPage() > 1)
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $peminjamanSelesai->previousPageUrl() }}" tabindex="-1">Previous</a>
+                                    </li>
+                                @endif
+
+                                @for ($i = max(1, $peminjamanSelesai->currentPage() - 2); $i <= min($peminjamanSelesai->currentPage() + 2, $peminjamanSelesai->lastPage()); $i++)
+                                    <li class="page-item {{ ($i == $peminjamanSelesai->currentPage()) ? 'active' : '' }}">
+                                        <a class="page-link" href="{{ $peminjamanSelesai->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+
+                                @if($peminjamanSelesai->currentPage() < $peminjamanSelesai->lastPage())
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $peminjamanSelesai->nextPageUrl() }}">Next</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+   
 @endsection
 
 @section('script')

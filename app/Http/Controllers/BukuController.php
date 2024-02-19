@@ -19,7 +19,7 @@ class BukuController extends Controller
     //menampilkan daftar buku di halaman admin dan petugas
     public function index()
     {
-        $bukus = Buku::paginate(10);
+        $bukus = Buku::orderBy('created_at', 'asc')->paginate(10);
         return view('dashboard.buku.index', compact('bukus'));
     }
 

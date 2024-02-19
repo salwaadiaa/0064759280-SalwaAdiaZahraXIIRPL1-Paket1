@@ -6,6 +6,7 @@ use App\Models\KoleksiPribadi;
 use App\Models\UlasanBuku;
 use App\Models\Buku;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KoleksiPribadiController extends Controller
 {
@@ -15,16 +16,24 @@ class KoleksiPribadiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-{
-    // Ambil buku yang sudah diulas
-    $bukusDiUlas = Buku::has('ulasans')->get();
-
-    // Ambil data lain yang diperlukan untuk tampilan
-    $koleksiPribadi = KoleksiPribadi::all();
-
-    // Kirim data ke tampilan
-    return view('dashboard.koleksipribadi.index', compact('koleksiPribadi', 'bukusDiUlas'));
-}
+    {
+        // Mendapatkan user yang sedang login
+        $user = Auth::user();
+    
+        // Jika user sedang login, ambil buku yang sudah diulas oleh user tersebut
+        if ($user) {
+            $bukusDiUlas = Buku::has('ulasans')->whereHas('ulasans', function ($query) use ($user) {
+                $query->where('user_id', $user->user_id);
+            })->get();
+        } else {
+            // Jika tidak ada user yang login, set $bukusDiUlas menjadi null atau array kosong, sesuai kebutuhan
+            $bukusDiUlas = null; // atau $bukusDiUlas = [];
+        }
+    
+        // Kirim data ke tampilan
+        return view('dashboard.koleksipribadi.index', compact('bukusDiUlas'));
+    }
+    
 
     /**
      * Show the form for creating a new resource.

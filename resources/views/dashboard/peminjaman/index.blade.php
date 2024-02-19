@@ -99,8 +99,27 @@
                                 </tr>
                             @endforelse
                         </tbody>
-
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                                @if($peminjamans->currentPage() > 1)
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $peminjamans->previousPageUrl() }}" tabindex="-1">Previous</a>
+                                    </li>
+                                @endif
+
+                                @for ($i = max(1, $peminjamans->currentPage() - 2); $i <= min($peminjamans->currentPage() + 2, $peminjamans->lastPage()); $i++)
+                                    <li class="page-item {{ ($i == $peminjamans->currentPage()) ? 'active' : '' }}">
+                                        <a class="page-link" href="{{ $peminjamans->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+
+                                @if($peminjamans->currentPage() < $peminjamans->lastPage())
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $peminjamans->nextPageUrl() }}">Next</a>
+                                    </li>
+                                @endif
+                            </ul>
                     </div>
                 </div>
             </div>

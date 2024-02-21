@@ -163,14 +163,14 @@ class UserController extends Controller
 
         // Handle file upload if a new avatar is provided
         $avatarPath = $user->avatar;
-    
+
         if ($request->hasFile('avatar')) {
             $fileName = time() . '.' . $request->avatar->extension();
             $avatarPath = $fileName;
-    
+
             // Move file
             $request->avatar->move(public_path('uploads/images'), $fileName);
-    
+
             // Delete the old avatar file if it's not the default one
             if ($user->avatar !== 'avatar.png') {
                 $oldAvatarPath = public_path('uploads/images/') . $user->avatar;
@@ -179,10 +179,9 @@ class UserController extends Controller
                 }
             }
         }
-    
-        // Update the user data
+
+        // Update the user data, but exclude 'user_id'
         $user->update([
-            'user_id' => $request->user_id,
             'username' => $request->username,
             'name' => $request->name,
             'alamat' => $request->alamat,
@@ -190,10 +189,11 @@ class UserController extends Controller
             'role' => $request->role,
             'avatar' => $avatarPath,
         ]);
-    
+
         // Redirect back with a success message
         return redirect()->route('users.index')->with('success', 'Pengguna berhasil diperbarui.');
     }
+
 
     /**
      * Remove the specified resource from storage.

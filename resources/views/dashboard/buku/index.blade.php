@@ -19,6 +19,24 @@
 @endsection
 @endif
 
+<style>
+.position-relative {
+    position: relative;
+}
+
+.best-seller {
+    position: absolute;
+    top: 0;
+    left: -20px; /* Adjust this value according to your preference */
+    transform: rotate(-45deg); /* Miringkan teks */
+    padding: 5px 10px;
+    background-color: #28a745; /* Warna latar belakang badge */
+    color: #fff; /* Warna teks badge */
+    font-size: 12px; /* Ukuran font */
+}
+
+</style>
+
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -44,20 +62,22 @@
                             <tbody>
                             @foreach ($bukus as $buku)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $buku->buku_id }}</td>
-                                    <td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $buku->buku_id }}</td>
+                                <td>
+                                    <div class="position-relative">
+                                        @if ($buku->jumlah_ulasan >= 3)
+                                            <span class="badge badge-success best-seller">Best</span>
+                                        @endif
                                         @if($buku->gambar)
                                             <img src="{{ asset('uploads/images/' . $buku->gambar) }}" alt="{{ $buku->judul }}" style="max-width: 50px; max-height: 50px;">
                                         @else
                                             No Image
                                         @endif
+                                    </div>
                                     </td>
                                     <td>
                                         {{ $buku->judul }}
-                                        @if ($buku->jumlah_ulasan >= 3)
-                                            <span class="badge badge-success">Best</span>
-                                        @endif
                                     </td>
                                     <td>{{ $buku->kategoriBuku->nama_kategori ?? '-' }}</td>
                                     <td>{{ $buku->penulis }}</td>

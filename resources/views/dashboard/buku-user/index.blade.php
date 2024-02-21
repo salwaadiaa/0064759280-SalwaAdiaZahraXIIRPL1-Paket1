@@ -10,7 +10,6 @@
 
 @section('content')
 <style>
-    /* Gaya CSS langsung disini */
     .card {
         border: 1px solid #ddd;
         border-radius: 8px;
@@ -19,8 +18,8 @@
 
     .card img {
         max-width: 100%;
-        height: 200px; /* Atur tinggi gambar sesuai kebutuhan Anda */
-        object-fit: cover; /* Memastikan gambar terisi di area yang telah ditentukan */
+        height: 200px; 
+        object-fit: cover; 
     }
 
     .card-title {
@@ -33,6 +32,12 @@
         font-size: 1rem;
         margin-bottom: 8px;
     }
+
+    .card-title {
+    font-size: 1rem; /* Atur sesuai dengan ukuran yang diinginkan */
+    }
+
+
 
     .btn-success {
         background-color: #28a745;
@@ -61,19 +66,16 @@
         box-sizing: border-box;
     }
 
-    /* Highlight selected option */
     .form-select option:checked {
         background-color: #007bff;
         color: #fff;
     }
 
-    /* Style for options */
     .form-select option {
         background-color: #fff;
         color: #495057;
     }
 
-    /* Hover effect on options */
     .form-select option:hover {
         background-color: #e9ecef;
         color: #495057;
@@ -83,30 +85,26 @@
         text-align: center;
     }
 
-    /* Flexbox untuk menyamakan tinggi card */
     .d-flex.align-items-stretch {
         display: flex;
     }
 
     .d-flex.align-items-stretch > .col-md-4 {
         flex: 1;
-        margin-right: 15px; /* Sesuaikan dengan kebutuhan Anda */
+        margin-right: 15px;
     }
 
-    /* Untuk penengahan bintang */
     .rating {
         display: flex;
         justify-content: center;
     }
 
-    /* Untuk membuat ukuran kartu tetap sama */
     .card-body {
-        min-height: 340px; /* Atur sesuai dengan kebutuhan Anda */
+        min-height: 140px; 
     }
 
     .btn-custom {
         background-color: #C0A183;
-        /* Tambahkan properti CSS lain sesuai kebutuhan Anda */
     }
 
     .text-center{
@@ -114,16 +112,16 @@
     }
 
     .best-seller {
-    position: absolute;
-    top: 10px; /* Sesuaikan dengan posisi watermark yang diinginkan */
-    right: 10px; /* Sesuaikan dengan posisi watermark yang diinginkan */
-}
-
-.best-seller-watermark {
-    width: 80px; /* Sesuaikan dengan ukuran watermark yang diinginkan */
-    height: auto;
-    opacity: 0.7; /* Sesuaikan kejelasan watermark yang diinginkan */
-}
+        position: absolute;
+        top: 10px;
+        right: 10px; 
+        transform: rotate(45deg);
+        background-color: #28a745;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        z-index: 1;
+    }
 
 </style>
 
@@ -152,7 +150,6 @@
                 </form>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12">
                 <div class="card shadow">
@@ -160,53 +157,62 @@
                         <h2 class="card-title h3">Daftar Buku</h2>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                        @foreach ($bukus as $buku)
-                            <div class="col-md-4 mb-4">
-                                <div class="card shadow {{ $buku->stok == 0 ? 'border-danger' : '' }}">
-                                    @if($buku->gambar)
-                                        <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="card-img-top" alt="{{ $buku->judul }}">
-                                    @else
-                                        <img src="{{ asset('uploads/images/no-image.jpg') }}" class="card-img-top" alt="No Image">
-                                    @endif
-                                    <div class="card-body d-flex flex-column justify-content-between">
-                                        <h5 class="card-title">
-                                            {{ $buku->judul }}
-                                            @if ($buku->jumlah_ulasan >= 3)
-                                                <span class="badge badge-success">Best</span>
-                                            @endif
-                                        </h5>
-                                        <div class="rating">
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                @if ($i <= $buku->rating_rata_rata)
-                                                    <i class="fas fa-star"></i>
-                                                @else
-                                                    <i class="far fa-star"></i>
-                                                @endif
-                                            @endfor
-                                        </div> 
-                                        @if ($buku->stok > 0)
-                                            <div class="d-flex justify-content-center mt-2">
-                                                <form action="{{ route('buku.ajukan-peminjaman', $buku->buku_id) }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-custom mx-1">
-                                                        <i class="fas fa-check"></i>
-                                                    </button>
-                                                </form>
-                                                <button type="button" class="btn btn-custom mx-2" data-toggle="modal" data-target="#detailBukuModal{{ $buku->buku_id }}">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                            </div>
-                                        @else
-                                            <div class="text-center mt-2">
-                                                Stok Buku Habis
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
+                    <div class="row">
+    @if ($bukus->isEmpty())
+        <div class="col-12">
+            <p class="text-center">Tidak ada buku untuk kategori ini.</p>
+        </div>
+    @else
+        @foreach ($bukus as $buku)
+            <div class="col-md-4 mb-4">
+                <div class="card shadow {{ $buku->stok == 0 ? 'border-danger' : '' }}">
+                    <div class="position-relative">
+                        @if ($buku->jumlah_ulasan >= 3)
+                            <span class="badge badge-success best-seller">Best</span>
+                        @endif
+                        @if($buku->gambar)
+                            <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="card-img-top" alt="{{ $buku->judul }}">
+                        @else
+                            <img src="{{ asset('uploads/images/no-image.jpg') }}" class="card-img-top" alt="No Image">
+                        @endif
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <h5 class="card-title">
+                            {{ $buku->judul }}
+                        </h5>
+                        <div class="rating">
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $buku->rating_rata_rata)
+                                    <i class="fas fa-star"></i>
+                                @else
+                                    <i class="far fa-star"></i>
+                                @endif
+                            @endfor
+                        </div> 
+                        @if ($buku->stok > 0)
+                            <div class="d-flex justify-content-center mt-2">
+                                <form action="{{ route('buku.ajukan-peminjaman', $buku->buku_id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-custom mx-1">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                                <button type="button" class="btn btn-custom mx-2" data-toggle="modal" data-target="#detailBukuModal{{ $buku->buku_id }}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
                             </div>
-                        @endforeach
-                        </div>
+                        @else
+                            <div class="text-center mt-2">
+                                Stok Buku Habis
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
+</div>
+
 
                         <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-end">

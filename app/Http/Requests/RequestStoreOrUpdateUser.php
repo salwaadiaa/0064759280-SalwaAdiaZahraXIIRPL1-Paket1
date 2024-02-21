@@ -24,8 +24,7 @@ class RequestStoreOrUpdateUser extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|unique:users,user_id',
-            'username' => 'required|unique:users,username',
+            'username' => 'required',
             'name' => 'required',
             'alamat' => 'nullable',
             'email' => 'required|email|unique:users,email',
@@ -43,7 +42,7 @@ class RequestStoreOrUpdateUser extends FormRequest
     public function messages()
     {
         return [
-            // Define custom error messages if needed
+            'email.regex' => 'Alamat email harus mengandung karakter "@".',
         ];
     }
 }

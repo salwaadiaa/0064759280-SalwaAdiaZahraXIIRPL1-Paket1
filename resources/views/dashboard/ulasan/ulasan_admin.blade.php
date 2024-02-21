@@ -23,8 +23,8 @@
                     <h2 class="card-title h3">Riwayat Ulasan Buku</h2>
                     <form action="{{ route('ulasan.admin') }}" method="GET">
                         <div class="input-group">
-                            <select class="form-control" name="judul">
-                                <option value="">-- Pilih Judul Buku --</option>
+                            <select class="judulBuku" name="judul">
+                                <option value="Plih">--- Pilih Judul Buku ---</option>
                                 @foreach ($listJudulBuku as $judulBuku)
                                     <option value="{{ $judulBuku->judul }}" {{ request('judul') == $judulBuku->judul ? 'selected' : '' }}>
                                         {{ $judulBuku->judul }}
@@ -87,4 +87,12 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('.judulBuku').select2();
+});
+</script>
 @endsection

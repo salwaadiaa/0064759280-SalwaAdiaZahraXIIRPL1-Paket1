@@ -16,24 +16,26 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow">
-                <div class="card-header bg-transparent border-0 text-dark">
-                    <h2 class="card-title h3">Riwayat Ulasan Buku</h2>
-                    <form action="{{ route('ulasan.admin') }}" method="GET">
-                        <div class="input-group">
-                            <select class="judulBuku" name="judul">
-                                <option value="Plih">--- Pilih Judul Buku ---</option>
-                                @foreach ($listJudulBuku as $judulBuku)
-                                    <option value="{{ $judulBuku->judul }}" {{ request('judul') == $judulBuku->judul ? 'selected' : '' }}>
-                                        {{ $judulBuku->judul }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <button type="submit" class="btn btn-custom">Filter</button>
-                        </div>
-                    </form>
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-transparent border-0 text-dark">
+                <h2 class="card-title h3">Riwayat Ulasan Buku</h2>
+                <form action="{{ route('ulasan.admin') }}" method="GET" class="input-group mb-3">
+                    <div  class="col-md-10 align-self-center"> <!-- Tidak perlu menambahkan class col-md-8 di sini -->
+                    <select class="judulBuku form-control" name="judul" style="max-height: 300px; width: 100%; padding-top: 8px;" id="judul-select">
+                            <option value="">-- Pilih Judul Buku --</option>
+                            @foreach ($listJudulBuku as $judulBuku)
+                                <option value="{{ $judulBuku->judul }}" {{ request('judul') == $judulBuku->judul ? 'selected' : '' }}>
+                                    {{ $judulBuku->judul }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 align-self-center">
+    <button type="submit" class="btn btn-custom btn-block" style="height: 38px;">Filter</button>
+</div>
+                </form>
                     <br>
                     <div class="table-responsive">
                         <table class="table table-flush table-hover">

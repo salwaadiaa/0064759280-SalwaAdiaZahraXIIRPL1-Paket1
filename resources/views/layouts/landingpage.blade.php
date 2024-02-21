@@ -25,39 +25,38 @@
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}"
   type="text/css">
-
-  <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-  <style>
+ <style>
     .card {
-        width: 200px; /* Lebar tetap card */
-        height: 300px; /* Tinggi tetap card */
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        overflow: hidden;
-        margin: 0 auto;
-        display: flex; /* Gunakan flexbox untuk tata letak */
-        flex-direction: column; /* Atur orientasi ke kolom */
-        justify-content: center; /* Pusatkan vertikal */
-        align-items: center; /* Pusatkan horizontal */
-        transition: transform 0.3s ease-in-out;
-    }
+    width: 400px; /* Ubah nilai lebar card */
+    max-width: 100%; /* Agar card tetap responsif */
+    height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease-in-out;
+}
 
-    .card:hover {
-        transform: scale(1.05);
-    }
+.card:hover {
+    transform: scale(1.05);
+}
 
-    .card-img-top {
-        width: 100%;
-        height: 70%; /* Sesuaikan tinggi gambar sesuai kebutuhan */
-        object-fit: cover;
-    }
+.card-img-top {
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+}
 
-    .card-title {
-        margin-top: 10px;
-        text-align: center; /* Pusatkan teks judul di dalam card */
-    }
-</style>
+.card-title {
+    margin-top: 10px;
+    text-align: center;
+}
+ </style>
 
 </head>
 
@@ -118,28 +117,24 @@
 
     <!-- ======= Gallery Section ======= -->
     <section id="daftar-buku" class="daftar-buku">
-        <div class="container" data-aos="fade-up">
-            <div class="section-title">
-                <h2>Daftar Buku</h2>
-                <p>Temukan berbagai judul buku yang menarik di SAZLibrary.</p>
+            <div class="container" data-aos="fade-up">
+                <div class="section-title">
+                    <h2>Daftar Buku</h2>
+                    <p>Temukan berbagai judul buku yang menarik di SAZLibrary.</p>
+                </div>
             </div>
-        </div>
-
-        <div class="container-fluid" data-aos="fade-up">
-        <div class="gallery-slider swiper">
-            <div class="swiper-wrapper">
-                @forelse ($bukus as $buku)
-                <div class="swiper-slide">
-    <div class="card">
-        <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="card-img-top" alt="{{ $buku->judul }}">
-        <div class="card-body">
-            <h5 class="card-title">{{ $buku->judul }}</h5>
-            <!-- tambahkan informasi lainnya seperti pengarang, genre, dll sesuai kebutuhan -->
-        </div>
-    </div>
-</div>
-
-
+            <div class="container-fluid" data-aos="fade-up">
+                <div class="gallery-slider swiper">
+                    <div class="swiper-wrapper">
+                    @forelse ($bukus as $buku)
+                    <div class="swiper-slide">
+                <div class="card">
+                    <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="card-img-top" alt="{{ $buku->judul }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $buku->judul }}</h5>
+                    </div>
+                </div>
+            </div>
                 @empty
                     <p>Tidak ada data buku.</p>
                 @endforelse

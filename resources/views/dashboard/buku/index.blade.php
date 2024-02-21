@@ -42,42 +42,42 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($bukus as $buku)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $buku->buku_id }}</td>
-                                        <td>
+                            @foreach ($bukus as $buku)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $buku->buku_id }}</td>
+                                    <td>
                                         @if($buku->gambar)
                                             <img src="{{ asset('uploads/images/' . $buku->gambar) }}" alt="{{ $buku->judul }}" style="max-width: 50px; max-height: 50px;">
                                         @else
                                             No Image
                                         @endif
-                                        </td>
-                                        <td>{{ $buku->judul }}</td>
-                                        <td>{{ $buku->kategoriBuku->nama_kategori ?? '-' }}</td>
-                                        <td>{{ $buku->penulis }}</td>
-                                        <td>{{ $buku->penerbit }}</td>
-                                        <td>{{ $buku->tahun_terbit }}</td>
-                                        <td>{{ $buku->stok }}</td>   
-                                        <td>
-                                            <a href="{{ route('buku.edit', $buku->buku_id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                            
-                                            {{-- Tampilkan tombol hapus hanya untuk admin --}}
-                                            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'petugas')
-                                                <form id="delete-form-{{ $buku->buku_id }}" action="{{ route('buku.destroy', $buku->buku_id) }}" class="d-inline" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
-                                                <button onclick="deleteForm('{{ $buku->buku_id }}')" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                                            @endif
-                                            
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="8">Tidak ada data buku.</td>
-                                    </tr>
-                                @endforelse
+                                    </td>
+                                    <td>
+                                        {{ $buku->judul }}
+                                        @if ($buku->jumlah_ulasan >= 3)
+                                            <span class="badge badge-success">Best</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $buku->kategoriBuku->nama_kategori ?? '-' }}</td>
+                                    <td>{{ $buku->penulis }}</td>
+                                    <td>{{ $buku->penerbit }}</td>
+                                    <td>{{ $buku->tahun_terbit }}</td>
+                                    <td>{{ $buku->stok }}</td>   
+                                    <td>
+                                        <a href="{{ route('buku.edit', $buku->buku_id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                                                        
+                                        {{-- Tampilkan tombol hapus hanya untuk admin --}}
+                                        @if (Auth::user()->role == 'admin' || Auth::user()->role == 'petugas')
+                                            <form id="delete-form-{{ $buku->buku_id }}" action="{{ route('buku.destroy', $buku->buku_id) }}" class="d-inline" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                            <button onclick="deleteForm('{{ $buku->buku_id }}')" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                             <nav aria-label="Page navigation example">

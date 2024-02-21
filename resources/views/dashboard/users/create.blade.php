@@ -22,14 +22,14 @@
                         @csrf
 
                         <div class="form-group mb-3">
-                            <label for="user_id">User ID</label>
-                            <input type="text" class="form-control @error('user_id') is-invalid @enderror" id="user_id"
-                                placeholder="User ID Pengguna" value="{{ old('user_id') }}" name="user_id" required>
+                            <input type="hidden" class="form-control @error('user_id') is-invalid @enderror" id="user_id"
+                                placeholder="User ID Pengguna" value="{{ old('user_id', $user_id) }}" name="user_id" required>
 
                             @error('user_id')
                                 <div class="d-block invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+
 
                         <div class="form-group mb-3">
                             <label for="username">Username</label>
@@ -96,7 +96,7 @@
                             <select class="form-control @error('role') is-invalid @enderror" id="role" name="role" required>
                                 <option value="" selected>---Role---</option>
                                 @php
-                                    $roles = ['admin', 'petugas', 'user'];
+                                    $roles = ['petugas', 'user'];
                                 @endphp
                                 @foreach ($roles as $role)
                                     <option value="{{ $role }}" @if (old('role') == $role) selected @endif>

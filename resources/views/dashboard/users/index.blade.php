@@ -58,14 +58,28 @@
                                     </tr>
                                 @endforelse
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="5">
-                                        {{ $users->links() }}
-                                    </th>
-                                </tr>
-                            </tfoot>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                                @if($users->currentPage() > 1)
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $users->previousPageUrl() }}" tabindex="-1">Previous</a>
+                                    </li>
+                                @endif
+
+                                @for ($i = max(1, $users->currentPage() - 2); $i <= min($users->currentPage() + 2, $users->lastPage()); $i++)
+                                    <li class="page-item {{ ($i == $users->currentPage()) ? 'active' : '' }}">
+                                        <a class="page-link" href="{{ $users->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+
+                                @if($users->currentPage() < $users->lastPage())
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $users->nextPageUrl() }}">Next</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

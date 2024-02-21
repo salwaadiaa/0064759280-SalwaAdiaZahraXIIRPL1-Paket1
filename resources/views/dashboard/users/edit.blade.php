@@ -90,7 +90,7 @@
                             <select class="form-control @error('role') is-invalid @enderror" id="role" name="role" required>
                                 <option value="" selected>---Role---</option>
                                 @php
-                                    $roles = ['admin', 'petugas'];
+                                    $roles = ['petugas','user'];
                                 @endphp
                                 @foreach ($roles as $role)
                                     <option value="{{ $role }}" @if (old('role', $user->role) == $role) selected @endif>

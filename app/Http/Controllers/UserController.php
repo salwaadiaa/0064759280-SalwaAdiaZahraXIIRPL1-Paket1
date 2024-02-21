@@ -26,9 +26,35 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('dashboard.users.create');
+{
+    // Generate user ID based on role
+    $rolePrefix = '';
+    $roles = ['petugas', 'user']; // List of roles
+    $selectedRole = ''; // Default selected role, you can set it to a default value if needed
+
+    // Jika role telah dipilih sebelumnya, gunakan role tersebut, jika tidak, gunakan role pertama dalam daftar roles
+    if (old('role')) {
+        $selectedRole = old('role');
+    } else {
+        $selectedRole = $roles[0]; // Default role
     }
+
+    switch ($selectedRole) {
+        case 'petugas':
+            $rolePrefix = 'P-';
+            break;
+        case 'user':
+            $rolePrefix = 'US-';
+            break;
+        // Add more cases if you have additional roles
+    }
+
+    // Generate user ID
+    $user_id = $rolePrefix . uniqid();
+
+    return view('dashboard.users.create', compact('user_id', 'roles', 'selectedRole'));
+}
+
 
     /**
      * Store a newly created resource in storage.
@@ -38,11 +64,11 @@ class UserController extends Controller
      */
     public function store(RequestStoreOrUpdateUser $request)
     {
-        // Form request will handle validation, and if it fails, it will automatically redirect back with errors.
-
+        // Form request akan menangani validasi, dan jika gagal, akan secara otomatis dialihkan kembali dengan kesalahan.
+    
         // Handle file upload if an avatar is provided
         $avatarPath = null;
-
+    
         if ($request->hasFile('avatar')) {
             $fileName = time() . '.' . $request->avatar->extension();
             $avatarPath = $fileName;
@@ -53,10 +79,38 @@ class UserController extends Controller
             // Set default avatar filename if no file is uploaded
             $avatarPath = 'avatar.png';
         }
+    
+        // Generate user ID based on role
+        $rolePrefix = '';
+        switch ($request->role) {
+            case 'petugas':
+                $rolePrefix = 'P-';
+                break;
+            case 'user':
+                $rolePrefix = 'US-';
+                break;
+            // Add more cases if you have additional roles
+        }
         
+        // Get the latest user ID for the selected role
+        $latestUserId = User::where('role', $request->role)->orderBy('created_at', 'desc')->first();
+        
+        // If there are no users for the selected role, start with '0001'
+        if (!$latestUserId) {
+            $user_id = $rolePrefix . '0001';
+        } else {
+            // Extract the numeric part of the user ID, increment it, and pad it with zeros
+            preg_match('/\d+$/', $latestUserId->user_id, $matches);
+            $numericPart = (int)$matches[0];
+            $nextNumericPart = $numericPart + 1;
+            $paddedNextNumericPart = str_pad($nextNumericPart, 4, '0', STR_PAD_LEFT);
+            
+            $user_id = $rolePrefix . $paddedNextNumericPart;
+        }
+    
         // Create a new user
         $user = User::create([
-            'user_id' => $request->user_id,
+            'user_id' => $user_id,
             'username' => $request->username,
             'name' => $request->name,
             'alamat' => $request->alamat,
@@ -66,10 +120,11 @@ class UserController extends Controller
             'avatar' => $avatarPath,
         ]);
         
-
+    
         // Redirect back with a success message
         return redirect()->route('users.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
+    
 
     /**
      * Display the specified resource.

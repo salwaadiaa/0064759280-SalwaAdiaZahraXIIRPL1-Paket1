@@ -8,6 +8,7 @@ use App\Models\Buku;
 use App\Models\Peminjaman;
 use App\Models\KategoriBuku;
 use App\Models\KoleksiPribadi;
+use Illuminate\Support\Facades\DB;
 
 class BukuController extends Controller
 {
@@ -18,29 +19,48 @@ class BukuController extends Controller
     }
     //menampilkan daftar buku di halaman admin dan petugas
     public function index()
-    {
-        $bukus = Buku::orderBy('created_at', 'asc')->paginate(10);
-        return view('dashboard.buku.index', compact('bukus'));
+{
+    // Ambil data buku beserta jumlah ulasan dan rating rata-ratanya
+    $bukus = Buku::leftJoin('ulasan_bukus', 'bukus.buku_id', '=', 'ulasan_bukus.buku_id')
+                  ->select('bukus.*', DB::raw('COUNT(ulasan_bukus.ulasan_id) as jumlah_ulasan'), DB::raw('AVG(ulasan_bukus.rating) as rating_rata_rata'))
+                  ->groupBy('bukus.buku_id')
+                  ->orderBy('jumlah_ulasan', 'desc')
+                  ->orderBy('rating_rata_rata', 'desc')
+                  ->paginate(10);
+
+    // Tandai buku best seller jika jumlah ulasan lebih dari 3
+    foreach ($bukus as $buku) {
+        if ($buku->jumlah_ulasan > 3) {
+            $buku->best_seller = true;
+        } else {
+            $buku->best_seller = false;
+        }
     }
 
-    //menampilkan daftar buku di halaman user, dan menambahkan fungsi search berdasarkan judul buku dan dapat memilih kategori buku
-    public function bukuIndex(Request $request)
+    return view('dashboard.buku.index', compact('bukus'));
+}
+
+public function bukuIndex(Request $request)
 {
     $search = $request->input('search');
     $kategori_id = $request->input('kategori_id');
     $kategoris = KategoriBuku::all();
 
-    $bukus = Buku::when($kategori_id, function ($query) use ($kategori_id) {
-            return $query->whereHas('kategoriBuku', function ($q) use ($kategori_id) {
-                $q->where('kategori_id', $kategori_id);
-            });
-        })
-        ->when(!$kategori_id, function ($query) {
-            return $query;
-        })
-        ->where('judul', 'like', "%$search%")
-        ->where('stok', '>', 0)
-        ->paginate(10);
+    $bukus = Buku::leftJoin('ulasan_bukus', 'bukus.buku_id', '=', 'ulasan_bukus.buku_id')
+                  ->select('bukus.*', DB::raw('COUNT(ulasan_bukus.ulasan_id) as jumlah_ulasan'), DB::raw('AVG(ulasan_bukus.rating) as rating_rata_rata'))
+                  ->when($kategori_id, function ($query) use ($kategori_id) {
+                      return $query->whereHas('kategoriBuku', function ($q) use ($kategori_id) {
+                          $q->where('kategori_id', $kategori_id);
+                      });
+                  })
+                  ->when(!$kategori_id, function ($query) {
+                      return $query;
+                  })
+                  ->where('judul', 'like', "%$search%")
+                  ->groupBy('bukus.buku_id')
+                  ->orderBy('jumlah_ulasan', 'desc')
+                  ->orderBy('rating_rata_rata', 'desc')
+                  ->paginate(9);
 
     return view('dashboard.buku-user.index', compact('bukus', 'kategoris', 'kategori_id'));
 }

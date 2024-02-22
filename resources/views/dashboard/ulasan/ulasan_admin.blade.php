@@ -15,6 +15,16 @@
 @endif
 @endsection
 
+<style>
+    .dropdown-select2 .select2-container--open {
+        z-index: 1051; /* Menentukan z-index untuk menampilkan dropdown di atas elemen lain */
+    }
+    .dropdown-select2 .select2-search__field {
+        width: 100% !important; /* Lebar input pencarian 100% */
+        box-sizing: border-box; /* Menyesuaikan lebar dengan kotak pencarian */
+    }
+</style>
+
 @section('content')
 <div class="row">
     <div class="col-12">
@@ -23,7 +33,7 @@
                 <h2 class="card-title h3">Riwayat Ulasan Buku</h2>
                 <form action="{{ route('ulasan.admin') }}" method="GET" class="input-group mb-3">
                     <div  class="col-md-10 align-self-center"> <!-- Tidak perlu menambahkan class col-md-8 di sini -->
-                    <select class="judulBuku form-control" name="judul" style="max-height: 300px; width: 100%; padding-top: 8px;" id="judul-select">
+                    <select class="judulBuku form-control" name="judul" id="judul-select">
                             <option value="">-- Pilih Judul Buku --</option>
                             @foreach ($listJudulBuku as $judulBuku)
                                 <option value="{{ $judulBuku->judul }}" {{ request('judul') == $judulBuku->judul ? 'selected' : '' }}>
@@ -33,8 +43,8 @@
                         </select>
                     </div>
                     <div class="col-md-2 align-self-center">
-    <button type="submit" class="btn btn-custom btn-block" style="height: 38px;">Filter</button>
-</div>
+                        <button type="submit" class="btn btn-custom btn-block" style="height: 32px;">Filter</button>
+                    </div>
                 </form>
                     <br>
                     <div class="table-responsive">
@@ -94,7 +104,13 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
-    $('.judulBuku').select2();
-});
+        $('.judulBuku').select2({
+            dropdownCssClass: 'dropdown-select2', // Menambahkan kelas CSS untuk styling dropdown
+            width: '100%', // Lebar dropdown sesuai dengan parent element
+            dropdownParent: $('.col-md-10'), // Menetapkan parent element dropdown
+            theme: 'bootstrap4', // Menggunakan tema Bootstrap 4
+        });
+    });
 </script>
 @endsection
+

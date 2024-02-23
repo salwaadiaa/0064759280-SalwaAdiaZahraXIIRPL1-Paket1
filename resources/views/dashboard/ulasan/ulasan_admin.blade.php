@@ -87,6 +87,7 @@
                                     </li>
                                 @endif
                             </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

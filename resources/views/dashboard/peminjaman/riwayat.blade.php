@@ -80,7 +80,7 @@
                             <tbody>
                             @forelse ($peminjamanSelesai as $peminjaman)
                                 <tr class="status-row" data-status="{{ $peminjaman->tanggal_peminjaman }}">
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ ($peminjamanSelesai->currentPage() - 1) * $peminjamanSelesai->perPage() + $loop->index + 1 }}</td>
                                     <td>{{ $peminjaman->user->email }}</td>
                                     <td>{{ $peminjaman->user->name }}</td>
                                     <td>{{ $peminjaman->buku->judul }}</td>

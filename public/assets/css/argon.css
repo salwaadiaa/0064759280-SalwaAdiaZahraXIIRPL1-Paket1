@@ -23753,7 +23753,7 @@ textarea[resize='horizontal']
 {
     font-size: .8125rem;
 
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .table.align-items-center td,

@@ -48,10 +48,10 @@
      <script>
         document.addEventListener('DOMContentLoaded', function () {
             var today = new Date();
-            var isLate = false; // Menyimpan status keterlambatan
+            var isLate = false; 
 
             document.querySelectorAll('.card').forEach(function (card) {
-                var returnDateText = card.querySelector('.card-text').innerText; // Mengubah dari '.return-date' ke '.card-text'
+                var returnDateText = card.querySelector('.card-text').innerText; 
                 var returnDate = new Date(returnDateText);
                 var lateDays = Math.max(0, Math.floor((today - returnDate) / (24 * 60 * 60 * 1000)));
                 var denda = lateDays * 10000;
@@ -60,23 +60,19 @@
 
                 var dendaColumn = card.querySelector('.denda-column');
 
-                // Tampilkan nilai denda
                 dendaColumn.innerText = 'Denda: ' + formattedDenda;
                 dendaColumn.style.display = 'block';
 
-                // Ubah nilai denda menjadi 0 jika tidak ada keterlambatan
                 if (lateDays === 0) {
                     dendaColumn.innerText = 'Denda: Rp. 0';
                 }
 
-                // Tambahkan warna merah jika ada denda
                 if (denda > 0) {
                     dendaColumn.style.color = 'red';
-                    isLate = true; // Setel status keterlambatan menjadi true jika ada denda
+                    isLate = true; 
                 }
             });
 
-            // Tampilkan SweetAlert2 jika ada keterlambatan
             if (isLate) {
                 Swal.fire({
                     icon: 'warning',

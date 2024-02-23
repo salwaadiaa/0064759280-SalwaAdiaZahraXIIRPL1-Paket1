@@ -35,6 +35,11 @@
     font-size: 12px; /* Ukuran font */
 }
 
+.sinopsis {
+    max-width: 200px; /* Sesuaikan dengan batas lebar yang telah Anda tentukan */
+    overflow: hidden; /* Jika Anda ingin menghindari pemotongan kata, tambahkan properti ini */
+    white-space: normal; /* Jika Anda ingin mempertahankan teks dalam satu baris */
+}
 </style>
 
 @section('content')
@@ -53,6 +58,7 @@
                                     <th>Judul</th>
                                     <th>Kategori</th>
                                     <th>Penulis</th>
+                                    <th>Sinopsis Buku</th>
                                     <th>Penerbit</th>
                                     <th>Tahun Terbit</th>
                                     <th>Stok Buku</th>
@@ -81,6 +87,7 @@
                                     </td>
                                     <td>{{ $buku->kategoriBuku->nama_kategori ?? '-' }}</td>
                                     <td>{{ $buku->penulis }}</td>
+                                    <td class="sinopsis">{{ $buku->sinopsis }}</td>
                                     <td>{{ $buku->penerbit }}</td>
                                     <td>{{ $buku->tahun_terbit }}</td>
                                     <td>{{ $buku->stok }}</td>   

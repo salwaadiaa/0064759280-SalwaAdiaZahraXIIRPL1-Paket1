@@ -160,11 +160,9 @@
 
         var dendaColumn = row.querySelector('.denda-column');
 
-        // Tampilkan nilai denda, bahkan jika tidak ada keterlambatan (nilai denda = 0)
         dendaColumn.innerText = formattedDenda;
         dendaColumn.style.display = 'table-cell';
 
-        // Ubah nilai denda menjadi 0 jika tidak ada keterlambatan
         if (lateDays === 0) {
             dendaColumn.innerText = 'Rp. 0';
         }

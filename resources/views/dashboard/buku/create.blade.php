@@ -84,6 +84,16 @@
                         </div>
 
                         <div class="form-group mb-3">
+                            <label for="sinopsis">Sinopsis Buku</label>
+                            <textarea class="form-control @error('sinopsis') is-invalid @enderror" id="sinopsis" placeholder="Sinopsis Buku" name="sinopsis" required>{{ old('sinopsis') }}</textarea>
+
+                            @error('sinopsis')
+                                <div class="d-block invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+                        <div class="form-group mb-3">
                             <label for="tahun_terbit">Tahun Terbit</label>
                             <input type="number" class="form-control @error('tahun_terbit') is-invalid @enderror" id="tahun_terbit"
                                 placeholder="Tahun Terbit" value="{{ old('tahun_terbit') }}" name="tahun_terbit" required>

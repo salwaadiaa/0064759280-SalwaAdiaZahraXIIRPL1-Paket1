@@ -107,10 +107,6 @@
         background-color: #C0A183;
     }
 
-    .text-center{
-        color: red;
-    }
-
     .best-seller {
         position: absolute;
         top: 10px;
@@ -157,62 +153,61 @@
                         <h2 class="card-title h3">Daftar Buku</h2>
                     </div>
                     <div class="card-body">
-                    <div class="row">
-    @if ($bukus->isEmpty())
-        <div class="col-12">
-            <p class="text-center">Tidak ada buku untuk kategori ini.</p>
-        </div>
-    @else
-        @foreach ($bukus as $buku)
-            <div class="col-md-4 mb-4">
-                <div class="card shadow {{ $buku->stok == 0 ? 'border-danger' : '' }}">
-                    <div class="position-relative">
-                        @if ($buku->jumlah_ulasan >= 3)
-                            <span class="badge badge-success best-seller">Best</span>
-                        @endif
-                        @if($buku->gambar)
-                            <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="card-img-top" alt="{{ $buku->judul }}">
-                        @else
-                            <img src="{{ asset('uploads/images/no-image.jpg') }}" class="card-img-top" alt="No Image">
-                        @endif
-                    </div>
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <h5 class="card-title">
-                            {{ $buku->judul }}
-                        </h5>
-                        <div class="rating">
-                            @for ($i = 1; $i <= 5; $i++)
-                                @if ($i <= $buku->rating_rata_rata)
-                                    <i class="fas fa-star"></i>
-                                @else
-                                    <i class="far fa-star"></i>
-                                @endif
-                            @endfor
-                        </div> 
-                        @if ($buku->stok > 0)
-                            <div class="d-flex justify-content-center mt-2">
-                                <form action="{{ route('buku.ajukan-peminjaman', $buku->buku_id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-custom mx-1">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                </form>
-                                <button type="button" class="btn btn-custom mx-2" data-toggle="modal" data-target="#detailBukuModal{{ $buku->buku_id }}">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                        @else
-                            <div class="text-center mt-2">
-                                Stok Buku Habis
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endif
-</div>
-
+                        <div class="row">
+                            @if ($bukus->isEmpty())
+                                <div class="col-12">
+                                    <p class="text-center">Tidak ada buku untuk kategori ini.</p>
+                                </div>
+                            @else
+                                @foreach ($bukus as $buku)
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card shadow {{ $buku->stok == 0 ? 'border-danger' : '' }}">
+                                            <div class="position-relative">
+                                                @if ($buku->jumlah_ulasan >= 3)
+                                                    <span class="badge badge-success best-seller">Best</span>
+                                                @endif
+                                                @if($buku->gambar)
+                                                    <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="card-img-top" alt="{{ $buku->judul }}">
+                                                @else
+                                                    <img src="{{ asset('uploads/images/no-image.jpg') }}" class="card-img-top" alt="No Image">
+                                                @endif
+                                            </div>
+                                            <div class="card-body d-flex flex-column justify-content-between">
+                                                <h5 class="card-title">
+                                                    {{ $buku->judul }}
+                                                </h5>
+                                                <div class="rating">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $buku->rating_rata_rata)
+                                                            <i class="fas fa-star"></i>
+                                                        @else
+                                                            <i class="far fa-star"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div> 
+                                                @if ($buku->stok > 0)
+                                                    <div class="d-flex justify-content-center mt-2">
+                                                        <form action="{{ route('buku.ajukan-peminjaman', $buku->buku_id) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-custom mx-1">
+                                                                <i class="fas fa-check"></i>
+                                                            </button>
+                                                        </form>
+                                                        <button type="button" class="btn btn-custom mx-2" data-toggle="modal" data-target="#detailBukuModal{{ $buku->buku_id }}">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+                                                    </div>
+                                                @else
+                                                <div class="text-center mt-2" style="background-color: #7D0A0A;">
+                                                        Stok Buku Habis
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
 
                         <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-end">
@@ -248,53 +243,70 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="detailBukuModalLabel{{ $buku->id }}">Detail Buku - {{ $buku->judul }}</h5>
+                    <h5 class="modal-title" id="detailBukuModalLabel{{ $buku->buku_id }}">Detail Buku - {{ $buku->judul }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="text-center mb-3">
-                        <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="img-fluid rounded" alt="{{ $buku->judul }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-center mb-3">
+                                <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="img-fluid rounded" alt="{{ $buku->judul }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <p><strong>Judul:</strong> {{ $buku->judul }}</p>
+                                        <p><strong>Penulis:</strong> {{ $buku->penulis }}</p>
+                                        <p><strong>Penerbit:</strong> {{ $buku->penerbit }}</p>
+                                        <p><strong>Tahun Terbit:</strong> {{ $buku->tahun_terbit }}</p>
+                                        @if ($buku->kategoriBuku)
+                                            <p><strong>Kategori:</strong> {{ $buku->kategoriBuku->nama_kategori }}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h5>Deskripsi Buku</h5>
-                        <p><strong>Judul:</strong> {{ $buku->judul }}</p>
-                        <p><strong>Penulis:</strong> {{ $buku->penulis }}</p>
-                        <p><strong>Penerbit:</strong> {{ $buku->penerbit }}</p>
-                        <p><strong>Tahun Terbit:</strong> {{ $buku->tahun_terbit }}</p>
-
-                        @if ($buku->kategoriBuku)
-                            <p><strong>Kategori:</strong> {{ $buku->kategoriBuku->nama_kategori }}</p>
-                        @endif
+                    <div class="text-center">
+                        <h5 class="mt-4">Sinopsis</h5>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <p>{{ $buku->sinopsis }}</p>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Tombol untuk menampilkan ulasan -->
                     <div class="centered-link mt-3">
                         <a href="javascript:void(0);" class="btn btn-link" onclick="showUlasan('{{ $buku->buku_id }}')">Lihat Ulasan Buku</a>
                     </div>
-
-                    <!-- Bagian untuk menampilkan ulasan (awalnya disembunyikan) -->
                     <div id="ulasanContainer{{ $buku->buku_id }}" style="display: none;">
-                        <h5 class="mt-4">Ulasan Buku</h5>
+                        <h5 class="text-center mt-4">Ulasan Buku</h5>
                         @forelse ($buku->ulasans as $ulasan)
-                            <div class="mb-3">
-                                <div class="d-flex align-items-center">
-                                    <p class="mb-0"><strong>{{ $ulasan->user->name }}</strong></p>|
-                                    {!! str_repeat('<i class="fa fa-star"></i>', $ulasan->rating) !!}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <p class="mb-0"><strong>{{ $ulasan->user->name }}</strong></p>
+                                        <div>
+                                            {!! str_repeat('<i class="fa fa-star"></i>', $ulasan->rating) !!}
+                                        </div>
+                                    </div>
+                                    <hr> <!-- Garis pemisah antara ulasan dan informasi pengguna -->
+                                    <p class="text-center mt-4">{{ $ulasan->ulasan }}</p>
                                 </div>
-                                <p>{{ $ulasan->ulasan }}</p>
                             </div>
                         @empty
-                            <p>Tidak ada ulasan untuk buku ini.</p>
+                            <p class="text-center">Tidak ada ulasan untuk buku ini.</p>
                         @endforelse
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 @endforeach
+
 
 <script>
     function submitForm() {

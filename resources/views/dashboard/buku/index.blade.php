@@ -58,8 +58,8 @@
                                     <th>Judul</th>
                                     <th>Kategori</th>
                                     <th>Penulis</th>
-                                    <th>Sinopsis Buku</th>
                                     <th>Penerbit</th>
+                                    <th>Sinopsis Buku</th>
                                     <th>Tahun Terbit</th>
                                     <th>Stok Buku</th>
                                     <th>Aksi</th>
@@ -68,7 +68,7 @@
                             <tbody>
                             @foreach ($bukus as $buku)
                                 <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ ($bukus->currentPage() - 1) * $bukus->perPage() + $loop->index + 1 }}</td>
                                 <td>{{ $buku->buku_id }}</td>
                                 <td>
                                     <div class="position-relative">
@@ -87,8 +87,8 @@
                                     </td>
                                     <td>{{ $buku->kategoriBuku->nama_kategori ?? '-' }}</td>
                                     <td>{{ $buku->penulis }}</td>
-                                    <td class="sinopsis">{{ $buku->sinopsis }}</td>
                                     <td>{{ $buku->penerbit }}</td>
+                                    <td class="sinopsis">{{ $buku->sinopsis }}</td>
                                     <td>{{ $buku->tahun_terbit }}</td>
                                     <td>{{ $buku->stok }}</td>   
                                     <td>

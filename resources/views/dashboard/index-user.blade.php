@@ -7,6 +7,36 @@
     <li class="breadcrumb-item active">Dashboard User</li>
 @endsection
 
+<style>
+     .buku-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        height: 550px; 
+    }
+
+    .buku-card img {
+        max-width: 100%;
+        height: 370px;
+        object-fit: cover;
+    }
+
+    .buku-card .card-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .buku-card .card-text {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .buku-card .card-body {
+        min-height: 140px;
+    }
+</style>
+
 @section('content')
     <div class="container mt-3">
         <div class="row justify-content-center">
@@ -20,8 +50,8 @@
                         <div class="row">
                             @foreach($peminjamans as $peminjaman)
                                 <div class="col-md-3 mb-3"> 
-                                    <div class="card" style="width: 100%;"> 
-                                        <img src="{{ asset('uploads/images/' . $peminjaman->buku->gambar) }}" alt="{{ $peminjaman->buku->judul }}" class="card-img-top" style="width: 100%; height: 180px; object-fit: cover;"> 
+                                    <div class="buku-card" style="width: 100%; "> 
+                                        <img src="{{ asset('uploads/images/' . $peminjaman->buku->gambar) }}" alt="{{ $peminjaman->buku->judul }}" class="card-img-top" style="width: 100%; height: 370px; object-fit: cover;"> 
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $peminjaman->buku->judul }}</h5>
                                             <p class="card-text">Return Date: {{ $peminjaman->tanggal_pengembalian }}</p>

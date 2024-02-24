@@ -11,16 +11,21 @@
 @section('content')
 <style>
     .buku-card {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        overflow: hidden;
-        height: 550px; 
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 550px;
+    }
+
+    @media (max-width: 768px) {
+        .buku-card {
+            min-height: auto;
+        }
     }
 
     .buku-card img {
-        max-width: 100%;
-        height: 370px;
-        object-fit: cover;
+        width: 100%;
+        height: 370px; 
     }
 
     .buku-card .card-title {
@@ -253,8 +258,8 @@
                                 <img src="{{ asset('uploads/images/' . $buku->gambar) }}" class="img-fluid rounded" alt="{{ $buku->judul }}">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="card mb-3 mx-3"> <!-- Tambah class mx-3 di sini -->
+                        <div class="col-md-6" style="margin-top: 55px;">
+                            <div class="card mb-3 mx-3" style="margin-top: 55px;"> 
                                 <div class="card-body">
                                     <p><strong>Judul:</strong> {{ $buku->judul }}</p>
                                     <p><strong>Penulis:</strong> {{ $buku->penulis }}</p>

@@ -72,6 +72,31 @@ class BukuController extends Controller
 
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'judul' => 'required',
+            'penulis' => 'required',
+            'penerbit' => 'required',
+            'tahun_terbit' => 'required|numeric',
+            'kategori_id' => 'required',
+            'stok' => 'required|numeric',
+            'sinopsis' => 'required',
+            'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048' 
+        ], [
+            'judul.required' => 'Judul buku harus diisi',
+            'penulis.required' => 'Nama penulis harus diisi',
+            'penerbit.required' => 'Nama penerbit harus diisi',
+            'tahun_terbit.required' => 'Tahun terbit harus diisi',
+            'tahun_terbit.numeric' => 'Tahun terbit harus berupa angka',
+            'kategori_id.required' => 'Kategori harus dipilih',
+            'stok.required' => 'Stok harus diisi',
+            'stok.numeric' => 'Stok harus berupa angka',
+            'sinopsis.required' => 'Sinopsis buku harus diisi',
+            'gambar.image' => 'File harus berupa gambar',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, atau gif',
+            'gambar.max' => 'Ukuran gambar tidak boleh melebihi 2048 kilobita'
+        ]);
+        
+
         $buku = new Buku();
         $buku->buku_id = $request->input('buku_id');
         $buku->judul = $request->input('judul');
@@ -93,6 +118,7 @@ class BukuController extends Controller
 
         return redirect()->route('buku.index')->with('success', 'Buku telah ditambahkan!');
     }
+
 
     public function destroy($buku_id)
     {

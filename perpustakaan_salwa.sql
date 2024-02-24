@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 24, 2024 at 05:32 AM
+-- Generation Time: Feb 24, 2024 at 10:42 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -46,7 +46,7 @@ CREATE TABLE `bukus` (
 --
 
 INSERT INTO `bukus` (`buku_id`, `judul`, `penulis`, `penerbit`, `tahun_terbit`, `stok`, `gambar`, `created_at`, `updated_at`, `kategori_id`, `sinopsis`) VALUES
-('BUKU-0001', 'Tentang Kamu', 'Tere Liye', 'Republika', 2020, 3, '1708749738.jpg', '2024-02-23 11:41:29', '2024-02-24 04:42:18', 1, 'Tentang Kamu menceritakan perjuangan Zaman Zulkarnaen, seorang pengacara muda dari Thompson & Co. Suatu hari, Zaman dipanggil atasannya untuk menyelesaikan sebuah kasus hukum klien. Kasus tersebut adalah persoalan harta warisan yang ditinggalkan kliennya yang belum lama meninggal dunia.'),
+('BUKU-0001', 'Tentang Kamu', 'Tere Liye', 'Republika', 2020, 4, '1708749738.jpg', '2024-02-23 11:41:29', '2024-02-24 08:45:50', 1, 'Tentang Kamu menceritakan perjuangan Zaman Zulkarnaen, seorang pengacara muda dari Thompson & Co. Suatu hari, Zaman dipanggil atasannya untuk menyelesaikan sebuah kasus hukum klien. Kasus tersebut adalah persoalan harta warisan yang ditinggalkan kliennya yang belum lama meninggal dunia.'),
 ('BUKU-0002', 'Septihan', 'Poppi Pertiwi', 'Coconut Books', 2020, 5, '1708749747.jpeg', '2024-02-24 03:41:37', '2024-02-24 04:42:27', 1, 'Septihan merupakan novel yang mengangkat kisah remaja yang dibalut dengan asmara dan persahabatan. Kisah dalam novel ini berfokus pada kehidupan dua karakter utama yaitu Septian Aidan Nugroho dan Jihan Halana. Septian adalah tokoh yang digambarkan sebagai sosok yang pendiam dan dingin, Walau demikian, Ia merupakan salah satu siswa tercerdas sehingga ia pun menjadi murid kebanggaan dan kesayangan para guru di SMA Ganesha. Karena kecerdasannya, Ia juga seringkali mewakili sekolahnya di perlombaan dan mengashilkan prestasi yang membanggakan. Tidak hanya itu, Septian juga merupakan seorang Bendahara di geng Ravispa yang bersikan murid-murid paling pemberani dan nakal di sekolah. Karakter lain bernama Jihan digambarkan sebagai sosok gadis yang ekspresif dan aktif. Di balik parasnya yang rupawan, Ia juga merupakan gadis yang keras kepala yang bisa dilihat dari kegigihannya selama 3 tahun dalam mengejar cinta Septian. Secara garis besar, cerita dalam novel ini lebih memusatkan pada usaha Jihan untuk menaklukkan hati seorang Septian yang dingin, cuek, dan jutek. Di sisi lain, Septian sangat menjauhi tipe-tipe orang ekspresif seperti Jihan.'),
 ('BUKU-0003', 'Galaksi', 'Poppi Pertiwi', 'Coconut Books', 2021, 3, '1708749758.jpg', '2024-02-24 03:43:26', '2024-02-24 04:42:38', 1, 'Novel ini mengisahkan Galaksi Aldebaran yang seorang ketua geng Ravispa. Geng tersebut merupakan geng paling gagah dan pemberani.\r\n\r\nDan geng ini merupakan tempat berkumpulnya anak-anak nakal dan pemberontak murid-murid SMA Ganesha.\r\n\r\nDan geng tersebut sering berselisih paham dengan geng SMA sebelah yaitu Geng Avegar geng miliki SMA Kencana.'),
 ('BUKU-0004', 'Mariposa', 'Luluk Hf', 'Coconut Books', 2018, 3, '1708747193.jpg', '2024-02-24 03:45:47', '2024-02-24 03:59:53', 1, 'Novel Mariposa berkisah tentang perjuangan seorang gadis bernama Natasha Kay Loovi atau Acha dalam mengejar seorang laki-laki yang sulit didekati seperti kupu-kupu. Acha sendiri digambarkan sebagai seorang gadis SMA berparas cantik dan pintar. Pertemuan pertamannya dengan Iqbal di sebuah camp olimpiade membuatnya jatuh hati pada sosok laki-laki itu. Iqbal bukan berasal dari sekolah yang sama dengannya. Berkat informasi dari sahabatnya, Amanda, Acha berhasil mengetahui sekolah Iqbal, yaitu SMA Arwana. Acha kemudian bertekad mengejar Iqbal dengan pindah ke SMA Arwana. Beruntung, karena Acha dan Iqbal adalah siswa berprestasi, keduanya dipilih menjadi perwakilan sekolah untuk mengikuti olimpiade sains tingkat nasional. Ini menjadi kesempatan bagus bagi Acha untuk lebih dekat dengan Iqbal, karena keduanya harus mengikuti bimbingan bersama selama tiga bulan menjelang kompetisi. Kendati demikian, untuk mendapatkan hati Iqbal bukan perkara mudah. Sosok Iqbal terlalu dingin dan tidak pernah membuka hati dengan perempuan manapun. Di mata Acha, Iqbal seperti kupu-kupu mariposa yang selalu lari ketika didekati. Namun, Acha merupakan sosok yang tidak kenal lelah dan terus mencoba mendekati Iqbal dengan berbagai cara. Mulai dari mendekatkan diri dengan sahabat Iqbal hingga memberi Iqbal sekotak kue keju. Sayangnya, berbagai usaha Acha justru membuat Iqbal kesal dan menyebutnya sebagai perempuan murahan. Bisakah Acha meluluhkan hati Iqbal?'),
@@ -56,8 +56,19 @@ INSERT INTO `bukus` (`buku_id`, `judul`, `penulis`, `penerbit`, `tahun_terbit`, 
 ('BUKU-0008', 'Komik Next G Rumahku Surgaku', 'Putri Aisyah Maharani & Rika, Dkk', 'Muffin Graphics', 2017, 5, '1708750480.jpg', '2024-02-24 04:54:40', '2024-02-24 04:54:40', 2, 'Sejak pulang dari rumah temannya, Adik terus saja merajuk minta dibuatkan kamar tidur yang lebih luas. Ia iri dengan kamar teman-temannya yang luas dan penuh boneka. Ibu dan ayah sampai harus memberi penjelasan supaya Adik mau mulai bersyukur. Kira-kira, mau tidak ya, Adik mendengar nasihat ayah dan ibu?'),
 ('BUKU-0009', 'Mahir Matematika SD/MI Kelas 4,5, & 6', 'Annisa Eprila Annisa Eprila Fauziah, M.Pd.', 'Bmedia', 2024, 2, '1708750930.jpg', '2024-02-24 05:02:10', '2024-02-24 05:05:32', 3, 'Buku Mahir Matematika ala Bimbel SD/MI Kelas 4. 5, & 6 ini disusun dengan tujuan membantu siswa mengatasi kesulitan-kesulitan mengerjakan soal dengan cara pembahasan soal bertahap dan trik ala bimbel. Di buku ini, penulis ingin membantu siswa belajar matematika dengan trik-trik tertentu sehingga terasa lebih mudah dalam memahami tipe soal. Untuk mencapai hal tersebut, siswa kelas 4,5, dan 6 yang ingin belajar matematika tentu juga membutuhkan ringkasan materi penting. Dilengkapi dengan contoh dan latihan soal untuk siswa agar dapat berlatih dan menguji pemahamannya.'),
 ('BUKU-0010', 'Bahasa Jepang : Simple & Easy Cepat Kuasai', 'TIM JAPANESE LANGUAGE CENTRE', 'Caesar Media Pustaka', 2023, 5, '1708751088.jpg', '2024-02-24 05:04:48', '2024-02-24 05:04:48', 3, 'SIMPLE & EASY CEPAT KUASAI BAHASA JEPANG\r\n\r\nBuku ini merupakan buku wajib yang harus dimiliki para pemula yang ingin belajar bahasa Jepang. Kenapa? Karena buku ini disusun dengan penyampaian materi yang simpel dan mudah, urut, serta sistematis.\r\n\r\nMateri-materi yang dikupas dalam buku ini antara lain tentang kaidah bahasa Jepang yang disampaikan dengan penjelasan simpel dan mudah. Dilanjutkan dengan materi tentang pengenalan ragam kosakata populer bahasa Jepang yang sering digunakan, tak lupa diberikan pula materi percakapan bahasa Jepang sehari-hari yang merupakan aplikasi dari dua materi sebelumnya. Dengan penyampaian materi secara berurutan seperti ini, belajar bahasa Jepang akan terasa lebih mudah, khususnya bagi pemula, pemahamannya pun akan lebih cepat dikuasai.'),
-('BUKU-0011', 'Malioboro at Midnight', 'Skysphire', 'Bukune', 2023, 5, '1708751357.jpg', '2024-02-24 05:09:17', '2024-02-24 05:28:20', 1, 'Tengah malam bagi kebanyakan orang adalah waktu terbaik untuk beristirahat dan tidur lelap. Tapi untuk Serana Nighita, itu adalah waktu untuk menangisi hidup dan meratapi hubungannya dengan sang penyanyi terkenal, Jan Ichard. Popularitas membawa lelaki itu jauh darinya, Ichard di Jakarta, meninggalkan Sera di Jogja.\r\n\r\nBagi Sera, tengah malam selalu menakutkan.\r\n\r\nNamun, semua berubah setelah Malioboro Hartigan tidak sengaja mendobrak pintu kamarnya pada sebuah malam. Malio datang dan menawarkan pertemanan agar Sera tidak sendiri, agar Sera bisa berbagi sedihnya.\r\n\r\nLantas bagaimana dengan hubungan Sera dan Jan Ichard yang semakin rumit? Dan benarkah tanpa sadar, Malio sudah menjadi \'Midnight\' terbaik Sera?'),
-('BUKU-0012', 'Kiprah Politik Soekarno', 'Yonita Yulia Yalinda', 'Anak Hebat Indonesia', 2024, 4, '1708751719.jpg', '2024-02-24 05:15:19', '2024-02-24 05:15:19', 4, 'Di buku ini, kita akan memasuki perjalanan hidup yang luar biasa dari seorang anak kecil bernama Soekarno hingga ia berhasil memperjuangkan kemerdekaan dan menjadi presiden pertama Republik Indonesia. Dengan semangat yang tak tergoyahkan, Soekarno melewati masa kecilnya yang sederhana dengan tekad untuk membebaskan bangsanya dari penjajahan yang berabad-abad lamanya.\r\n\r\nBuku ini akan membawa kita menjelajahi setiap tahap perjuangannya hingga proklamasi kemerdekaan Indonesia pada tahun 1945. Buku ini juga menceritakan akibat dari karier politik yang dilaluinya pada masa penjajahan, yaitu pengasingan.\r\n\r\nSoekarno dikenal sebagai seorang orator ulung. Kepiawaiannya dalam berpidato ini jugalah yang membuatnya sukses dalam karier politik. Selain membahas kiprah politik Soekarno di dalam negeri, buku ini juga membahas kiprah politiknya di dunia internasional. Soekarno menjadi tokoh yang dikenal dan disegani di luar negeri saat menjadi presiden Indonesia.');
+('BUKU-0011', 'Malioboro at Midnight', 'Skysphire', 'Bukune', 2023, 8, '1708751357.jpg', '2024-02-24 05:09:17', '2024-02-24 10:07:35', 1, 'Tengah malam bagi kebanyakan orang adalah waktu terbaik untuk beristirahat dan tidur lelap. Tapi untuk Serana Nighita, itu adalah waktu untuk menangisi hidup dan meratapi hubungannya dengan sang penyanyi terkenal, Jan Ichard. Popularitas membawa lelaki itu jauh darinya, Ichard di Jakarta, meninggalkan Sera di Jogja.\r\n\r\nBagi Sera, tengah malam selalu menakutkan.\r\n\r\nNamun, semua berubah setelah Malioboro Hartigan tidak sengaja mendobrak pintu kamarnya pada sebuah malam. Malio datang dan menawarkan pertemanan agar Sera tidak sendiri, agar Sera bisa berbagi sedihnya.\r\n\r\nLantas bagaimana dengan hubungan Sera dan Jan Ichard yang semakin rumit? Dan benarkah tanpa sadar, Malio sudah menjadi \'Midnight\' terbaik Sera?'),
+('BUKU-0012', 'Kiprah Politik Soekarno', 'Yonita Yulia Yalinda', 'Anak Hebat Indonesia', 2024, 4, '1708751719.jpg', '2024-02-24 05:15:19', '2024-02-24 05:15:19', 4, 'Di buku ini, kita akan memasuki perjalanan hidup yang luar biasa dari seorang anak kecil bernama Soekarno hingga ia berhasil memperjuangkan kemerdekaan dan menjadi presiden pertama Republik Indonesia. Dengan semangat yang tak tergoyahkan, Soekarno melewati masa kecilnya yang sederhana dengan tekad untuk membebaskan bangsanya dari penjajahan yang berabad-abad lamanya.\r\n\r\nBuku ini akan membawa kita menjelajahi setiap tahap perjuangannya hingga proklamasi kemerdekaan Indonesia pada tahun 1945. Buku ini juga menceritakan akibat dari karier politik yang dilaluinya pada masa penjajahan, yaitu pengasingan.\r\n\r\nSoekarno dikenal sebagai seorang orator ulung. Kepiawaiannya dalam berpidato ini jugalah yang membuatnya sukses dalam karier politik. Selain membahas kiprah politik Soekarno di dalam negeri, buku ini juga membahas kiprah politiknya di dunia internasional. Soekarno menjadi tokoh yang dikenal dan disegani di luar negeri saat menjadi presiden Indonesia.'),
+('BUKU-0013', 'Resep Snack MPASI Cegah Stunting', 'Margaret M Sugondo, Florence Sukmawati Jaya', 'Gramedia Pustaka Utama', 2024, 5, '1708764776.jpg', '2024-02-24 08:52:56', '2024-02-24 08:52:56', 5, 'Buku in akan membuat moms and dads ingin memasak di dapur rumah untuk si kecil karena bahan-bahannya simpel, menggunakan alat-alat masak yang biasanya ada di rumah, bahan mudah didapat dan diolah serta dapat dibuat dalam waktu yg cukup singkat.'),
+('BUKU-0014', 'Andin`S Kitchen Makan Minum Nyemil', 'ANDINI PUTRI PRIBADINI', 'Wahyu Media', 2023, 3, '1708765093.jpg', '2024-02-24 08:58:13', '2024-02-24 10:38:03', 5, 'ANEKA RESEP SEHARI-HARI BERBAHAN DASAR: AYAM, DAGING, SEAFOOD, SAYURAN ANEKA RESEP JAJANAN NUSANTARA ANEKA RESEP JAJANAN MANCANEGARA ANEKA RESEP DESSERT DAN MINUMAN SEGAR\r\n\r\nBuku ini sangat lengkap memuat aneka resep masakan sehari-berbahan dasar ayam, daging, seafood, dan sayuran. Selain itu ada resep jajanan nusantara & mancanegara, minuman, dan dessert yang hanya lezat, tetapi juga simple pembuatannya dengan bahan yang mudah didapatkan. Resep-resep di buku ini sudah teruji dengan banyaknya followers yang sudah me-recook-nya dan puas dengan hasilnya.'),
+('BUKU-0015', 'Inspirasi Desain Interior Modern', 'Andie A. Wicaksono, Dimas Kharisma Y., & Suparno Sastra M', 'Griya Kreasi', 2019, 5, '1708767084.jpg', '2024-02-24 09:31:24', '2024-02-24 09:31:24', 6, 'Buku ini juga menyajikan beragam inspirasi desain dan penataan interior bernuansa modern. Harapannya buku ini, bisa menjadi sebuah pedoman agar suasana interior dalam rumah menjadi nyaman ditempati, sehingga bermanfaat bagi para pembaca.\r\nSelamat membaca!'),
+('BUKU-0016', 'Photoshop, Lightroom, dan CorelDraw', 'Jubilee Enterprise', 'Elex Media Komputindo', 2018, 5, '1708767189.jpg', '2024-02-24 09:33:09', '2024-02-24 09:33:09', 6, 'Semua desainer grafis, editor foto, maupun fotografer wajib mengenal ketiga software tersebut jika ingin sukses di karir maupun hobi. Buku Photoshop, Lightroom, dan CorelDraw yang disusun oleh Jubilee Enterprise ini adalah buku yang tepat bagi anda yang tertarik mempelajari ketiga perangkat lunak tersebut. Buku ini memberi pengantar kepada Anda untuk mengenal secara cepat Photoshop, Lightroom, maupun CorelDraw.\r\n\r\nSyarat membaca buku ini adalah Anda memiliki:\r\n- Adobe Photoshop minimal versi CS4\r\n- Adobe Photoshop Lightroom minimal versi 5\r\n- CorelDraw minimal versi X5.\r\n\r\nSemoga Anda bisa menjadi desainer grafis, fotografer, dan editor foto yang sukses setelah membaca buku ini!'),
+('BUKU-0017', 'Kompilasi Superlengkap Lagu Wajib Nasional & Daerah', 'Tim Redaksi', 'Scritto Books Publisher', 2017, 5, '1708769072.jpg', '2024-02-24 09:35:15', '2024-02-24 10:04:32', 7, 'Kompilasi Superlengkap Lagu Wajib Nasional & Daerah'),
+('BUKU-0018', 'Best Lagu Pop Viral : 15 Lagu Viral untuk Piano dan Gitar', 'Mahardhika Kusumo Simbolon', 'Anak Hebat Indonesia', 2024, 3, '1708767414.jpg', '2024-02-24 09:36:54', '2024-02-24 09:36:54', 7, 'Dari 15 lagu yang disajikan di sini, 13 merupakan lagu populer Indonesia terbaru dan 2 sisanya merupakan lagu Barat yang sudah sangat familiar di level internasional. Lagu lagu tersebut disajikan apa adanya dalam terbitan ini, yakni mengikuti tangga nada dan tempo yang digunakan oleh penyanyi aslinya. Iringan yang ditawarkan di sini juga berpatokan pada irama lagu aslinya yang disederhanakan agar para pembaca dapat menyesuaikan dengan format penampilan yang dikehendaki masing-masing.'),
+('BUKU-0019', 'Dongeng 100 Kota', 'Suprapti & Temu Penulis Yogyakarta', 'Laksana', 2019, 5, '1708767970.jpg', '2024-02-24 09:46:10', '2024-02-24 09:46:10', 8, 'Kota-kota di Indonesia memiliki dongeng yang menarik dan penuh teladan. Dongeng-dongeng itu sejak zaman dulu hingga sekarang tetap diceritakan dari mulut ke mulut, dari buku ke buku. Buku ini berisi 100 dongeng yang diceritakan kembali oleh para penulis Temu Penulis Yogyakarta.\r\n\r\nAda dongeng Ayam dan Ikan Tongkol dari Pekanbaru, dongeng Batu Kuwung dari Serang, dongeng Gajah Merik dari Lebong, dongeng Tukang Taking dari Palangkaraya, dongeng Batu Berdaun dari Ambon, dan masih banyak dongeng lainnya.\r\n\r\nBuku dongeng ini sangat menarik karena anak-anak akan mengenal kota-kota di Indonesia dan dongeng di kota tersebut. Yuk, membaca dongeng bersama-sama! Jangan lupa mengajak teman-temanmu, ya.'),
+('BUKU-0020', 'Cerita Anak Binatang: Burung Hantu', 'Nabila Anwar', 'Tiga Serangkai', 2020, 4, '1708768085.jpg', '2024-02-24 09:48:05', '2024-02-24 09:48:05', 8, 'Jalinan keakraban orangtua dan anak salah satunya dapat dilakukan dengan bercerita. Sebelum tidur, orangtua dapat menceritakan kisah-kisah yang menarik untuk si kecil. Secara tidak langsung, dengan mendengarkan cerita, anak-anak akan melatih kemampuan bahasanya. Dari mendengar itulah, mereka lama-lama jadi tahu arti mengenai banyak kata, dan memperkaya kosa kata mereka. Serta memungkinkan anak-anak untuk berlatih \'bertanya\'. Jika dipancing dengan pertanyaan, mereka juga akan belajar \'menjawab\'. Dengan kata lain mereka belajar berkomunikasi. Tak hanya itu, buku cerita juga dapat membantu anak untuk berimajinasi untuk perkembangan daya pikirnya. Untuk itu, orangtua harus pintar-pintar memilih cerita, agar anak tertarik dan tidak bosan.'),
+('BUKU-0021', 'Pendidikan Pancasila Dan Kewarganegaraan SMA/SMK Kelas 10', 'Abdul Waidl, Ali Usman, Ahmad Asroni, Hatim Gazali danTedi Kholiluddin', 'Pusat Kurikulum dan Perbukuan Kemendikbud', 2022, 8, '1708768609.jpg', '2024-02-24 09:56:25', '2024-02-24 09:56:49', 3, 'Pendidikan Pancasila dan Kewarganegaraan (PPKn) merupakan salah satu mata pelajaran wajib untuk semua jenjang pendidikan di Indonesia, mulai dari tingkat SD sampai SMA. PPKn mengemban amanah untuk menumbuhkembangkan nilai-nilai Pancasila setiap anak bangsa Indonesia. Sebuah amanah yang sangat mulia—pada satu sisi—dan tidak ringan, pada sisi yang lain. Melalui mata pelajaran PPKn ini, peserta didik diharapkan tidak hanya memahami sebuah konsep maupun teori dan sejarah tentang Pancasila dan kewarganegaraan. Lebih dari itu, PPKn diharapkan menjadi wahana edukatif dalam mengembangkan peserta didik menjadi manusia yang memiliki rasa kebangsaan dan cinta tanah air.'),
+('BUKU-0022', 'Berorientasi Objek Menggunakan PHP', 'PROF. DR. IR. RIRI FITRI SARI, M.M., M.SC., DTM, SMIEEE', 'Andi Offset', 2021, 5, '1708768981.jpg', '2024-02-24 10:03:01', '2024-02-24 10:36:32', 3, 'Buku Rekayasa Perangkat Lunak Berbasis Objek Menggunakan PHP ini dibuat untuk digunakan pada program studi Teknik Komputer, Ilmu Komputer, Teknik Elektro, Teknik Informatika disekitar tahun kedua perkuliahan dengan beban sebanyak 3 SKS. Buku ini disertai contoh penggunaan tools dalam mempelajari siklus hidup perangkat lunak. Pada buku ini juga dipaparkan sejarah mengapa kita sampai pada bentuk rekayasa perangkat lunak seperti sekarang ini. Pembuatan program perangkat lunak merupakan teknologi yang sangat cepat berkembang, mengingat berkembangnya infrastruktur dan perangkat keras yang tersedia.'),
+('BUKU-0023', 'Kartu Mainstream Si Juki: Biru', 'Pionicon', 'Elex Media Komputindo', 2018, 5, '1708770523.jpg', '2024-02-24 10:28:43', '2024-02-24 10:28:43', 2, 'Kartu Mainstream Si Juki: Biru');
 
 -- --------------------------------------------------------
 
@@ -96,7 +107,11 @@ INSERT INTO `kategori_bukus` (`kategori_id`, `nama_kategori`, `created_at`, `upd
 (1, 'Novel', '2024-02-23 11:40:30', '2024-02-23 11:40:30'),
 (2, 'Komik', '2024-02-24 03:55:43', '2024-02-24 03:55:43'),
 (3, 'Pendidikan', '2024-02-24 05:01:02', '2024-02-24 05:01:02'),
-(4, 'Biografi', '2024-02-24 05:13:57', '2024-02-24 05:13:57');
+(4, 'Biografi', '2024-02-24 05:13:57', '2024-02-24 05:13:57'),
+(5, 'Resep & Masakan', '2024-02-24 08:51:39', '2024-02-24 08:51:39'),
+(6, 'Desain', '2024-02-24 09:30:17', '2024-02-24 09:30:17'),
+(7, 'Musik', '2024-02-24 09:34:33', '2024-02-24 09:34:33'),
+(8, 'Dongeng', '2024-02-24 09:44:16', '2024-02-24 09:44:16');
 
 -- --------------------------------------------------------
 
@@ -193,10 +208,14 @@ CREATE TABLE `peminjamen` (
 --
 
 INSERT INTO `peminjamen` (`peminjaman_id`, `user_id`, `buku_id`, `tanggal_peminjaman`, `tanggal_pengembalian`, `status_peminjaman`, `denda`, `created_at`, `updated_at`) VALUES
-(1, 'US-0003', 'BUKU-0001', '2024-02-23', '2024-02-28', 'Sudah Kembali', '0.00', '2024-02-23 11:46:19', '2024-02-23 11:46:41'),
-(2, 'US-0003', 'BUKU-0011', '2024-02-24', '2024-02-29', 'Sudah Kembali', '0.00', '2024-02-24 05:16:15', '2024-02-24 05:23:13'),
-(3, 'US-0004', 'BUKU-0011', '2024-02-24', '2024-02-29', 'Sudah Kembali', '0.00', '2024-02-24 05:24:41', '2024-02-24 05:24:51'),
-(4, 'US-0005', 'BUKU-0011', '2024-02-24', '2024-02-29', 'Sudah Kembali', '0.00', '2024-02-24 05:26:30', '2024-02-24 05:28:20');
+(1, 'US-0003', 'BUKU-0001', '2024-02-17', '2024-02-22', 'Sudah Kembali', '20000.00', '2024-02-23 11:46:19', '2024-02-24 08:45:50'),
+(2, 'US-0003', 'BUKU-0011', '2024-02-18', '2024-02-23', 'Sudah Kembali', '10000.00', '2024-02-24 05:16:15', '2024-02-24 10:07:30'),
+(3, 'US-0004', 'BUKU-0011', '2024-02-18', '2024-02-23', 'Sudah Kembali', '10000.00', '2024-02-24 05:24:41', '2024-02-24 10:07:33'),
+(4, 'US-0005', 'BUKU-0011', '2024-02-18', '2024-02-23', 'Sudah Kembali', '10000.00', '2024-02-24 05:26:30', '2024-02-24 10:07:35'),
+(5, 'US-0004', 'BUKU-0022', '2024-02-19', '2024-02-24', 'Sudah Kembali', '0.00', '2024-02-24 10:05:32', '2024-02-24 10:07:37'),
+(6, 'US-0003', 'BUKU-0022', '2024-02-19', '2024-02-24', 'Sudah Kembali', '0.00', '2024-02-24 10:33:20', '2024-02-24 10:34:12'),
+(7, 'US-0006', 'BUKU-0022', '2024-02-20', '2024-02-25', 'Sudah Kembali', '0.00', '2024-02-24 10:36:04', '2024-02-24 10:36:32'),
+(8, 'US-0006', 'BUKU-0014', '2024-02-20', '2024-02-25', 'Sudah Kembali', '0.00', '2024-02-24 10:37:19', '2024-02-24 10:38:03');
 
 -- --------------------------------------------------------
 
@@ -239,9 +258,13 @@ CREATE TABLE `ulasan_bukus` (
 
 INSERT INTO `ulasan_bukus` (`ulasan_id`, `user_id`, `buku_id`, `ulasan`, `rating`, `peminjaman_id`, `created_at`, `updated_at`) VALUES
 (1, 'US-0003', 'BUKU-0001', 'bukunya bagus banget', 4, 1, '2024-02-23 11:46:55', '2024-02-23 11:46:55'),
-(2, 'US-0004', 'BUKU-0011', 'ceritanya seru banget, bagus pokonya mah, wajib dibaca ya', 5, 3, '2024-02-24 05:25:27', '2024-02-24 05:25:27'),
-(3, 'US-0005', 'BUKU-0011', 'lucu banget ceritanya', 4, 4, '2024-02-24 05:28:41', '2024-02-24 05:28:41'),
-(4, 'US-0003', 'BUKU-0011', 'ceritanya bikin baper', 4, 2, '2024-02-24 05:31:18', '2024-02-24 05:31:18');
+(5, 'US-0004', 'BUKU-0011', 'BUKUNYA BAGUS BANGET, BIKIN BAPER', 5, 3, '2024-02-24 10:08:52', '2024-02-24 10:08:52'),
+(6, 'US-0004', 'BUKU-0022', 'BUKUNYA BAGUS, NGEBANTU BUAT BIKIN PROGRAM PAKE PHP', 5, 5, '2024-02-24 10:09:19', '2024-02-24 10:09:19'),
+(7, 'US-0005', 'BUKU-0011', 'alurnya bikin banyak kupu\' diperut', 4, 4, '2024-02-24 10:11:33', '2024-02-24 10:11:33'),
+(8, 'US-0003', 'BUKU-0011', 'covernya cantik, isinya juga cantik', 5, 2, '2024-02-24 10:12:40', '2024-02-24 10:12:40'),
+(9, 'US-0003', 'BUKU-0022', 'bukunya ngebantu banget buat yg mau belajar php', 4, 6, '2024-02-24 10:35:16', '2024-02-24 10:35:16'),
+(10, 'US-0006', 'BUKU-0022', 'Buar kalian yg mau belejar oop baca aja buku ini ya, ngebantu banget asli', 4, 7, '2024-02-24 10:37:04', '2024-02-24 10:37:04'),
+(11, 'US-0006', 'BUKU-0014', 'Kalian juga kalau mau belajar masak jangan lupa dibaca buku yg ini', 4, 8, '2024-02-24 10:38:43', '2024-02-24 10:38:43');
 
 -- --------------------------------------------------------
 
@@ -271,9 +294,10 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `username`, `name`, `alamat`, `email`, `email_verified_at`, `password`, `remember_token`, `role`, `avatar`, `created_at`, `updated_at`) VALUES
 ('A001', 'admin', 'admin', 'rumah', 'admin@mail.com', NULL, '$2y$10$9zWFgS59RKgLldxlDgY7Y.Bstjyh9bJXjiqD2kpHXAbZy77IKEmEe', NULL, 'admin', 'avatar.png', NULL, NULL),
 ('P001', 'petugas', 'petugas', 'rumah', 'petugas@mail.com', NULL, '$2y$10$pcvHn0vQqj5dWkkeqblZROmpOFQCgf566fENaZURmAr2TTnvcTtKS', NULL, 'petugas', 'avatar.png', NULL, NULL),
-('US-0003', 'salwa', 'salwa zhr', 'tajur', 'salwa@gmail.com', NULL, '$2y$10$CuetlaDEG4oBAH8hL0ffbu0jYTGm/NmuegQsW8SrQW7z9v9GbYQBa', NULL, 'user', 'avatar.png', '2024-02-23 11:43:28', '2024-02-23 11:43:28'),
+('US-0003', 'salwa', 'Salwa', 'tajur', 'salwa@gmail.com', NULL, '$2y$10$WWbh2Pdpah8L8Jbl4sGeaOrTkhfSed4CYkvkh7f0E/kZecaPakpVW', NULL, 'user', 'avatar.png', '2024-02-23 11:43:28', '2024-02-24 10:34:46'),
 ('US-0004', 'nadillaww', 'Nadila Zari Fani', 'Agus Tailor', 'nadilazarifani@gmail.com', NULL, '$2y$10$9SI7idbgLc7FWl2UDl86RubrlCBc.wT82ZwH.4HpqaKkIvsLHfChG', NULL, 'user', 'avatar.png', '2024-02-24 05:24:12', '2024-02-24 05:24:12'),
-('US-0005', 'anandananda', 'Ananda Nuraini', 'Rancamaya', 'anandanuraini@gmail.com', NULL, '$2y$10$e2Lt8Xe/h90OUlrdnYva5.iT4idUk4VxIfK7oNAeDoLHhIIXIsAyS', NULL, 'user', 'avatar.png', '2024-02-24 05:26:23', '2024-02-24 05:26:23');
+('US-0005', 'anandananda', 'Ananda Nuraini', 'Rancamaya', 'anandanuraini@gmail.com', NULL, '$2y$10$e2Lt8Xe/h90OUlrdnYva5.iT4idUk4VxIfK7oNAeDoLHhIIXIsAyS', NULL, 'user', 'avatar.png', '2024-02-24 05:26:23', '2024-02-24 05:26:23'),
+('US-0006', 'Ilma', 'Ilma Awaliah', 'Balubur Sari', 'ilmaawaliah@gmail.com', NULL, '$2y$10$k8x58z/zEvCb2eQrCQJKMOWfmwKiDXTAg9WxZ8McOH.rQRRoIHvfG', NULL, 'user', 'avatar.png', '2024-02-24 10:35:57', '2024-02-24 10:35:57');
 
 --
 -- Indexes for dumped tables
@@ -373,7 +397,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `kategori_bukus`
 --
 ALTER TABLE `kategori_bukus`
-  MODIFY `kategori_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `kategori_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `kategori_buku_relasis`
@@ -397,7 +421,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `peminjamen`
 --
 ALTER TABLE `peminjamen`
-  MODIFY `peminjaman_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `peminjaman_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -409,7 +433,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `ulasan_bukus`
 --
 ALTER TABLE `ulasan_bukus`
-  MODIFY `ulasan_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ulasan_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables

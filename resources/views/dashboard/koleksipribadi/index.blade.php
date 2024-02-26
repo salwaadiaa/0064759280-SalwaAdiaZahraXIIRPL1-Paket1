@@ -21,21 +21,29 @@
                                     <th>No</th>
                                     <th>Judul Buku</th>
                                     <th>Penerbit</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-    @forelse ($bukusDiUlas as $buku)
-        <tr>
-            <td>{{ $loop->iteration }}</td>
-            <td>{{ $buku->judul }}</td>
-            <td>{{ $buku->penerbit }}</td>
-        </tr>
-    @empty
-        <tr>
-            <td colspan="4">Tidak ada buku dalam koleksi pribadi yang telah diulas.</td>
-        </tr>
-    @endforelse
-</tbody>
+                                @forelse ($koleksiPribadi as $koleksi)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $koleksi->buku->judul }}</td>
+                                        <td>{{ $koleksi->buku->penerbit }}</td>
+                                        <td>
+                                            <form id="delete-form-{{ $koleksi->koleksi_id }}" action="{{ route('koleksi.destroy', $koleksi->koleksi_id) }}" class="d-inline" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            </form>
+                                            <button onclick="deleteForm('{{ $koleksi->koleksi_id }}')" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4">Tidak ada buku dalam koleksi pribadi.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -44,20 +52,23 @@
     </div>
 @endsection
 
-<script>
-    function deleteForm(id) {
-        Swal.fire({
-            title: 'Hapus data',
-            text: "Anda akan menghapus data!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'Batal!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $(`#delete-form-${id}`).submit();
-            }
-        });
-    }
-</script>
+@section('script')
+    @parent
+    <script>
+        function deleteForm(id) {
+            Swal.fire({
+                title: 'Hapus data',
+                text: "Anda akan menghapus data!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Batal!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
+@endsection

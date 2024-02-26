@@ -34,11 +34,11 @@
 @section('breadcrumb')
 @if (Auth::user()->role == 'admin')
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard Admin</a></li>
-    <li class="breadcrumb-item active">Daftar Peminjaman</li>
+    <li class="breadcrumb-item active">Data Peminjaman</li>
 @endif
 @if (Auth::user()->role == 'petugas')
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard Petugas</a></li>
-    <li class="breadcrumb-item active">Daftar Peminjaman</li>
+    <li class="breadcrumb-item active">Data Peminjaman</li>
 @endif
 @endsection
 
@@ -82,14 +82,16 @@
                                     <td>{{ $peminjaman->status_peminjaman }}</td>
                                     @if (Auth::user()->role == 'petugas')
                                     <td>
-                                        @if($peminjaman->status_peminjaman == 'Dipinjam')
-                                            <form id="return-form-{{ $peminjaman->peminjaman_id }}" action="{{ route('peminjaman.return', $peminjaman->peminjaman_id) }}" method="POST" style="display: inline;">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="button" class="btn btn-primary" onclick="confirmReturn('{{ $peminjaman->peminjaman_id }}')">Selesai</button>
-                                            </form>
-                                            {{-- <div class="denda-column" style="display: none;">Rp. {{ number_format($peminjaman->denda, 0, ',', '.') }}</div> --}}
-                            @endif
+                                        <form id="return-form-{{ $peminjaman->peminjaman_id }}" action="{{ route('peminjaman.return', $peminjaman->peminjaman_id) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="button" class="btn btn-primary" onclick="confirmReturn('{{ $peminjaman->peminjaman_id }}')">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </form>
+                                        <a href="{{ route('peminjaman.edit', ['peminjaman_id' => $peminjaman->peminjaman_id]) }}" class="btn btn-primary ml-2">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
                                     </td>
                                     @endif
                                 </tr>
@@ -160,11 +162,9 @@
 
         var dendaColumn = row.querySelector('.denda-column');
 
-        // Tampilkan nilai denda, bahkan jika tidak ada keterlambatan (nilai denda = 0)
         dendaColumn.innerText = formattedDenda;
         dendaColumn.style.display = 'table-cell';
 
-        // Ubah nilai denda menjadi 0 jika tidak ada keterlambatan
         if (lateDays === 0) {
             dendaColumn.innerText = 'Rp. 0';
         }

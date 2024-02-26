@@ -20,31 +20,39 @@
 @endif
 
 <style>
-.position-relative {
-    position: relative;
-}
-
-.best-seller {
-    position: absolute;
-    top: 0;
-    left: -20px; /* Adjust this value according to your preference */
-    transform: rotate(-45deg); /* Miringkan teks */
-    padding: 5px 10px;
-    background-color: #28a745; /* Warna latar belakang badge */
-    color: #fff; /* Warna teks badge */
-    font-size: 12px; /* Ukuran font */
-}
-
-</style>
-
-@section('content')
+    .position-relative {
+        position: relative;
+    }
+    
+    .best-seller {
+        position: absolute;
+        top: 0;
+        left: -20px;
+        transform: rotate(-45deg);
+        padding: 5px 10px;
+        background-color: #28a745; 
+        color: #fff; 
+        font-size: 12px; 
+    }
+    </style>
+    
+    @section('content')
     <div class="row">
         <div class="col-12">
             <div class="card shadow">
-                <div class="card-header bg-transparent border-0 text-dark">
+                <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center text-dark">
                     <h2 class="card-title h3">Daftar Buku</h2>
-                    <div class="table-responsive">
-                        <table class="table table-flush table-hover">
+                    <div class="ml-auto" style="max-width: 200px;"> 
+                        <select id="category_filter" class="form-control" onchange="filterByCategory(this)">
+                            <option value="" {{ (!$selectedCategory) ? 'selected' : '' }}>Semua Kategori</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->kategori_id }}" {{ ($selectedCategory == $category->kategori_id) ? 'selected' : '' }}>{{ $category->nama_kategori }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="table-responsive" style="padding: 15px;"> 
+                    <table class="table table-flush table-hover">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -54,6 +62,7 @@
                                     <th>Kategori</th>
                                     <th>Penulis</th>
                                     <th>Penerbit</th>
+                                    <th>Sinopsis Buku</th>
                                     <th>Tahun Terbit</th>
                                     <th>Stok Buku</th>
                                     <th>Aksi</th>
@@ -62,12 +71,12 @@
                             <tbody>
                             @foreach ($bukus as $buku)
                                 <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ ($bukus->currentPage() - 1) * $bukus->perPage() + $loop->index + 1 }}</td>
                                 <td>{{ $buku->buku_id }}</td>
                                 <td>
                                     <div class="position-relative">
                                         @if ($buku->jumlah_ulasan >= 3)
-                                            <span class="badge badge-success best-seller">Best</span>
+                                            <span class="badge badge-success best-seller">Favorite</span>
                                         @endif
                                         @if($buku->gambar)
                                             <img src="{{ asset('uploads/images/' . $buku->gambar) }}" alt="{{ $buku->judul }}" style="max-width: 50px; max-height: 50px;">
@@ -82,12 +91,11 @@
                                     <td>{{ $buku->kategoriBuku->nama_kategori ?? '-' }}</td>
                                     <td>{{ $buku->penulis }}</td>
                                     <td>{{ $buku->penerbit }}</td>
+                                    <td>{{ $buku->sinopsis }}</td>
                                     <td>{{ $buku->tahun_terbit }}</td>
                                     <td>{{ $buku->stok }}</td>   
                                     <td>
                                         <a href="{{ route('buku.edit', $buku->buku_id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                                                        
-                                        {{-- Tampilkan tombol hapus hanya untuk admin --}}
                                         @if (Auth::user()->role == 'admin' || Auth::user()->role == 'petugas')
                                             <form id="delete-form-{{ $buku->buku_id }}" action="{{ route('buku.destroy', $buku->buku_id) }}" class="d-inline" method="post">
                                                 @csrf
@@ -145,6 +153,11 @@
                     $(`#delete-form-${id}`).submit()
                 }
             })
+        }
+
+        function filterByCategory(element) {
+            var selectedCategory = element.value;
+            window.location.href = "{{ route('buku.index') }}" + "?category=" + selectedCategory;
         }
     </script>
 @endsection

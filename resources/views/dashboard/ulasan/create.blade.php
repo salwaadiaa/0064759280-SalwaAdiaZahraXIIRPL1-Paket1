@@ -29,7 +29,7 @@
     }
 
     .rating input:checked ~ label {
-        color: #ffcc00; /* Change this to the desired color when a star is selected */
+        color: #ffcc00; 
     }
 </style>
 

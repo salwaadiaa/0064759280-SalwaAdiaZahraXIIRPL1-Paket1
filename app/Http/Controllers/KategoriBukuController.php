@@ -9,7 +9,7 @@ class KategoriBukuController extends Controller
 {
     public function indexAdmin()
     {
-        $kategoris = KategoriBuku::orderBy('created_at', 'asc')->paginate(5);
+        $kategoris = KategoriBuku::orderBy('created_at', 'asc')->paginate(10);
         return view('dashboard.kategori.kategori_admin', compact('kategoris'));
     }
 
@@ -53,7 +53,7 @@ class KategoriBukuController extends Controller
             'nama_kategori' => $request->nama_kategori,
         ]);
 
-        return redirect()->route('kategori.admin')->with('success', 'Kategori berhasil diperbarui.');
+        return redirect()->route('kategori.admin')->with('success', 'Kategori ' .$kategori->nama_kategori. ' berhasil diperbarui.');
     }
 
     public function destroy($ketegori_id)

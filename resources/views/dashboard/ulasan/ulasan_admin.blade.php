@@ -15,6 +15,9 @@
 @endif
 @endsection
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
 @section('content')
 <div class="row">
     <div class="col-12">
@@ -22,9 +25,9 @@
             <div class="card-header bg-transparent border-0 text-dark">
                 <h2 class="card-title h3">Riwayat Ulasan Buku</h2>
                 <form action="{{ route('ulasan.admin') }}" method="GET" class="input-group mb-3">
-                    <div  class="col-md-10 align-self-center"> 
-                    <select class="judulBuku form-control" name="judul" style="max-height: 300px; width: 100%; padding-top: 8px;" id="judul-select">
-                            <option value="">-- Pilih Judul Buku --</option>
+                    <div class="col-md-10 align-self-center">
+                        <select class="judulBuku form-control" name="judul" id="judul-select">
+                            <option value="" selected disabled>-- Pilih Judul Buku --</option>
                             @foreach ($listJudulBuku as $judulBuku)
                                 <option value="{{ $judulBuku->judul }}" {{ request('judul') == $judulBuku->judul ? 'selected' : '' }}>
                                     {{ $judulBuku->judul }}
@@ -33,7 +36,7 @@
                         </select>
                     </div>
                     <div class="col-md-2 align-self-center">
-                        <button type="submit" class="btn btn-custom btn-block" style="height: 38px;">Filter</button>
+                        <button type="submit" class="btn btn-custom btn-block" style="height: 42px;">Filter</button>
                     </div>
                 </form>
                     <br>
@@ -46,6 +49,7 @@
                                     <th>Buku</th>
                                     <th>Ulasan</th>
                                     <th>Rating</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,6 +60,13 @@
                                         <td>{{ $ulasan->buku->judul }}</td>
                                         <td>{{ $ulasan->ulasan }}</td>
                                         <td>{!! str_repeat('<i class="fa fa-star"></i>', $ulasan->rating) !!}</td>
+                                        <td>
+                                            <form id="delete-form-{{ $ulasan->ulasan_id }}" action="{{ route('ulasan.destroy', $ulasan->ulasan_id) }}" class="d-inline" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            </form>
+                                            <button onclick="deleteForm('{{ $ulasan->ulasan_id }}')" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -84,6 +95,7 @@
                                     </li>
                                 @endif
                             </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -91,10 +103,30 @@
     </div>
 @endsection
 @section('script')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-    $(document).ready(function() {
-    $('.judulBuku').select2();
-});
+    document.addEventListener('DOMContentLoaded', function () {
+        var judulBukuSelect = new Choices('#judul-select', {
+            placeholder: true,
+            placeholderValue: '-- Pilih Judul Buku --',
+            searchPlaceholderValue: '-- Ketik untuk mencari --',
+        });
+    });
+
+    function deleteForm(id) {
+            Swal.fire({
+                title: 'Hapus data',
+                text: "Anda akan menghapus data!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Batal!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#delete-form-' + id).submit();
+                }
+            });
+        }
 </script>
+
 @endsection

@@ -29,26 +29,23 @@ Route::middleware(['web', 'auth', 'preventBackAfterLogout'])->group(function () 
     Route::get('/buku/edit/{buku_id}', [BukuController::class, 'edit'])->name('buku.edit')->middleware(['auth', 'roles:admin,petugas']);
     Route::put('/buku/update/{buku_id}', [BukuController::class, 'update'])->name('buku.update')->middleware(['auth', 'roles:admin,petugas']);
     Route::delete('/buku/destroy/{id}', [BukuController::class, 'destroy'])->name('buku.destroy')->middleware(['auth', 'roles:admin,petugas']);
-    Route::post('/buku/tambah-ke-koleksi/{buku_id}', [BukuController::class, 'tambahKeKoleksi'])->name('buku.tambah-ke-koleksi');
-
     Route::post('/buku/ajukan-peminjaman/{id}', [BukuController::class, 'ajukanPeminjaman'])->name('buku.ajukan-peminjaman');
     Route::get('/user/buku/index', [BukuController::class, 'bukuIndex'])->name('user.buku.index')->middleware(['auth', 'roles:user']);
 
-    Route::get('/peminjaman/exportPdf', [PeminjamanController::class, 'exportPdf'])->name('peminjaman.exportPdf')->middleware(['auth', 'roles:admin']);
     Route::get('/peminjam', [PeminjamanController::class, 'index'])->name('peminjaman.index')->middleware(['auth', 'roles:admin,petugas']);
-    Route::get('/peminjam/selesai', [PeminjamanController::class, 'selesai'])->name('peminjaman.selesai');
-    Route::put('/peminjaman/approve/{peminjaman_id}', [PeminjamanController::class, 'approve'])->name('peminjaman.approve');
-    Route::put('/peminjaman/reject/{peminjaman_id}', [PeminjamanController::class, 'reject'])->name('peminjaman.reject');
+    Route::get('/peminjaman/exportPdf', [PeminjamanController::class, 'exportPdf'])->name('peminjaman.exportPdf')->middleware(['auth', 'roles:admin']);
     Route::put('/peminjaman/return/{peminjaman_id}', [PeminjamanController::class, 'return'])->name('peminjaman.return');
+    Route::get('peminjaman/{peminjaman_id}/edit', [PeminjamanController::class, 'edit'])->name('peminjaman.edit')->middleware(['auth', 'roles:admin,petugas']);
+    Route::put('/peminjaman/{peminjaman_id}', [PeminjamanController::class, 'update'])->name('peminjaman.update')->middleware(['auth', 'roles:admin,petugas']);
 
     Route::get('/ulasan', [UlasanBukuController::class, 'index'])->name('ulasan.index')->middleware(['auth', 'roles:user']);
     Route::get('/ulasan/create/{peminjamanId}', [UlasanBukuController::class, 'create'])->name('ulasan.create')->middleware(['auth', 'roles:user']);
     Route::post('/ulasan-buku/store', [UlasanBukuController::class, 'store'])->name('ulasan.store')->middleware(['auth', 'roles:user']);
-    Route::get('dashboard/ulasan/buku-di-ulas', [UlasanBukuController::class, 'bukuDiUlas'])->name('dashboard.ulasan.buku-di-ulas');
     Route::get('/admin-petugas/ulasan', [UlasanBukuController::class, 'ulasanAdmin'])->name('ulasan.admin')->middleware(['auth', 'roles:admin,petugas']);
+    Route::delete('/admin-petugas/ulasan/{id}', [UlasanBukuController::class, 'destroy'])->name('ulasan.destroy')->middleware(['auth', 'roles:admin,petugas']);
 
     Route::get('/dashboard/koleksipribadi', [KoleksiPribadiController::class, 'index'])->name('koleksipribadi.index')->middleware(['auth', 'roles:user']);
-    Route::delete('/koleksi/{koleksi_id}/hapus', [KoleksiPribadiController::class, 'hapus'])->name('koleksi.hapus')->middleware(['auth', 'roles:user']);
+    Route::delete('/dashboard/koleksipribadi/{id}', [KoleksiPribadiController::class, 'destroy'])->name('koleksi.destroy')->middleware(['auth', 'roles:user']);
 
     Route::get('/kategori', [KategoriBukuController::class, 'indexUser'])->name('kategori.user')->middleware(['auth', 'roles:user']);
     Route::get('/admin/kategori', [KategoriBukuController::class, 'indexAdmin'])->name('kategori.admin')->middleware(['auth', 'roles:admin,petugas']);
@@ -57,7 +54,19 @@ Route::middleware(['web', 'auth', 'preventBackAfterLogout'])->group(function () 
     Route::get('admin/kategori/{kategori_id}/edit', [KategoriBukuController::class, 'edit'])->name('kategori.edit')->middleware(['auth', 'roles:admin,petugas']);
     Route::put('admin/kategori/{kategori_id}', [KategoriBukuController::class, 'update'])->name('kategori.update')->middleware(['auth', 'roles:admin,petugas']);
     Route::delete('/admin/kategori/{kategori_id}', [KategoriBukuController::class, 'destroy'])->name('kategori.destroy')->middleware(['auth', 'roles:admin,petugas']);
+
+
+
+
+
+
+
+
+    Route::get('/peminjam/selesai', [PeminjamanController::class, 'selesai'])->name('peminjaman.selesai');
+    Route::put('/peminjaman/approve/{peminjaman_id}', [PeminjamanController::class, 'approve'])->name('peminjaman.approve');
+    Route::put('/peminjaman/reject/{peminjaman_id}', [PeminjamanController::class, 'reject'])->name('peminjaman.reject');
+    Route::get('dashboard/ulasan/buku-di-ulas', [UlasanBukuController::class, 'bukuDiUlas'])->name('dashboard.ulasan.buku-di-ulas');
 });
 
-Route::get('/', [BukuController::class, 'landing']);
+Route::get('/', [RouteController::class, 'landing']);
 require __DIR__.'/auth.php';

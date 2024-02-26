@@ -7,6 +7,36 @@
     <li class="breadcrumb-item active">Dashboard User</li>
 @endsection
 
+<style>
+     .buku-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        height: 550px; 
+    }
+
+    .buku-card img {
+        max-width: 100%;
+        height: 370px;
+        object-fit: cover;
+    }
+
+    .buku-card .card-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .buku-card .card-text {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .buku-card .card-body {
+        min-height: 140px;
+    }
+</style>
+
 @section('content')
     <div class="container mt-3">
         <div class="row justify-content-center">
@@ -20,8 +50,8 @@
                         <div class="row">
                             @foreach($peminjamans as $peminjaman)
                                 <div class="col-md-3 mb-3"> 
-                                    <div class="card" style="width: 100%;"> 
-                                        <img src="{{ asset('uploads/images/' . $peminjaman->buku->gambar) }}" alt="{{ $peminjaman->buku->judul }}" class="card-img-top" style="width: 100%; height: 180px; object-fit: cover;"> 
+                                    <div class="buku-card" style="width: 100%; "> 
+                                        <img src="{{ asset('uploads/images/' . $peminjaman->buku->gambar) }}" alt="{{ $peminjaman->buku->judul }}" class="card-img-top" style="width: 100%; height: 370px; object-fit: cover;"> 
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $peminjaman->buku->judul }}</h5>
                                             <p class="card-text">Return Date: {{ $peminjaman->tanggal_pengembalian }}</p>
@@ -48,10 +78,10 @@
      <script>
         document.addEventListener('DOMContentLoaded', function () {
             var today = new Date();
-            var isLate = false; // Menyimpan status keterlambatan
+            var isLate = false; 
 
             document.querySelectorAll('.card').forEach(function (card) {
-                var returnDateText = card.querySelector('.card-text').innerText; // Mengubah dari '.return-date' ke '.card-text'
+                var returnDateText = card.querySelector('.card-text').innerText; 
                 var returnDate = new Date(returnDateText);
                 var lateDays = Math.max(0, Math.floor((today - returnDate) / (24 * 60 * 60 * 1000)));
                 var denda = lateDays * 10000;
@@ -60,23 +90,19 @@
 
                 var dendaColumn = card.querySelector('.denda-column');
 
-                // Tampilkan nilai denda
                 dendaColumn.innerText = 'Denda: ' + formattedDenda;
                 dendaColumn.style.display = 'block';
 
-                // Ubah nilai denda menjadi 0 jika tidak ada keterlambatan
                 if (lateDays === 0) {
                     dendaColumn.innerText = 'Denda: Rp. 0';
                 }
 
-                // Tambahkan warna merah jika ada denda
                 if (denda > 0) {
                     dendaColumn.style.color = 'red';
-                    isLate = true; // Setel status keterlambatan menjadi true jika ada denda
+                    isLate = true; 
                 }
             });
 
-            // Tampilkan SweetAlert2 jika ada keterlambatan
             if (isLate) {
                 Swal.fire({
                     icon: 'warning',

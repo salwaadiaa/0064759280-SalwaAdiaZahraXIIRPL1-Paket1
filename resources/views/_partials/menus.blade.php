@@ -22,12 +22,6 @@
             <span class="nav-link-text">Daftar Buku</span>
         </a>
     </li>
-    <!-- <li class="nav-item">
-        <a class="nav-link {{ $routeActive == 'users.index' ? 'active' : '' }}" href="{{ route('users.index') }}">
-            <i class="fas fa-users text-warning"></i>
-            <span class="nav-link-text">Anggota</span>
-        </a>
-    </li> -->
     <li class="nav-item">
         <a class="nav-link {{ $routeActive == 'peminjaman.index' ? 'active' : '' }}" href="{{ route('peminjaman.index') }}">
             <i class="fas fa-clock text-success"></i>

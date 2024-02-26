@@ -27,10 +27,10 @@
   type="text/css">
   <link href="assets/css/style.css" rel="stylesheet">
  <style>
-    .card {
-    width: 400px; /* Ubah nilai lebar card */
-    max-width: 100%; /* Agar card tetap responsif */
-    height: 200px;
+   .card {
+    width: 200px; 
+    height: 400px;
+    max-width: 100%; 
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
@@ -56,6 +56,7 @@
     margin-top: 10px;
     text-align: center;
 }
+
  </style>
 
 </head>

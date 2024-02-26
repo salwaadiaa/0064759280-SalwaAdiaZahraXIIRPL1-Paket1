@@ -15,7 +15,7 @@
 }
 
 .pdf-button {
-    background-color: #FF0000;
+    background-color: #B31312;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -26,6 +26,8 @@
     margin-right: 5px;
 }
 </style>
+
+
 @extends('layouts.app')
 
 @section('title', 'Riwayat Peminjaman')
@@ -43,25 +45,27 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow">
-                <div class="card-header bg-transparent border-0 text-dark">
-                    <h2 class="card-title h3">Daftar Peminjaman</h2>
-                    <div class="mb-3">
-                        <label for="start_date" class="form-label">Start Date:</label>
-                        <input type="date" id="start_date" class="form-select">
-                        <label for="end_date" class="form-label">End Date:</label>
-                        <input type="date" id="end_date" class="form-select">
-                        <button class="btn" id="filterBtn">Filter</button>
-                        @if (Auth::user()->role == 'admin')
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-transparent border-0 text-dark d-flex justify-content-between align-items-center">
+                <h2 class="card-title h3">Daftar Peminjaman</h2>
+                <div class="ml-auto">
+                    @if (Auth::user()->role == 'admin')
                         <button class="pdf-button" id="exportPdfBtn">
-                        <i class="fas fa-file-pdf"></i> Ekspor PDF
+                            <i class="fas fa-file-pdf"></i> PDF
                         </button>
-                        @endif
-                    </div>
-
-
+                    @endif
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="start_date" class="form-label">Start Date:</label>
+                    <input type="date" id="start_date" class="form-select">
+                    <label for="end_date" class="form-label">End Date:</label>
+                    <input type="date" id="end_date" class="form-select">
+                    <button style="background-color: #C0A183; " class="btn" id="filterBtn">Filter</button>
+                </div>
                     <div class="table-responsive">
                         <table class="table table-flush table-hover">
                             <thead>
@@ -80,7 +84,7 @@
                             <tbody>
                             @forelse ($peminjamanSelesai as $peminjaman)
                                 <tr class="status-row" data-status="{{ $peminjaman->tanggal_peminjaman }}">
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ ($peminjamanSelesai->currentPage() - 1) * $peminjamanSelesai->perPage() + $loop->index + 1 }}</td>
                                     <td>{{ $peminjaman->user->email }}</td>
                                     <td>{{ $peminjaman->user->name }}</td>
                                     <td>{{ $peminjaman->buku->judul }}</td>

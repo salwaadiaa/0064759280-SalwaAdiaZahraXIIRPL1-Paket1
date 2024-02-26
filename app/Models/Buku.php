@@ -9,8 +9,8 @@ class Buku extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'buku_id'; // Specify the primary key
-    public $incrementing = false; // Set to false if the primary key is not auto-incrementing
+    protected $primaryKey = 'buku_id'; 
+    public $incrementing = false;
 
     protected $fillable = [
         'buku_id',
@@ -21,6 +21,7 @@ class Buku extends Model
         'kategori_id',
         'gambar',
         'stok',
+        'sinopsis',
     ];
 
     public function kategoriBuku()

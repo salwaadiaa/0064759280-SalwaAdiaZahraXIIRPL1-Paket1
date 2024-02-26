@@ -6,7 +6,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
     <li class="breadcrumb-item"><a href="{{ route('kategori.admin') }}">Daftar Kategori Buku</a></li>
-    <li class="breadcrumb-item active">Edit Kategori Buku</li>
+    <li class="breadcrumb-item active">Edit Kategori Buku - {{ $kategori->nama_kategori }}</li>
 @endsection
 
 @section('content')
@@ -34,6 +34,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <button type="submit" class="btn btn-sm btn-primary">Simpan Perubahan</button>
+                                <a href="{{ route('kategori.admin') }}" class="btn btn-sm btn-secondary">Kembali</a>
                             </div>
                         </div>
                     </form>

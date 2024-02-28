@@ -75,3 +75,44 @@ public function index(Request $request)
 
         return view('dashboard.buku.index', compact('bukus', 'categories', 'selectedCategory'));
     }
+
+
+
+     <script>
+        var dataBuku = {!! $bukusQuery !!};
+
+        var ctx = document.getElementById('BukuChart').getContext('2d');
+
+        var labels = [];
+        var data = [];
+
+        for (var i = 0; i < dataBuku.length; i++) {
+            labels.push(dataBuku[i].ulasans);
+            data.push(dataBuku[i].total);
+        }
+
+        var BukuChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Buku Favorite',
+                    data: data,
+                    backgroundColor: '#E0D7C8',
+                    borderColor: '#C0A183',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>

@@ -209,23 +209,23 @@
                             <ul class="pagination justify-content-end">
                                 @if($bukus->currentPage() > 1)
                                     <li class="page-item">
-                                        <a class="page-link" href="{{ $bukus->previousPageUrl() }}" tabindex="-1">Previous</a>
+                                        <a class="page-link" href="{{ $bukus->previousPageUrl() . '&kategori_id=' . $kategori_id }}" tabindex="-1">Previous</a>
                                     </li>
                                 @endif
-
+                        
                                 @for ($i = max(1, $bukus->currentPage() - 2); $i <= min($bukus->currentPage() + 2, $bukus->lastPage()); $i++)
                                     <li class="page-item {{ ($i == $bukus->currentPage()) ? 'active' : '' }}">
-                                        <a class="page-link" href="{{ $bukus->url($i) }}">{{ $i }}</a>
+                                        <a class="page-link" href="{{ $bukus->url($i) . '&kategori_id=' . $kategori_id }}">{{ $i }}</a>
                                     </li>
                                 @endfor
-
+                        
                                 @if($bukus->currentPage() < $bukus->lastPage())
                                     <li class="page-item">
-                                        <a class="page-link" href="{{ $bukus->nextPageUrl() }}">Next</a>
+                                        <a class="page-link" href="{{ $bukus->nextPageUrl() . '&kategori_id=' . $kategori_id }}">Next</a>
                                     </li>
                                 @endif
                             </ul>
-                        </nav>
+                        </nav>                        
                     </div>
                 </div>
             </div>

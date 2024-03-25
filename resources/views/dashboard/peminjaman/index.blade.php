@@ -50,7 +50,6 @@
                     <h2 class="card-title h3">Daftar Peminjaman</h2>
                     <div class="mb-3">
                     </div>
-
                     <div class="table-responsive">
                         <table class="table table-flush table-hover">
                             <thead>

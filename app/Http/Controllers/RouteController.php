@@ -44,16 +44,22 @@ class RouteController extends Controller
             $peminjamanPerTanggal = Peminjaman::select(DB::raw('DATE(tanggal_peminjaman) as tanggal'), DB::raw('COUNT(*) as total'))
                 ->groupBy('tanggal')
                 ->get();
-
+                
+            $ulasanPerBuku = DB::table('bukus')
+                ->leftJoin('ulasan_bukus', 'bukus.buku_id', '=', 'ulasan_bukus.buku_id')
+                ->select('bukus.judul', DB::raw('COUNT(ulasan_bukus.ulasan_id) as jumlah_ulasan'))
+                ->groupBy('bukus.judul')
+                ->havingRaw('COUNT(ulasan_bukus.ulasan_id)') 
+                ->get();            
+    
+            $judulBuku = $ulasanPerBuku->pluck('judul')->toArray();
+            $jumlahUlasan = $ulasanPerBuku->pluck('jumlah_ulasan')->toArray();
             $totalBuku = Buku::count();
             $totalKategoriBuku = KategoriBuku::count();
             $totalPeminjaman = Peminjaman::count();
             $jumlahUlasan = UlasanBuku::count();
 
-            return view('dashboard.index-admin', compact('totalBuku', 'totalKategoriBuku', 'totalPeminjaman', 'peminjamanPerTanggal', 'totalDenda', 'jumlahUlasan'));
+            return view('dashboard.index-admin', compact('totalBuku', 'totalKategoriBuku', 'ulasanPerBuku', 'totalPeminjaman', 'judulBuku', 'jumlahUlasan', 'peminjamanPerTanggal', 'totalDenda', 'jumlahUlasan'));
         }
-    }
-
-
-    
+    }   
 }

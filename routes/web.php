@@ -68,5 +68,5 @@ Route::middleware(['web', 'auth', 'preventBackAfterLogout'])->group(function () 
     Route::get('dashboard/ulasan/buku-di-ulas', [UlasanBukuController::class, 'bukuDiUlas'])->name('dashboard.ulasan.buku-di-ulas');
 });
 
-Route::get('/', [RouteController::class, 'landing']);
+Route::get('/', [RouteController::class, 'landing'])->name('landing');
 require __DIR__.'/auth.php';

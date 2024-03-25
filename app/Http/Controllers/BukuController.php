@@ -9,6 +9,7 @@ use App\Models\Peminjaman;
 use App\Models\KategoriBuku;
 use App\Models\KoleksiPribadi;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class BukuController extends Controller
 {
@@ -65,10 +66,14 @@ class BukuController extends Controller
 
     public function create()
     {
-        $buku_id = 'BUKU-' . sprintf('%04d', Buku::count() + 1);
+        $latestBuku = Buku::latest('buku_id')->first();
+        $latestId = $latestBuku ? substr($latestBuku->buku_id, 5) : 0;
+        $nextId = sprintf('%04d', $latestId + 1);
+        $buku_id = 'BUKU-' . $nextId;
+    
         $kategoriBukus = KategoriBuku::all();
         return view('dashboard.buku.create', compact('kategoriBukus', 'buku_id'));
-    }
+    }    
 
     public function store(Request $request)
     {
@@ -96,7 +101,6 @@ class BukuController extends Controller
             'gambar.max' => 'Ukuran gambar tidak boleh melebihi 2048 kilobita'
         ]);
         
-
         $buku = new Buku();
         $buku->buku_id = $request->input('buku_id');
         $buku->judul = $request->input('judul');
@@ -119,10 +123,13 @@ class BukuController extends Controller
         return redirect()->route('buku.index')->with('success', 'Buku berhasil ditambahkan!');
     }
 
-
     public function destroy($buku_id)
     {
         $buku = Buku::findOrFail($buku_id);
+        $gambarPath = public_path('/uploads/images/') . $buku->gambar;
+        if (File::exists($gambarPath)) {
+            File::delete($gambarPath);
+        }
 
         $buku->delete();
 
@@ -184,9 +191,6 @@ class BukuController extends Controller
             return redirect()->back()->with('error', 'Stok buku habis. Tidak dapat melakukan peminjaman.');
         }
 
-        $buku->stok--;
-        $buku->save();
-
         $tanggalPeminjaman = now();
         $tanggalPengembalian = clone $tanggalPeminjaman;
         $tanggalPengembalian->addDays(5);
@@ -198,7 +202,6 @@ class BukuController extends Controller
             'tanggal_pengembalian' => clone $tanggalPengembalian,
             'status_peminjaman' => 'Dipinjam',
         ]);
-
 
         return redirect()->back()->with('success', 'Peminjaman buku yang berjudul ' . $buku->judul . ' berhasil dilakukan.');
     }

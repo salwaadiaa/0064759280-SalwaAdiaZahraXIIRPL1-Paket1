@@ -60,7 +60,7 @@
                 </a>
             </div>
             @if (Auth::user()->role == 'admin')
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <a href="{{ route('peminjaman.index') }}">
                         <div class="card mt-4">
                             <div class="card-body">
@@ -72,23 +72,41 @@
                         </div>
                     </a>
                 </div>
+                <div class="col-lg-6">
+                    <a href="{{ route('buku.index') }}">
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Buku Favorite</h5>
+                                <div style="height: 400px; width: 100%;">
+                                    <canvas style="height: 400px; width: 100%;" id="ulasanPerBukuChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>    
             @endif
         </div>
     </div>
+@endsection
 
+@section('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
-        // Data total peminjaman per tanggal
         var dataPerTanggal = {!! $peminjamanPerTanggal !!};
 
         var ctx = document.getElementById('peminjamanChart').getContext('2d');
 
         var labels = [];
         var data = [];
+        var backgroundColors = ['#C0A183', '#637FA7']; 
+        var borderColor = ['#C0A183', '#637FA7']; 
+
 
         for (var i = 0; i < dataPerTanggal.length; i++) {
-            labels.push(dataPerTanggal[i].tanggal);
+            var tanggal = new Date(dataPerTanggal[i].tanggal);
+            var formattedDate = tanggal.getDate() + '-' + (tanggal.getMonth() + 1) + '-' + tanggal.getFullYear();
+            
+            labels.push(formattedDate);
             data.push(dataPerTanggal[i].total);
         }
 
@@ -99,8 +117,47 @@
                 datasets: [{
                     label: 'Total Peminjaman',
                     data: data,
-                    backgroundColor: '#E0D7C8',
-                    borderColor: '#C0A183',
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColor,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ulasanPerBukuData = {!! $ulasanPerBuku !!};
+
+        var ctxUlasanPerBuku = document.getElementById('ulasanPerBukuChart').getContext('2d');
+
+        var judulBukuUlasan = [];
+        var jumlahUlasanPerBuku = [];
+        var backgroundColors = ['#C0A183', '#637FA7']; 
+        var borderColor = ['#C0A183', '#637FA7']; 
+
+        for (var i = 0; i < ulasanPerBukuData.length; i++) {
+            judulBukuUlasan.push(ulasanPerBukuData[i].judul);
+            jumlahUlasanPerBuku.push(ulasanPerBukuData[i].jumlah_ulasan);
+        }
+
+        var ulasanPerBukuChart = new Chart(ctxUlasanPerBuku, {
+            type: 'bar',
+            data: {
+                labels: judulBukuUlasan,
+                datasets: [{
+                    label: 'Jumlah Ulasan',
+                    data: jumlahUlasanPerBuku,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColor,
                     borderWidth: 1
                 }]
             },

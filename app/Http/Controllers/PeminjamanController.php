@@ -47,18 +47,10 @@ class PeminjamanController extends Controller
     
             $peminjaman->save();
     
-            $buku = Buku::find($peminjaman->buku_id);
-            $buku->stok++;
-            $buku->save();
-    
             return redirect()->route('peminjaman.index')->with('success', 'Buku berhasil dikembalikan.');
         } else {
             $peminjaman->status_peminjaman = 'Sudah Kembali';
             $peminjaman->save();
-    
-            $buku = Buku::find($peminjaman->buku_id);
-            $buku->stok++;
-            $buku->save();
     
             return redirect()->route('peminjaman.index')->with('success', 'Buku berhasil dikembalikan.');
         }

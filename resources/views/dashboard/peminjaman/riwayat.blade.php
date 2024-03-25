@@ -151,13 +151,11 @@
                 });
             });
 
-            // Logika ekspor PDF
             var exportPdfBtn = document.getElementById('exportPdfBtn');
             exportPdfBtn.addEventListener('click', function () {
                 var startDate = document.getElementById('start_date').value;
                 var endDate = document.getElementById('end_date').value;
 
-                // Handle kasus di mana tanggal awal atau tanggal akhir kosong
                 if (!startDate && !endDate) {
                     window.location.href = "/peminjaman/exportPdf";
                 } else {
